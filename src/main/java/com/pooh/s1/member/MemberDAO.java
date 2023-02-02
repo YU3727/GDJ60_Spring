@@ -13,9 +13,6 @@ import com.pooh.s1.util.DBConnection;
 public class MemberDAO {
 //230202 8교시
 	
-//	@Autowired
-//	private MemberDTO memberDTO;
-	
 	public int memberJoin(MemberDTO memberDTO) throws Exception{
 		
 		Connection connection = DBConnection.getConnection();
