@@ -38,4 +38,16 @@ public class HomeController {
 		return "home";
 	}
 	
+	//요청이 왔을때(value = "이 메서드가 실행할때 입력되야될 url"
+	//servlet은 Spring이 만들어준다.
+	@RequestMapping(value = "/test/test.do")
+	public void test() {
+		System.out.println("/test/test.do test ---------");
+	}
+	
+	@RequestMapping(value = "test/sub.do")
+	public void test2() {
+		System.out.println("/test/sub.do test2-----------");
+	}
+	
 }
