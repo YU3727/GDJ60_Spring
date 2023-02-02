@@ -21,7 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.pooh.s1" />
+	<!-- 여긴 잘 안건드린다 -->
+	<context:component-scan base-package="com.pooh.s1" >
+		<context:include-filter type="annotation" expression=""/> <!-- s1 하위 패키지가 아니더라도 포함할 것 -->
+		<context:exclude-filter type="annotation" expression=""/> <!-- s1 하위 패키지에서 제외하고 검색 -->
+	</context:component-scan>
+	
 	
 	
 	
