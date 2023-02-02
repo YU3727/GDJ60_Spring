@@ -16,6 +16,7 @@ public class MemberController {
 	
 	@RequestMapping(value="memberJoin")
 	public String memberJoin() throws Exception{
+		//test용
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setID("ID1");
 		memberDTO.setPW("PW1");
