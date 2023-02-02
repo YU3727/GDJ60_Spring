@@ -14,15 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Handles requests for the application home page.
  */
-@Controller
+@Controller //controller 역할을 하는 객체 생성
 public class HomeController {
-//230202 2교시 POJO(P
+//230202 2교시 POJO(Plain Old Java Object)
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	//요청경로가 root, 요청메서드가 GET일때 아래 메서드를 실행하세요
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
