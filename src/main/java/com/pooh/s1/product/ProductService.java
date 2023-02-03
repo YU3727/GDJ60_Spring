@@ -37,12 +37,13 @@ public class ProductService { //test용 메서드
 		pDTO.setProductNum(productNum); //pDTO에는 시퀀스번호가 들어가있지 않으므로 넣어준다.
 		int result = pDAO.setAddProduct(pDTO);
 		
-		//옵션은 반복해야 하므로 반복문을 돌린다. List에서 꺼낸건 ProductOptionDTO이므로
-		for(ProductOptionDTO poDTO : ar) {
-			poDTO.setOptionNum(productNum);
-			result = pDAO.setAddProductOption(poDTO); //옵션은 최소 1개 이상이므로 List를 사용한다
+		if(ar != null) {
+			//옵션은 반복해야 하므로 반복문을 돌린다. List에서 꺼낸건 ProductOptionDTO이므로
+			for(ProductOptionDTO poDTO : ar) {
+				poDTO.setOptionNum(productNum);
+				result = pDAO.setAddProductOption(poDTO); //옵션은 최소 1개 이상이므로 List를 사용한다
+			}
 		}
-		
 		return result;
 		
 	}

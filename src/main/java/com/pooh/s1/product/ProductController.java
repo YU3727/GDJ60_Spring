@@ -1,5 +1,6 @@
 package com.pooh.s1.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -120,12 +122,21 @@ public class ProductController {
 	}
 	
 	
-	
-	@RequestMapping(value="productAdd")
+	@RequestMapping(value="productAdd", method = RequestMethod.GET)  //얘는 해당url과 get메서드가 왔을때. 안써도 작동하니까 default는 get이다
 	public void productAdd() {
 		//return 값이 void라도 Spring이 친절하게 찾아준다
 		//url 경로를 jsp 경로명으로 대체해서 자동으로 찾아줌....
 		//즉, url경로와 jsp경로가 일치하는 경우 void로 해도 jsp를 찾아준다.
+	}
+	
+	//230203 7교시 html을 통해 데이터를 입력받고 전달하기
+	//2교시에 했던 외부에서 넘어온 요청을 Controller가 접수하는 방법과 같다.
+	@RequestMapping(value="productAdd", method = RequestMethod.POST) //얘는 해당url과 post메서드가 왔을때.
+	public String productAdd(ProductDTO productDTO) throws Exception{ 
+		//parameter 이름과 DTO의 멤버변수 이름이 같아야한다.
+		int result = productService.setAddProduct(productDTO, null);
+		System.out.println(result == 1); //확인용
+		return "redirect:./list"; //끝나고 나서 다른경로로 나가라는 것. 절대경로, 상대경로 모두 사용 가능
 	}
 	
 	//위의 메서드는 이 메서드와 같음.
