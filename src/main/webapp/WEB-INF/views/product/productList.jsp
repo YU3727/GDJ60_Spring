@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>Product List Page</h1>
+	<a href="./detail?productNum=1">ProductDetail</a>
 </body>
 </html>
