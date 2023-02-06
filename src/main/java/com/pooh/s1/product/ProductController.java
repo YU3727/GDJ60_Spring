@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+//별칭을 주려면 @Controller("c") 이런식으로. 별칭을 주지 않으면 bean name은 클래스이름의 첫글자를 소문자로 바꾼것을 기본으로 한다.
 @Controller
 @RequestMapping(value="/product/*") //root 밑에 product/로 시작하는 모든 것들은 다 ProductController로 보내달라는 의미
 public class ProductController {

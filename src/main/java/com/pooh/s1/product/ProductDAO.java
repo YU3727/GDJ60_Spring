@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pooh.s1.util.DBConnection;
@@ -14,6 +18,44 @@ import com.pooh.s1.util.DBConnection;
 public class ProductDAO {
 //230130 3~5교시
 //230201 6교시
+//230206 2교시 삭제하는 메서드
+	
+	//database-context.xml에서 만든 객체의 의존성을 표시해줌
+	@Autowired
+	private SqlSession sqlSession; //맵퍼의 위치를 찾는것
+	//상수의 변수명을 사용하고싶다. 여기에는 파일명을 쓰는게 아니라, mapper의 속성을 써줘야한다.(일치시키면 됨)
+	//어느 맵퍼를 쓸건지는 이 이름으로 찾아간다. 중요한 정보
+	private final String NAMESPACE = "com.pooh.si.product.productDAO."; //이 맵퍼들의 위치에서 어느 맵퍼를 쓸건지 결정
+	
+	//순서
+	//sqlSession을 따라가서 namespace를 보고 주소를 찾아갈거다.
+	
+	
+	//230206 2교시 삭제하는 메서드
+	public int setProductDelete(Long productNum) throws Exception{
+		int result = 0;
+		
+		//1.DB 연결
+		Connection connection = DBConnection.getConnection();
+		
+		//2.SQL 연결
+		String sql = "DELETE PRODUCT WHERE PRODUCTNUM = ?";
+		
+		//3.미리보내기
+		PreparedStatement st = connection.prepareStatement(sql);
+		
+		//4.?세팅
+		//원래는 DTO로 받는게 좋은데, 수업특성상 Long으로 받아본다.
+		st.setLong(1, productNum);
+		
+		//5.?값 최종적으로 보내기, 결과처리
+		result = st.executeUpdate();
+		
+		//6.DB 연결해제, 리턴값 보내기
+		DBConnection.disConnection(st, connection);
+		
+		return result;
+	}
 	
 	
 	//5교시 getMax -> 6교시 getProductNum
@@ -99,29 +141,36 @@ public class ProductDAO {
 	//getProductDetail
 	public ProductDTO getProductDetail(ProductDTO pDTO) throws Exception{
 		
-		Connection con = DBConnection.getConnection();
+		//
+//		Connection con = DBConnection.getConnection();
 		
-		String sql = "SELECT * FROM PRODUCT WHERE PRODUCTNUM = ?";
+		//쿼리문작성, 미리보내기는 mapper(mybatis)가 해줌
+//		String sql = "SELECT * FROM PRODUCT WHERE PRODUCTNUM = ?";
+//		PreparedStatement st = con.prepareStatement(sql);
 		
-		PreparedStatement st = con.prepareStatement(sql);
+		//Mapper에서 #{}로 처리함
+//		st.setLong(1, pDTO.getProductNum());
 		
-		st.setLong(1, pDTO.getProductNum());
+		//mapper(mybatis)가 해줌
+//		ResultSet rs = st.executeQuery();
 		
-		ResultSet rs = st.executeQuery();
+//		if(rs.next()) {
+//			pDTO = new ProductDTO(); //pDTO를 새로 만들어서 넣어라
+//			pDTO.setProductNum(rs.getLong("PRODUCTNUM"));
+//			pDTO.setProductName(rs.getString("PRODUCTNAME"));
+//			pDTO.setProductDetail(rs.getString("PRODUCTDETAIL"));
+//			pDTO.setProductScore(rs.getDouble("PRODUCTSCORE"));
+//		}else {
+//			pDTO = null;
+//		}
 		
-		if(rs.next()) {
-			pDTO = new ProductDTO(); //pDTO를 새로 만들어서 넣어라
-			pDTO.setProductNum(rs.getLong("PRODUCTNUM"));
-			pDTO.setProductName(rs.getString("PRODUCTNAME"));
-			pDTO.setProductDetail(rs.getString("PRODUCTDETAIL"));
-			pDTO.setProductScore(rs.getDouble("PRODUCTSCORE"));
-		}else {
-			pDTO = null;
-		}
+		//mapper(mybatis)가 해줌
+//		DBConnection.disConnection(rs, st, con);
 		
-		DBConnection.disConnection(rs, st, con);
-		
-		return pDTO;
+//		return pDTO; 이거 대신에 아래꺼 사용
+		//namespace + id이름인데 id이름은 곧 메서드명이다 // 뒤에 보내주는 매개변수는 mapper에 있는 parameterType, resultType과 일치해야한다.
+		//결과값이 0 또는 하나로 보장이 되는 경우는 selectOne으로 받는다. 두개이상 나오면 에러
+		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO)
 		
 		
 	}
@@ -136,26 +185,29 @@ public class ProductDAO {
 	public List<ProductDTO> getProductList() throws Exception{
 		ArrayList<ProductDTO> ar = new ArrayList<ProductDTO>();
 		
-		Connection con = DBConnection.getConnection();
+		//
+//		Connection con = dataSource.getConnection();
 		
-		String sql = "SELECT PRODUCTNUM, PRODUCTNAME, PRODUCTSCORE " //PRODUCTDETAIL은 일단 빼고
-				+ "FROM PRODUCT "
-				+ "ORDER BY PRODUCTSCORE DESC";
+		//쿼리문작성, 미리보내기는 mapper(mybatis)가 해줌
+//		String sql = "SELECT PRODUCTNUM, PRODUCTNAME, PRODUCTSCORE " //PRODUCTDETAIL은 일단 빼고
+//				+ "FROM PRODUCT "
+//				+ "ORDER BY PRODUCTSCORE DESC";
+//		PreparedStatement st = con.prepareStatement(sql);
 		
-		PreparedStatement st = con.prepareStatement(sql);
-		
-		ResultSet rs = st.executeQuery();
+		//mapper(mybatis)가 해줌
+//		ResultSet rs = st.executeQuery();
 		
 		//한줄 읽고 데이터 있으면 true, 없으면 false. 즉 데이터 없어질 때 까지 반복해라
-		while(rs.next()) {
-			ProductDTO pDTO = new ProductDTO();
-			pDTO.setProductNum(rs.getLong("PRODUCTNUM"));
-			pDTO.setProductName(rs.getString("PRODUCTNAME"));
-			pDTO.setProductScore(rs.getDouble("PRODUCTSCORE"));
-			ar.add(pDTO);
+//		while(rs.next()) {
+//			ProductDTO pDTO = new ProductDTO();
+//			pDTO.setProductNum(rs.getLong("PRODUCTNUM"));
+//			pDTO.setProductName(rs.getString("PRODUCTNAME"));
+//			pDTO.setProductScore(rs.getDouble("PRODUCTSCORE"));
+//			ar.add(pDTO);
 		}
 		
-		DBConnection.disConnection(rs, st, con);
+		//mybatis가 해줌
+//		DBConnection.disConnection(rs, st, con);
 		
 		return ar;
 	}
