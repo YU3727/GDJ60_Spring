@@ -25,7 +25,7 @@ public class ProductDAO {
 	private SqlSession sqlSession; //맵퍼의 위치를 찾는것
 	//상수의 변수명을 사용하고싶다. 여기에는 파일명을 쓰는게 아니라, mapper의 속성을 써줘야한다.(일치시키면 됨)
 	//어느 맵퍼를 쓸건지는 이 이름으로 찾아간다. 중요한 정보
-	private final String NAMESPACE = "com.pooh.si.product.productDAO."; //이 맵퍼들의 위치에서 어느 맵퍼를 쓸건지 결정
+	private final String NAMESPACE = "com.pooh.s1.product.productDAO."; //이 맵퍼들의 위치에서 어느 맵퍼를 쓸건지 결정
 	
 	//순서
 	//sqlSession을 따라가서 namespace를 보고 주소를 찾아갈거다.
@@ -137,23 +137,39 @@ public class ProductDAO {
 	}
 	
 	
-	
 	//getProductDetail
 	public ProductDTO getProductDetail(ProductDTO pDTO) throws Exception{
 		
-		//
+		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO);	
+	}
+	
+	
+	//제품조회기능
+	//다형성 때문에 ArrayList 또한 List 타입이다.
+	//혼자 개발하는게 아님 - 다른사람이 만든 table이 ArrayList라는 보장이 없기 때문에 부모형으로 리턴을 받아온다.
+	//ex. LinkedList, ArrayList...
+	public List<ProductDTO> getProductList() throws Exception{
+
+		return sqlSession.selectList(NAMESPACE+"getProductList");
+	}
+	
+	
+	//getProductDetail
+//	public ProductDTO getProductDetail(ProductDTO pDTO) throws Exception{
+//		
+//		
 //		Connection con = DBConnection.getConnection();
-		
-		//쿼리문작성, 미리보내기는 mapper(mybatis)가 해줌
+//		
+//		//쿼리문작성, 미리보내기는 mapper(mybatis)가 해줌
 //		String sql = "SELECT * FROM PRODUCT WHERE PRODUCTNUM = ?";
 //		PreparedStatement st = con.prepareStatement(sql);
-		
-		//Mapper에서 #{}로 처리함
+//		
+//		//Mapper에서 #{}로 처리함
 //		st.setLong(1, pDTO.getProductNum());
-		
-		//mapper(mybatis)가 해줌
+//		
+//		//mapper(mybatis)가 해줌
 //		ResultSet rs = st.executeQuery();
-		
+//		
 //		if(rs.next()) {
 //			pDTO = new ProductDTO(); //pDTO를 새로 만들어서 넣어라
 //			pDTO.setProductNum(rs.getLong("PRODUCTNUM"));
@@ -163,54 +179,53 @@ public class ProductDAO {
 //		}else {
 //			pDTO = null;
 //		}
-		
-		//mapper(mybatis)가 해줌
+//		
+//		//mapper(mybatis)가 해줌
 //		DBConnection.disConnection(rs, st, con);
-		
+//		
 //		return pDTO; 이거 대신에 아래꺼 사용
-		//namespace + id이름인데 id이름은 곧 메서드명이다 // 뒤에 보내주는 매개변수는 mapper에 있는 parameterType, resultType과 일치해야한다.
-		//결과값이 0 또는 하나로 보장이 되는 경우는 selectOne으로 받는다. 두개이상 나오면 에러
-		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO)
-		
-		
-	}
-	
-	
+//		//namespace + id이름인데 id이름은 곧 메서드명이다 // 뒤에 보내주는 매개변수는 mapper에 있는 parameterType, resultType과 일치해야한다.
+//		//결과값이 0 또는 하나로 보장이 되는 경우는 selectOne으로 받는다. 두개이상 나오면 에러
+//		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO);
+//		
+//	}
 	
 	
 	//제품조회기능
 	//다형성 때문에 ArrayList 또한 List 타입이다.
 	//혼자 개발하는게 아님 - 다른사람이 만든 table이 ArrayList라는 보장이 없기 때문에 부모형으로 리턴을 받아온다.
 	//ex. LinkedList, ArrayList...
-	public List<ProductDTO> getProductList() throws Exception{
-		ArrayList<ProductDTO> ar = new ArrayList<ProductDTO>();
-		
-		//
+//	public List<ProductDTO> getProductList() throws Exception{
+//		ArrayList<ProductDTO> ar = new ArrayList<ProductDTO>();
+//		
+//		//
 //		Connection con = dataSource.getConnection();
-		
-		//쿼리문작성, 미리보내기는 mapper(mybatis)가 해줌
+//		
+//		//쿼리문작성, 미리보내기는 mapper(mybatis)가 해줌
 //		String sql = "SELECT PRODUCTNUM, PRODUCTNAME, PRODUCTSCORE " //PRODUCTDETAIL은 일단 빼고
 //				+ "FROM PRODUCT "
 //				+ "ORDER BY PRODUCTSCORE DESC";
 //		PreparedStatement st = con.prepareStatement(sql);
-		
-		//mapper(mybatis)가 해줌
+//		
+//		//mapper(mybatis)가 해줌
 //		ResultSet rs = st.executeQuery();
-		
-		//한줄 읽고 데이터 있으면 true, 없으면 false. 즉 데이터 없어질 때 까지 반복해라
+//		
+//		//한줄 읽고 데이터 있으면 true, 없으면 false. 즉 데이터 없어질 때 까지 반복해라
 //		while(rs.next()) {
 //			ProductDTO pDTO = new ProductDTO();
 //			pDTO.setProductNum(rs.getLong("PRODUCTNUM"));
 //			pDTO.setProductName(rs.getString("PRODUCTNAME"));
 //			pDTO.setProductScore(rs.getDouble("PRODUCTSCORE"));
 //			ar.add(pDTO);
-		}
-		
-		//mybatis가 해줌
+//		}
+//		
+//		//mybatis가 해줌
 //		DBConnection.disConnection(rs, st, con);
-		
-		return ar;
-	}
+//		
+//		return ar;
+//		//매개변수가 없기 때문에 안보내준다.
+//		return sqlSession.selectList(NAMESPACE+"getProductList");
+//	}
 	
 	
 	//setAddProduct

@@ -33,7 +33,7 @@
   		<!-- #{}의 중괄호 내에는 getter를 쓰면 됨.(get 떼고, 나머지글자의 첫글자를 소문자로) -->
   		WHERE PRODUCTNUM = #{productNum}
   	</select>
-  	<insert id=""></insert>
+<!--   	<insert id=""></insert>
   	<update id=""></update>
-  	<delete id=""></delete>  	
+  	<delete id=""></delete> -->  	
   </mapper>
