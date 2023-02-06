@@ -30,11 +30,7 @@ public class ProductDAO {
 	//순서
 	//sqlSession을 따라가서 namespace를 보고 주소를 찾아갈거다.
 	
-	
-	
 	//230206, MyBatis를 이용하여 다듬은 DAO 메서드들
-	
-	
 	
 	//setProductDelete
 	public int setProductDelete(Long productNum) throws Exception{

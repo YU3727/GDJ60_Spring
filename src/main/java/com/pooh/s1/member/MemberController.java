@@ -14,15 +14,15 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
 	@RequestMapping(value="memberJoin")
-	public String memberJoin() throws Exception{
-		//test용
-		MemberDTO memberDTO = new MemberDTO();
-		memberDTO.setID("ID1");
-		memberDTO.setPW("PW1");
-		memberDTO.setMemberName("NAME1");
-		memberDTO.setMemberPhone("PHONE1");
-		memberDTO.setEmail("EMAIL1");
+	public String memberJoin(MemberDTO memberDTO) throws Exception{
+		memberDTO=new MemberDTO();
+		memberDTO.setId("no1.id");
+		memberDTO.setPw("12341234");
+		memberDTO.setMemberName("iuuuu");
+		memberDTO.setMemberPhone("01023123");
+		memberDTO.setEmail("iuuuuu@naver.com");
 
 		int result = memberService.memberJoin(memberDTO);
 		System.out.println(result>0);
