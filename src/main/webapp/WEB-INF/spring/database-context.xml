@@ -26,8 +26,9 @@
 		<!-- 1. DB 연결 // 레퍼런스타입은 참조값을 ref로 값을 입력 -->
 		<property name="dataSource" ref="dataSource"></property>
 		<!-- 3. 설정(Config) 파일의 참조위치 등록 -->
+		<!-- 얘는 Location 단수형이다. 주소를 하나만 포함 -->
 		<property name="configLocation" value="classpath:database/config/MybatisConfig.xml"></property>
-		<!-- 2. SQL문이 있는 Mapper의 위치 -->
+		<!-- 2. SQL문이 있는 Mapper의 위치 등록 -->
 		<!-- classpath : WEB-INF 아래에 classes폴더를 말함 // 그리고 다른 패키지들도 mapper를 만들어야하니까 *Mapper.xml로 -->
 		<property name="mapperLocations" value="classpath:database/mappers/*Mapper.xml"></property>
 	</bean>
