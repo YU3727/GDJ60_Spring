@@ -18,7 +18,7 @@ import com.pooh.s1.util.DBConnection;
 public class ProductDAO {
 //230130 3~5교시
 //230201 6교시
-//230206 2교시 삭제하는 메서드
+//230206 2교시 삭제하는 메서드, 3~4교시 XML(Mapper, database-content) 연결
 	
 	//database-context.xml에서 만든 객체의 의존성을 표시해줌
 	@Autowired
@@ -139,18 +139,23 @@ public class ProductDAO {
 	
 	//getProductDetail
 	public ProductDTO getProductDetail(ProductDTO pDTO) throws Exception{
-		
+		//
 		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO);	
 	}
 	
 	
-	//제품조회기능
-	//다형성 때문에 ArrayList 또한 List 타입이다.
-	//혼자 개발하는게 아님 - 다른사람이 만든 table이 ArrayList라는 보장이 없기 때문에 부모형으로 리턴을 받아온다.
-	//ex. LinkedList, ArrayList...
+	//getProductList
 	public List<ProductDTO> getProductList() throws Exception{
 
 		return sqlSession.selectList(NAMESPACE+"getProductList");
+	}
+	
+	
+	//setAddProduct
+	public int setAddProduct(ProductDTO pDTO) throws Exception{		
+		//어느Mapper의 어느id를 가져올거냐?
+		//Mapper의 위치는 NAMESPACE로, ID는 맵퍼내의 id = 해당메서드명으로 설정했기때문에 그대로 써주면 됨
+		return sqlSession.insert(NAMESPACE+"setAddProduct");
 	}
 	
 	
@@ -229,26 +234,26 @@ public class ProductDAO {
 	
 	
 	//setAddProduct
-	public int setAddProduct(ProductDTO pDTO) throws Exception{
-		
-		Connection con = DBConnection.getConnection();
-		
-		String sql = "INSERT INTO PRODUCT "
-				+ "VALUES(?, ?, ?, 0.0)";
-		
-		PreparedStatement st = con.prepareStatement(sql);
-		
-		st.setLong(1, pDTO.getProductNum()); //시퀀스를 쓸 경우 쿼리문에 쓰지않고 productnum쪽에 써줌....
-		st.setString(2, pDTO.getProductName());
-		st.setString(3, pDTO.getProductDetail());
-//		st.setDouble(4, pDTO.getProductScore()); //물건이 처음 등록될 때 평점은 0점이니까 시작점수를 0으로
-		
-		int result = st.executeUpdate();
-		
-		DBConnection.disConnection(st, con);
-		
-		return result;
-		
-	}
+//	public int setAddProduct(ProductDTO pDTO) throws Exception{
+//		
+//		Connection con = DBConnection.getConnection();
+//		
+//		String sql = "INSERT INTO PRODUCT "
+//				+ "VALUES(?, ?, ?, 0.0)";
+//		
+//		PreparedStatement st = con.prepareStatement(sql);
+//		
+//		st.setLong(1, pDTO.getProductNum()); //시퀀스를 쓸 경우 쿼리문에 쓰지않고 productnum쪽에 써줌....
+//		st.setString(2, pDTO.getProductName());
+//		st.setString(3, pDTO.getProductDetail());
+////		st.setDouble(4, pDTO.getProductScore()); //물건이 처음 등록될 때 평점은 0점이니까 시작점수를 0으로
+//		
+//		int result = st.executeUpdate();
+//		
+//		DBConnection.disConnection(st, con);
+//		
+//		return result;
+//		
+//	}
 	
 }

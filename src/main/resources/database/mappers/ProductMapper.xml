@@ -13,7 +13,7 @@
   
   <mapper namespace="com.pooh.s1.product.productDAO">
  	<!-- resultType : 어디에 담아서 리턴해줄거냐? 이것 또한 풀패키지명을 써줘야한다 -->
-  	<select id="getProductList" resultType="com.pooh.s1.product.ProductDTO">
+  	<select id="getProductList" resultType="com.pooh.s1.product.ProductDTO" statementType="PREPARED">
   		SELECT PRODUCTNUM, PRODUCTNAME, PRODUCTSCORE
   		FROM PRODUCT
   		ORDER BY PRODUCTSCORE DESC
@@ -26,14 +26,27 @@
   	<!-- ?로 써두면 ProductDTO에서 뭘 꺼내야할지 모르기 때문에, #{}를 사용한다. -->
   	<!-- jsp에는 EL로${}을 쓰지만 Mapper에서는 #{}을 쓴다. 유사하게 생겼기 때문에 주의하자. -->
   	<!-- resultType -->
-  	<!-- 어디에 담아서 리턴해줄거냐? 이것 또한 풀패키지명을 써줘야한다. -->
+  	<!-- 무슨타입이 들어올지 모르기 때문에 표시해줌. 어디에 담아서 리턴해줄거냐? 이것 또한 풀패키지명을 써줘야한다. -->
   	<select id="getProductDetail" parameterType="com.pooh.s1.product.ProductDTO" resultType="com.pooh.s1.product.ProductDTO">
   		SELECT *
   		FROM PRODUCT
   		<!-- #{}의 중괄호 내에는 getter를 쓰면 됨.(get 떼고, 나머지글자의 첫글자를 소문자로) -->
   		WHERE PRODUCTNUM = #{productNum}
   	</select>
-<!--   	<insert id=""></insert>
-  	<update id=""></update>
-  	<delete id=""></delete> -->  	
+  	
+  	<!-- AddProduct -->
+  	<!-- productNum은 어딘가에서 꺼내올거다 -> parameterType이 필요함 -->
+  	<!-- resultType은 항상 int가 결과값으로 나온다. 그래서 따로 resultType을 쓰지 않음. select만 -->
+  	<insert id="setAddProduct" parameterType="com.pooh.s1.product.ProductDTO">
+  		INSERT INTO PRODUCT
+  		<!-- #{getter의 이름} -->
+  		VALUES(#{productNum}, #{productName}, #{productDetail}, 0.0)
+  	</insert>
+  	
+	<!--   	
+	  	<select id=""></select>
+		<insert id=""></insert>
+  		<update id=""></update>
+  		<delete id=""></delete>
+  		-->  	
   </mapper>
