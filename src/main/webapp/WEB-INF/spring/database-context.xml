@@ -14,7 +14,8 @@
 		<!-- setter 호출 : property -->
 		<property name="username" value="user01"></property>
 		<property name="password" value="user01"></property>
-		<property name="url" value="jdbc:oracle:thin:@192.168.1.129:1521:xe"></property>
+		<!-- 내꺼는 .129 -->
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.95:1521:xe"></property>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 		<!-- 생성자 호출 constructor-arg -->
 		<!-- <constructor-arg></constructor-arg> -->
