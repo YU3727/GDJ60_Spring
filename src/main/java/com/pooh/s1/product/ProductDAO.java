@@ -31,31 +31,63 @@ public class ProductDAO {
 	//sqlSession을 따라가서 namespace를 보고 주소를 찾아갈거다.
 	
 	
-	//230206 2교시 삭제하는 메서드
+	
+	//230206, MyBatis를 이용하여 다듬은 DAO 메서드들
+	
+	
+	
+	//setProductDelete
 	public int setProductDelete(Long productNum) throws Exception{
-		int result = 0;
 		
-		//1.DB 연결
-		Connection connection = DBConnection.getConnection();
-		
-		//2.SQL 연결
-		String sql = "DELETE PRODUCT WHERE PRODUCTNUM = ?";
-		
-		//3.미리보내기
-		PreparedStatement st = connection.prepareStatement(sql);
-		
-		//4.?세팅
-		//원래는 DTO로 받는게 좋은데, 수업특성상 Long으로 받아본다.
-		st.setLong(1, productNum);
-		
-		//5.?값 최종적으로 보내기, 결과처리
-		result = st.executeUpdate();
-		
-		//6.DB 연결해제, 리턴값 보내기
-		DBConnection.disConnection(st, connection);
-		
-		return result;
+		return sqlSession.delete(NAMESPACE+"setProductDetail", productNum);
 	}
+	
+	//getProductDetail
+	public ProductDTO getProductDetail(ProductDTO pDTO) throws Exception{
+		//
+		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO);	
+	}
+	
+	//getProductList
+	public List<ProductDTO> getProductList() throws Exception{
+
+		return sqlSession.selectList(NAMESPACE+"getProductList");
+	}
+	
+	//setAddProduct
+	public int setAddProduct(ProductDTO pDTO) throws Exception{		
+		//어느Mapper의 어느id를 가져올거냐?
+		//Mapper의 위치는 NAMESPACE로, ID는 맵퍼내의 id = 해당메서드명으로 설정했기때문에 그대로 써주면 됨
+		return sqlSession.insert(NAMESPACE+"setAddProduct");
+	}
+	
+	
+	
+	//230206 2교시 삭제하는 메서드
+//	public int setProductDelete(Long productNum) throws Exception{
+//		int result = 0;
+//		
+//		//1.DB 연결
+//		Connection connection = DBConnection.getConnection();
+//		
+//		//2.SQL 연결
+//		String sql = "DELETE PRODUCT WHERE PRODUCTNUM = ?";
+//		
+//		//3.미리보내기
+//		PreparedStatement st = connection.prepareStatement(sql);
+//		
+//		//4.?세팅
+//		//원래는 DTO로 받는게 좋은데, 수업특성상 Long으로 받아본다.
+//		st.setLong(1, productNum);
+//		
+//		//5.?값 최종적으로 보내기, 결과처리
+//		result = st.executeUpdate();
+//		
+//		//6.DB 연결해제, 리턴값 보내기
+//		DBConnection.disConnection(st, connection);
+//		
+//		return result;
+//	}
 	
 	
 	//5교시 getMax -> 6교시 getProductNum
@@ -135,28 +167,7 @@ public class ProductDAO {
 		return result;
 		
 	}
-	
-	
-	//getProductDetail
-	public ProductDTO getProductDetail(ProductDTO pDTO) throws Exception{
-		//
-		return sqlSession.selectOne(NAMESPACE+"getProductDetail", pDTO);	
-	}
-	
-	
-	//getProductList
-	public List<ProductDTO> getProductList() throws Exception{
 
-		return sqlSession.selectList(NAMESPACE+"getProductList");
-	}
-	
-	
-	//setAddProduct
-	public int setAddProduct(ProductDTO pDTO) throws Exception{		
-		//어느Mapper의 어느id를 가져올거냐?
-		//Mapper의 위치는 NAMESPACE로, ID는 맵퍼내의 id = 해당메서드명으로 설정했기때문에 그대로 써주면 됨
-		return sqlSession.insert(NAMESPACE+"setAddProduct");
-	}
 	
 	
 	//getProductDetail
