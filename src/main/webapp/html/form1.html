@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>입력 양식</h1>
+    <form action="">
+        <!--input 태그는 닫는태그 없이 단독으로 쓰임-->
+        text : <input type="text" placeholder="Email을 입력하세요"> <br>
+        password : <input type="password" readonly> <br>
+        Date : <input type="date" name="" id=""> <br>
+        File : <input type="file" name="" id=""> <br>
+        성별 : <!--radio는 여러개중에 한개 선택 가능-->
+        <!--name이 같으면 하나의 group으로 인식한다-->
+        남 <input type="radio" name="gender" id="">
+        여 <input type="radio" name="gender" id=""> <br>
+
+        OTT : <!--checkbox는 여러개중에 여러개 선택 가능-->
+        <!--같은 group으로 묶고싶으면 name을 같게 설정, 나중에 data 받을때 필요하다-->
+        Tving   <input type="checkbox" name="OTT" id="">
+        Wave    <input type="checkbox" name="OTT" id="">
+        Netflix <input type="checkbox" name="OTT" id="">
+        Watchar <input type="checkbox" name="OTT" id="">
+        Disney+ <input type="checkbox" name="OTT" id=""> <br>
+
+        <!--여러개중에 하나를 고르는 다른방법 select(드랍다운방식)-->
+        <select>
+            <option>LG</option>
+            <option>KT</option>
+            <option>SKT</option>
+        </select> <br>
+
+        <!--장문의 글을 쓰고싶을때-->
+        <textarea rows="6" cols="15" disabled></textarea> <br>
+
+        <!--버튼들은 form 안에 있을때만 기능한다. 바깥에서는 기능x-->
+        <!--위와 아래는 동일한 기능-->
+        <input type="button" value="하찮은버튼"> <!--얘는 JavaScript와 연동해서 씀-->
+        <input type="reset" value="초기화"> <!--입력된 값을 초기화하는 기능-->
+        <input type="submit" value="전송"> <br> <!--입력된 값을 url주소(action안의 값)로 전송함-->
+        
+        <button type="button">BUTTER1</button>
+        <button type="reset">BUTTER2</button>
+        <button type="submit">BUTTER3</button>
+        
+        <!--button은 기본설정이 submit이다-->
+        <button>BUTTER4</button>
+        
+    </form>
+    <!--속성 readonly와 disabled는 모두 입력이 불가하지만-->
+    <!--서버로 전송하면 readonly는 데이터 전송이 되지만, disabled는 데이터 전송이 안됨-->
+
+</body>
+</html>
