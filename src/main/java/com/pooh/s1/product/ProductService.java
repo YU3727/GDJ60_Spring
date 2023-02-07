@@ -28,14 +28,14 @@ public class ProductService { //test용 메서드
 	}
 	
 	
-	public int setAddProduct(ProductDTO pDTO, List<ProductOptionDTO> ar) throws Exception{
+	public int setProductAdd(ProductDTO pDTO, List<ProductOptionDTO> ar) throws Exception{
 		//다른클래스의 메서드와 이름이 중복되어도 상관x 다른클래스니까
 		//product table에 상품을 등록, option도 등록
 		//입력을 다른곳에서 받아올거기 때문에 매개변수가 필요함
 		//호출하려면 객체부터 만들어야한다는걸 생각하자
 		Long productNum = pDAO.getProductNum();
 		pDTO.setProductNum(productNum); //pDTO에는 시퀀스번호가 들어가있지 않으므로 넣어준다.
-		int result = pDAO.setAddProduct(pDTO);
+		int result = pDAO.setProductAdd(pDTO);
 		
 		if(ar != null) {
 			//옵션은 반복해야 하므로 반복문을 돌린다. List에서 꺼낸건 ProductOptionDTO이므로

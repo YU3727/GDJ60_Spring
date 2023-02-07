@@ -17,21 +17,21 @@ public class MemberDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
-	private final String NAMESPACE = "com.pooh.s1.member.memberDAO.";
+
+	private final String NAMESPACE = "com.pooh.s1.member.MemberDAO.";
 	//어떤 table을 새로 만들거다 -> DAO, DTO는 새로 만들어야함
 	//Mapper는 새로 만들건지 따로 만들건지 생각
 	
 	
 	//mybatis로 만들기
-	public int memberJoin(MemberDTO memberDTO) throws Exception{
+	public int setMemberAdd(MemberDTO memberDTO) throws Exception{
 		//연결부는 database-context.xml에서 설정해줬음
-		return sqlSession.insert(NAMESPACE+"memberJoin", memberDTO);	
+		return sqlSession.insert(NAMESPACE+"setMemberAdd", memberDTO);	
 }
 	
 	
 	//memberJoin
-//	public int memberJoin(MemberDTO memberDTO) throws Exception{
+//	public int setmemberAdd(MemberDTO memberDTO) throws Exception{
 //		
 //		Connection connection = DBConnection.getConnection();
 //		

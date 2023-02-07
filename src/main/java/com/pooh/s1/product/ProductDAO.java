@@ -25,12 +25,18 @@ public class ProductDAO {
 	private SqlSession sqlSession; //맵퍼의 위치를 찾는것
 	//상수의 변수명을 사용하고싶다. 여기에는 파일명을 쓰는게 아니라, mapper의 속성을 써줘야한다.(일치시키면 됨)
 	//어느 맵퍼를 쓸건지는 이 이름으로 찾아간다. 중요한 정보
-	private final String NAMESPACE = "com.pooh.s1.product.productDAO."; //이 맵퍼들의 위치에서 어느 맵퍼를 쓸건지 결정
+	private final String NAMESPACE = "com.pooh.s1.product.ProductDAO."; //이 맵퍼들의 위치에서 어느 맵퍼를 쓸건지 결정
 	
 	//순서
 	//sqlSession을 따라가서 namespace를 보고 주소를 찾아갈거다.
 	
 	//230206, MyBatis를 이용하여 다듬은 DAO 메서드들
+	
+	public Long getProductNum() throws Exception{
+		//SELECT PRODUCTNUM_SEQ.NEXTVAL FROM DUAL
+		return sqlSession.selectOne(NAMESPACE+"getProductNum");
+	}
+	
 	
 	//setProductDelete
 	public int setProductDelete(Long productNum) throws Exception{
@@ -51,10 +57,10 @@ public class ProductDAO {
 	}
 	
 	//setAddProduct
-	public int setAddProduct(ProductDTO pDTO) throws Exception{		
+	public int setProductAdd(ProductDTO pDTO) throws Exception{		
 		//어느Mapper의 어느id를 가져올거냐?
 		//Mapper의 위치는 NAMESPACE로, ID는 맵퍼내의 id = 해당메서드명으로 설정했기때문에 그대로 써주면 됨
-		return sqlSession.insert(NAMESPACE+"setAddProduct");
+		return sqlSession.insert(NAMESPACE+"setProductAdd", pDTO);
 	}
 	
 	
@@ -89,27 +95,27 @@ public class ProductDAO {
 	//5교시 getMax -> 6교시 getProductNum
 	//제일 최근에 등록된 상품번호를 참조해서 옵션을 추가해주기 위한 메서드
 	//옵션을 등록할때는 상품번호가 뭔지 알 수 없으므로 제일 최근에 등록된 상품(상품번호 시퀀스가 제일 높은값)을 가져옴
-	public Long getProductNum() throws Exception{
-		
-		Connection con = DBConnection.getConnection();
-		
-//		String sql = "SELECT MAX(PRODUCTNUM) FROM PRODUCT";
-		String sql = "SELECT PRODUCT_SEQ.NEXTVAL FROM DUAL";
-		
-		PreparedStatement st = con.prepareStatement(sql);
-		
-		ResultSet rs = st.executeQuery();
-		
-		//무조건 1개의 응답은 온다(값이 없으면 0, 있으면 제일 높은 값)
-		rs.next();
-		
-		Long num = rs.getLong(1); //1번 컬럼값을 가져오시오
-		
-		DBConnection.disConnection(rs, st, con);
-		
-		return num;
-		
-	}
+//	public Long getProductNum() throws Exception{
+//		
+//		Connection con = DBConnection.getConnection();
+//		
+////		String sql = "SELECT MAX(PRODUCTNUM) FROM PRODUCT";
+//		String sql = "SELECT PRODUCT_SEQ.NEXTVAL FROM DUAL";
+//		
+//		PreparedStatement st = con.prepareStatement(sql);
+//		
+//		ResultSet rs = st.executeQuery();
+//		
+//		//무조건 1개의 응답은 온다(값이 없으면 0, 있으면 제일 높은 값)
+//		rs.next();
+//		
+//		Long num = rs.getLong(1); //1번 컬럼값을 가져오시오
+//		
+//		DBConnection.disConnection(rs, st, con);
+//		
+//		return num;
+//		
+//	}
 	
 	
 	//옵션 전체 조회
