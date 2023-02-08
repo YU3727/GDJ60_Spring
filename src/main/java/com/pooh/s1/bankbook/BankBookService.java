@@ -24,8 +24,7 @@ public class BankBookService {
 	}
 	
 	//setBankBookAdd
-	public int setBankBookAdd(BankBookDTO bankBookDTO, Long bookNumber) throws Exception{
-		bankBookDAO.getBankBookNum(bookNumber);
+	public int setBankBookAdd(BankBookDTO bankBookDTO) throws Exception{
 		return bankBookDAO.setBankBookAdd(bankBookDTO);
 	}
 	

@@ -19,9 +19,9 @@ public class BankBookDAO {
 	//머리속으로 쿼리문을 생각해봐야함. 결과가 뭐가오는지, 필요한게 뭔지
 	
 	//getBankBookNum
-	public Long getBankBookNum(Long bookNumber) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"getBankBookNum", bookNumber);
-	}
+//	public BankBookDTO getBankBookNum(BankBookDTO bankBookDTO) throws Exception{
+//		return sqlSession.selectOne(NAMESPACE+"getBankBookNum", bankBookDTO);
+//	}
 	
 	//getBankBookList
 	public List<BankBookDTO> getBankBookList() throws Exception{
