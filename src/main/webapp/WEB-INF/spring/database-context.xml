@@ -15,7 +15,7 @@
 		<property name="username" value="user01"></property>
 		<property name="password" value="user01"></property>
 		<!-- 내꺼는 .129 희진님꺼는 .95 -->
-		<property name="url" value="jdbc:oracle:thin:@192.168.1.129:1521:xe"></property>
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.95:1521:xe"></property>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 		<!-- 생성자 호출 constructor-arg -->
 		<!-- <constructor-arg></constructor-arg> -->

@@ -18,6 +18,11 @@ public class BankBookDAO {
 	//리턴을 뭘할건지, 매개변수 받는게 있어야하나없어도되나 다 생각해보고 해야함
 	//머리속으로 쿼리문을 생각해봐야함. 결과가 뭐가오는지, 필요한게 뭔지
 	
+	//getBankBookNum
+	public Long getBankBookNum(Long bookNumber) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getBankBookNum", bookNumber);
+	}
+	
 	//getBankBookList
 	public List<BankBookDTO> getBankBookList() throws Exception{
 		//SELECT * FROM BANKBOOK

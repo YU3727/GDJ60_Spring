@@ -28,6 +28,7 @@ public class BankBookController {
 		//view에 jsp경로 담기
 		mv.setViewName("bankBook/list");
 		//model에 attribute로 데이터 보내기(name, value)
+		//name은 jsp에서 데이터를 꺼낼때 사용함.
 		mv.addObject("list", ar);
 		return mv;
 	}
