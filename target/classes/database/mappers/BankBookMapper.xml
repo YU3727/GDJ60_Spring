@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema 추가 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 230207 8교시 -->
+  <mapper namespace="com.pooh.s1.bankbook.BankBookDAO">
+  	<!-- bankbook 메서드 5개중에 update 빼고 나머지 4개 하기 -->
+  	<select id="getBankBookList" resultType="BankBookDTO">
+  		SELECT * FROM BANKBOOK
+  	</select>
+  	
+  	<select id="getBankBookDetail" resultType="BankBookDTO" parameterType="BankBookDTO">
+  		SELECT * FROM BANKBOOK
+  		WHERE BOOKNUMBER = #{bookNumber}
+  	</select>
+  	
+  	<insert id="setBankBookAdd" parameterType="BankBookDTO"> <!-- select를 제외하면 리턴타입이 int인데 의미없다. 안받음 -->
+  		INSERT INTO BANKBOOK(BOOKNUMBER, BOOKNAME, BOOKRATE, BOOKSALE, BOOKDETAIL)
+  		VALUES(#{bookNumber}, #{bookName}, #{bookRate}, #{bookSale}, #{bookDetail})
+  	</insert>
+  	
+  	<delete id="setBankBookDelete" parameterType="BankBookDTO">
+  		DELETE BANKBOOK WHERE BOOKNUMBER = #{bookNumber}
+  	</delete>
+  	
+  </mapper>
+  
+
