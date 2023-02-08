@@ -75,4 +75,26 @@ public class BankBookController {
 		mv.setViewName("redirect:./list");
 		return mv;
 	}
+	
+	//수정 폼으로 이동
+	@RequestMapping(value = "update", method = RequestMethod.GET)
+	public ModelAndView setBankBookUpdate(BankBookDTO bankBookDTO) throws Exception{
+		//매개변수 bankbookDTO는 bookNumber의 정보를 담고있어서, 어느 data를 수정할건지 특정짓게 해줌
+		ModelAndView mv = new ModelAndView();
+		//detail로 특정DTO의 정보를 다 불러옴
+		bankBookDTO = bankBookService.getBankBookDetail(bankBookDTO);
+		mv.setViewName("bankBook/update");
+		//특정인의 모든데이터가 담겨있는 DTO를 mv에 담아서 보냄
+		mv.addObject("dto", bankBookDTO);
+		return mv;
+	}
+	
+	//parameter를 받아서 DB에 update 하는 메서드
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public ModelAndView setBankBookUpdate(BankBookDTO bankBookDTO, ModelAndView mv) throws Exception{
+		//bookNumber를 받아와야 할수있겠는데?
+		int result = bankBookService.setBankBookUpdate(bankBookDTO);
+		mv.setViewName("redirect:./list");
+		return mv;
+	}
 }

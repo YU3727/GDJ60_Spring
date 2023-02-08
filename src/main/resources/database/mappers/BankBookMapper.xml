@@ -4,6 +4,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 230207 8교시 -->
+<!-- 원래는 풀패키지명을 써야하는데, 공통설정파일에 별칭을 줘서 짧게 작성 가능 -->
   <mapper namespace="com.pooh.s1.bankbook.BankBookDAO">
   	<!-- bankbook 메서드 5개중에 update 빼고 나머지 4개 하기 -->
   	<select id="getBankBookList" resultType="BankBookDTO">
@@ -17,13 +18,18 @@
   	
   	<insert id="setBankBookAdd" parameterType="BankBookDTO"> <!-- select를 제외하면 리턴타입이 int인데 의미없다. 안받음 -->
   		INSERT INTO BANKBOOK(BOOKNUMBER, BOOKNAME, BOOKRATE, BOOKSALE, BOOKDETAIL)
-  		VALUES(#{bookNumber}, #{bookName}, #{bookRate}, #{bookSale}, #{bookDetail})
+  		VALUES(BANKNUM_SEQ.NEXTVAL, #{bookName}, #{bookRate}, #{bookSale}, #{bookDetail})
   	</insert>
   	
   	<delete id="setBankBookDelete" parameterType="BankBookDTO">
   		DELETE BANKBOOK WHERE BOOKNUMBER = #{bookNumber}
   	</delete>
   	
+  	<update id="setBankBookUpdate" parameterType="BankBookDTO">
+  		UPDATE BANKBOOK
+  		SET BOOKNAME = #{bookName}, BOOKRATE = #{bookRate}, BOOKSALE = #{bookSale}, BOOKDETAIL = #{bookDetail}
+  		WHERE BOOKNUMBER = #{bookNumber}
+  	</update>
   </mapper>
   
 

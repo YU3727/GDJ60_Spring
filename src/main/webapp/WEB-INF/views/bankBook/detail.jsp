@@ -21,12 +21,13 @@
 				</c:choose>
 			</h3>
 			<h3>Detail : ${DTO.bookDetail}</h3>
-			<a href="./delete?bookNumber=${dto.bookNumber}">상품삭제</a>
+			<a href="./delete?bookNumber=${DTO.bookNumber}">상품삭제</a>
 		</c:when>
 		<c:when test="${empty DTO}">
 			<h3>존재하지 않는 상품입니다.</h3>
 		</c:when>
 	</c:choose>
+	<a href="./update?bookNumber=${DTO.bookNumber}">상품수정</a>
 	<a href="./list">목록으로</a>
 </body>
 </html>
