@@ -1,0 +1,24 @@
+.tb1{
+    /* 기본 부모가 browser의 크기가 된다 */
+    width: 70%;
+    margin: 50px auto;
+}
+
+.title {
+    /* 중앙 정렬을 위해 margin을 쓰기 위해서는 기준이 되는 width값이 필요하다 */
+    /* width값을 손대지 않는경우 100%기 때문에 조정이 불가능하다 */
+    width: 30%;
+    margin: 0 auto;
+}
+
+.image{
+    /* image tag는 display 속성이 inline이다 */
+    /* image를 감싸는 블록(div, display속성 : block)태그를 만들고 여기에 margin을 걸어야한다 */
+    width: 30%;
+    margin: 0 auto;
+}
+
+
+
+
+/* 한번 만든 css는 .jsp에 link걸고 class명만 같게 해주면 재활용이 가능하다 */

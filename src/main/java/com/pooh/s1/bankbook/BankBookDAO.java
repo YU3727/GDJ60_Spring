@@ -43,6 +43,7 @@ public class BankBookDAO {
 	public int setBankBookUpdate(BankBookDTO bankBookDTO) throws Exception{
 		//일단 이거는 빼고(230208 8교시)
 		//UPDATE BANKBOOK SET BOOKNAME = ?, BOOKRATE = ?, BOOKSALE = ?, BOOKDETAIL = ? WHERE BOOKNUMBER = ?
+		//sqlSession : DB 연결하는것,(mapper의 id가 일치하는것을 호출하자, 필요한DataType)
 		return sqlSession.update(NAMESPACE+"setBankBookUpdate", bankBookDTO);
 	}
 	
