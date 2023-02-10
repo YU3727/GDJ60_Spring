@@ -1,5 +1,76 @@
-.header{
-    background-color: black;
+header{
     width: 100%;
-    height: 100px;
+    height: 67px;
+    background-image: url(/resources/images/header_bg.png);
+    background-repeat: repeat-x;
+}
+
+.header_wrap{
+    width: 70%;
+    height: 100%;
+    /* background-color: gray; */
+    margin: 0 auto;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+}
+
+.header_logo{
+    /* width: 100px; */
+    height: 100%;
+    /* background-color: red; */
+    padding: 13px 0;
+    box-sizing: border-box;
+}
+
+.header_nav{
+    width: 40%;
+    height: 100%;
+    /* background-color: blue; */
+}
+.header_nav > ul{
+    display: flex;
+    /* ul내의 items들을 아래옵션으로 정렬하겠다 */
+    /* text 수평정렬, 간격정렬 */
+    justify-content: space-evenly;
+}
+
+.header_nav ul > li{
+    /* text 수직정렬 */
+    line-height: 67px;
+}
+
+.header_nav ul > li > a{
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.header_nav ul > li > a:hover{
+    /* a태그에 마우스가 올라왔을 때(hover) */
+    color: red;
+}
+
+.header_sub{
+    width: 20%;
+    height: 100%;
+    /* background-color: yellow; */
+}
+
+.header_sub > ul{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header_sub ul > li{
+    line-height: 67px;
+}
+
+.header_sub > ul > li > a{
+    color: gray;
+    font-size: 0.4rem;
+}
+
+.header_sub > ul > li > a:hover{
+    color: white;
 }
