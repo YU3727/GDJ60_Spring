@@ -28,7 +28,7 @@
 	<hr>
 	
 	<!-- html을 통해 내용을 table에 넣어보자 -->
-	<table class="tb1">
+	<table class="tbl">
 		<thead>
 			<tr>
 				<th>상품명</th><th>평점</th>

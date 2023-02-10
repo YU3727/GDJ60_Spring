@@ -1,8 +1,22 @@
-.tb1{
-    /* 기본 부모가 browser의 크기가 된다 */
+.tbl{
+    /* 기본 부모가 <body>이고 body의 크기는 browser의 크기가 된다 */
     width: 70%;
     margin: 50px auto;
+    border: 1px black solid;
+    /* border-border간의 간격 */
+    border-spacing: 0;
+    /* border의 선이 겹쳐졌을때 어떻게할거냐 */
+    border-collapse: separate; /*선을 분리해서 따로 봄*/
+    border-collapse: collapse; /*선을 합쳐서 하나로 봄*/
 }
+
+
+/* tbl class내의 column들만 border */
+.tbl th, .tbl td{
+    border:  1px black solid;
+    height: 40px;
+}
+
 
 .title {
     /* 중앙 정렬을 위해 margin을 쓰기 위해서는 기준이 되는 width값이 필요하다 */
@@ -18,7 +32,44 @@
     margin: 0 auto;
 }
 
-
-
-
 /* 한번 만든 css는 .jsp에 link걸고 class명만 같게 해주면 재활용이 가능하다 */
+
+
+.tbl_td{
+    /* width: 15%; */
+    text-align: center;
+}
+
+.tbl > thead > tr{
+    color: white;
+    background-color: black;
+}
+
+.tbl > tbody td > a{
+    color: black;
+    text-decoration-line: none;
+}
+
+/* list.jsp의 class 이름을 tbl2로 바꿨을 때 */
+.tbl2{
+    width: 70%;
+    margin: 20px auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.tbl2 > thead > tr{
+    color: white;
+    background-color: black;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border-right: 1px white solid;
+    border-left: 1px white solid;
+}
+
+.tbl2 > tbody td{
+    border-bottom: 1px black solid;
+}
+.tbl2 th, tbl2 td{
+    border-right: 3px white solid;
+}

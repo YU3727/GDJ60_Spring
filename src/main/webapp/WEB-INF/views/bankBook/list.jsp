@@ -17,9 +17,9 @@
 	
 	
 	
-	<table border="1" class="tb1">
+	<table class="tbl2">
 		<thead>
-			<tr>
+			<tr class="tr">
 				<th>상품명</th>
 				<th>이자율</th>
 				<th>판매여부</th>
@@ -31,8 +31,8 @@
 		<c:forEach items="${list}" var="dto">
 			<tr>
 				<td><a href="./detail?bookNumber=${dto.bookNumber}">${pageScope.dto.bookName}</a></td>
-				<td>${dto.bookRate}</td>
-				<td>
+				<td class="tbl_td">${dto.bookRate}</td>
+				<td class="tbl_td">
 					<%-- if else와 switch case의 혼합 --%>
 					<%-- when : if같은 느낌, otherwise : else같은 느낌 --%>
 					<!-- 123 -->
