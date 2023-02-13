@@ -9,15 +9,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../resources/css/table.css">
+	<c:import url="../template/common_css.jsp"></c:import>
+<link rel="stylesheet" href="/resources/css/table.css">
 </head>
 <body>
+<c:import url="../template/header.jsp"></c:import>
+
 	<h1 class="title">Product List Page</h1>
 	<!-- list ar에 데이터가 담겨져 왔는지 확인 <h3>${requestScope.list }</h3>-->
 	
 	<!-- 스크립틀릿과 EL에서 반복문을 사용하는 방법 -->
 	<!-- 스크립틀릿 -->
-	<%
+<%-- 	<%
 		List<ProductDTO> ar = (List<ProductDTO>)request.getAttribute("list");
 		for(ProductDTO productDTO : ar){
 	%>
@@ -25,7 +28,7 @@
 		<h3><%=productDTO.getProductScore() %></h3>
 	<%} %>
 	
-	<hr>
+	<hr> --%>
 	
 	<!-- html을 통해 내용을 table에 넣어보자 -->
 	<table class="tbl">

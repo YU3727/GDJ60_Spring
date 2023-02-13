@@ -5,38 +5,12 @@
 <html>
 <head>
 	<title>Home</title>
-	<link rel="stylesheet" href="./resources/css/reset.css">
-	<link rel="stylesheet" href="./resources/css/main.css">
+	<c:import url="./template/common_css.jsp"></c:import>
 </head>
 <body>
-	<header>
-		<div class="header_wrap">
-			<div class="header_logo">
-				<!-- 여기는 절대경로를 쓰는걸로 -->
-				<img src="/resources/images/logo.png" alt="">
-			</div>
-			<nav class="header_nav">
-				<!-- 메뉴 만들때 많이 쓰는 태그가 list(ol, ul) -->
-				<ul>
-					<!-- 아직 url이 정해지지 않은경우 # -->
-					<li><a href="#">공지사항</a></li>
-					<li><a href="#">제품</a></li>
-					<li><a href="#">저축상품</a></li>
-					<li><a href="#">기타메뉴</a></li>
-				</ul>
-			</nav>
-			<div class="header_sub">
-				<ul>
-					<li><a href="#">LOGIN</a></li>
-					<li><a href="#">JOIN</a></li>
-					<li><a href="#">KO</a></li>
-					<li><a href="#">EN</a></li>
-					<li><a href="#">JP</a></li>
-					<li><a href="#">CN</a></li>
-				</ul>
-			</div>
-		</div>
-	</header>
+	<!-- header를 직접 작성하지 말고, 공통적인 부분이기 때문에 따로 header.jsp로 만들고 이걸 가져오는 방법을 쓰자 -->
+	<!-- *주의 : 아래 경로는 wep url이 아니라 서버 내부의 주소를 찾아가야하므로 jsp의 위치를 봐야한다. 상대경로로 작성하자 -->
+	<c:import url="./template/header.jsp"></c:import>
 
 </body>
 </html>

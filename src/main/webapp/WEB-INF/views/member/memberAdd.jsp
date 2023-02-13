@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<c:import url="../template/common_css.jsp"></c:import>
 </head>
 <body>
+	<c:import url="../template/header.jsp"></c:import>
 	<h1>Member Join Page</h1>
-<!-- 	<div class="col-6">
+	<!-- <div class="col-6">
 	html에서 데이터를 보내는 방식을 조정할 수 있는 유일한 곳이 form 태그이다.(get/post), a태그 등 기본 옵션은 get
 		<form action="./memberAdd" method="POST"> url mapping이 필요함 -> 컨트롤러에 연결되니까 컨트롤러에 메서드 만들기
 		form의 공통속성 name이 parameter의 이름이 되어야 한다. 그래야 읽어올 수 있음.(parameter가 따로 없기 때문)
