@@ -12,5 +12,9 @@
 <body>
 	<c:import url="../template/header.jsp"></c:import>
 	<h1>member List Page</h1>
+	
+	
+	
+<c:import url="../template/common_js.jsp"></c:import>
 </body>
 </html>

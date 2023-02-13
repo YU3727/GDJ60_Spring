@@ -8,9 +8,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>제품정보</title>
 	<c:import url="../template/common_css.jsp"></c:import>
-<link rel="stylesheet" href="/resources/css/table.css">
+	<link rel="stylesheet" href="/resources/css/table.css">
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
@@ -56,7 +56,8 @@
 	
 		<a class="btn btn-danger" href="./productAdd">상품등록</a>
 	
-	
 	<!-- 예전에는 스크립틀릿을 썼는데, 요새는 EL($)을 쓴다 -->
+	
+<c:import url="../template/common_js.jsp"></c:import>
 </body>
 </html>

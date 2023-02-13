@@ -38,11 +38,19 @@ public class BankBookDTO {
 	}
 
 	public Integer getBookSale() {
+		if(this.bookSale == null || this.bookSale != 1) {
+			this.bookSale = 0;
+		}
 		return bookSale;
 	}
 
 	public void setBookSale(Integer bookSale) {
-		this.bookSale = bookSale;
+//		add page에서 switch로 데이터를 입력하는경우 null이나 1이 넘어오기떄문에 getter/setter에 안전장치를 마련해둔다
+		if(bookSale == null || bookSale != 1) {
+			this.bookSale = 0;
+		}else {
+			this.bookSale = bookSale;	
+		}
 	}
 
 	public String getBookDetail() {

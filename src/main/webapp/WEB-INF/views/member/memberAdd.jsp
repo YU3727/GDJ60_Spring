@@ -1,28 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 230213 7~8교시 bootstrap -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Join us</title>
 	<c:import url="../template/common_css.jsp"></c:import>
 </head>
 <body>
 	<c:import url="../template/header.jsp"></c:import>
-	<h1>Member Join Page</h1>
-	<!-- <div class="col-6">
-	html에서 데이터를 보내는 방식을 조정할 수 있는 유일한 곳이 form 태그이다.(get/post), a태그 등 기본 옵션은 get
-		<form action="./memberAdd" method="POST"> url mapping이 필요함 -> 컨트롤러에 연결되니까 컨트롤러에 메서드 만들기
-		form의 공통속성 name이 parameter의 이름이 되어야 한다. 그래야 읽어올 수 있음.(parameter가 따로 없기 때문)
-		parameter는 name, value로 구성되어있는데 name은 속성으로 지정해줘야하고, value는 입력받은값으로 들어간다
-			ID : <input type="text" name="id" placeholder="이름을 입력하세요"> <br>
-			PASSWORD : <input type="password" name="pw"> <br>
-			상품정보 :	<textarea name ="productDetail" rows="10" cols="20"></textarea> <br>
-			
-			<button type="submit">입력</button>
-			<button type="reset">초기화</button>
-		</form>
-	</div> -->
+
+<div class="container-fluid my-5">
+
+	<div class="row justify-content-center">
+		<h1 class="col-md-7 mx-auto text-center border-bottom border-dark pb-4">Member Join Page</h1>
+	</div>
+	
+	<div class="row justify-content-center">
+	<form class="col-md-7" action="./memberAdd" method="post">
+		<div class="mb-3">
+		  <label for="id" class="form-label">ID</label>
+		  <input type="text" name="id" class="form-control" id="id" placeholder="id 입력">
+		</div>
+		
+		<div class="mb-3">
+		  <label for="pw" class="form-label">Password</label>
+		  <input type="text" name="pw" class="form-control" id="pw" placeholder="password 입력">
+		</div>
+
+		<div class="mb-3">
+		  <label for="name" class="form-label">이름</label>
+		  <input type="text" name="memberName" class="form-control" id="name" placeholder="회원 이름 입력">
+		</div>
+
+		<div class="mb-3">
+		  <label for="phone" class="form-label">전화번호</label>
+		  <input type="text" name="memberPhone" class="form-control" id="phone" placeholder="전화번호 입력">
+		</div>
+		
+		<div class="mb-3">
+		  <label for="email" class="form-label">e-mail</label>
+		  <input type="text" name="email" class="form-control" id="email" placeholder="e-mail 입력">
+		</div>
+
+	</div>
+
+		<div class="row justify-content-center mx-auto">
+			<button class="btn btn-outline-success col-2" type="submit" value="등록">회원가입</button>	
+		</div>
+
+
+	</form>
+</div>
+
+<c:import url="../template/common_js.jsp"></c:import>
+
 </body>
 </html>

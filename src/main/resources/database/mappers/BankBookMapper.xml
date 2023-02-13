@@ -8,7 +8,7 @@
   <mapper namespace="com.pooh.s1.bankbook.BankBookDAO">
   	<!-- bankbook 메서드 5개중에 update 빼고 나머지 4개 하기 -->
   	<select id="getBankBookList" resultType="BankBookDTO">
-  		SELECT * FROM BANKBOOK
+  		SELECT * FROM BANKBOOK ORDER BY BOOKNUMBER DESC
   	</select>
   	
   	<select id="getBankBookDetail" resultType="BankBookDTO" parameterType="BankBookDTO">
