@@ -20,9 +20,14 @@ public class MemberService {
 		return ar;
 	}
 	
-	//getMemberDetail
-	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception{
-		return memberDAO.getMemberDetail(memberDTO);
+//	//getMemberDetail
+//	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception{
+//		return memberDAO.getMemberDetail(memberDTO);
+//	}
+	
+	//getMemberLogin
+	public MemberDTO getMemberLogin(MemberDTO memberDTO)throws Exception{
+		return memberDAO.getMemberLogin(memberDTO);
 	}
 	
 	//setMemberAdd

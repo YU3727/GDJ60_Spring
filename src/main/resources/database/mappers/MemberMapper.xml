@@ -9,10 +9,15 @@
   		SELECT * FROM MEMBER
   	</select>
   	
-  	<select id="getMemberDetail" parameterType="MemberDTO">
+<!--   	<select id="getMemberDetail" parameterType="MemberDTO">
   		SELECT *
   		FROM MEMBER
   		WHERE = #{id}
+  	</select> -->
+  
+  	<select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
+  		SELECT * FROM MEMBER WHERE ID = #{id} AND PW = #{pw} 
+
   	</select>
   
 	<insert id="setMemberAdd" parameterType="MemberDTO">

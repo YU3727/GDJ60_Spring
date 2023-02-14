@@ -30,12 +30,16 @@ public class MemberDAO {
 		return sqlSession.selectList(NAMESPACE+"getMemberList");
 	}
 	
-	//getMemberDetail
-	public MemberDTO getMemberDetail(MemberDTO memberDTO)throws Exception{
-		//SELECT * FROM MEMBER WHERE = ?
-		return sqlSession.selectOne(NAMESPACE+"getMemberDetail", memberDTO);
-	}
+//	//getMemberDetail
+//	public MemberDTO getMemberDetail(MemberDTO memberDTO)throws Exception{
+//		//SELECT * FROM MEMBER WHERE = ?
+//		return sqlSession.selectOne(NAMESPACE+"getMemberDetail", memberDTO);
+//	}
 	
+	//getMemberLogin
+	public MemberDTO getMemberLogin(MemberDTO memberDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getMemberLogin", memberDTO);
+	}
 	
 	//mybatis로 만들기
 	public int setMemberAdd(MemberDTO memberDTO) throws Exception{

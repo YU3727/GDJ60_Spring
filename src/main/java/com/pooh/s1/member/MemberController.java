@@ -2,9 +2,13 @@ package com.pooh.s1.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,10 +57,35 @@ public class MemberController {
 		return mv;
 	}
 	
-	@RequestMapping(value="memberLogin")
-	public void memberLogin() {
-		
+	@RequestMapping(value="memberLogin", method = RequestMethod.GET)
+	public ModelAndView memberLogin() throws Exception{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/memberLogin");
+		return mv;
 	}
+	
+	@RequestMapping(value = "memberLogin", method = RequestMethod.POST)
+	public ModelAndView getMemberLogin(MemberDTO memberDTO, HttpServletRequest request)throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberDTO = memberService.getMemberLogin(memberDTO);
+		//request에서 session객체를 반환해줌(lifecycle이 작은 객체에서 큰 객체를 꺼내기 가능 - 무조건 존재하기때문)
+		HttpSession session = request.getSession();
+		session.setAttribute("member", memberDTO);
+		mv.setViewName("redirect:../");
+		return mv;
+	}	
+	
+	@RequestMapping(value = "memberLogout", method = RequestMethod.GET)
+	public ModelAndView getMemberLogout(HttpSession session) throws Exception{
+		//logout은 session을 없애는 것. session을 써야한다 > 매개변수로 session을 쓸 수 있음
+		//1. member를 꺼냈을 떄 null이면 로그아웃처리. 이건 잘 안씀
+		//2. session의 메서드 invalidate()를 쓴다(즉시 삭제 효과)
+		ModelAndView mv = new ModelAndView();
+		session.invalidate();
+		mv.setViewName("redirect:../");
+		return mv;
+	}
+	
 	
 	@RequestMapping(value="memberPage")
 	public ModelAndView myPage() {
