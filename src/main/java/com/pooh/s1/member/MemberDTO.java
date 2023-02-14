@@ -1,5 +1,7 @@
 package com.pooh.s1.member;
 
+import java.util.List;
+
 public class MemberDTO {
 //230202 8교시
 	
@@ -10,6 +12,7 @@ public class MemberDTO {
 	private String memberName;
 	private String memberPhone;
 	private String email;
+	private List<RoleDTO> roleDTOs;
 	
 	public MemberDTO() {
 		
