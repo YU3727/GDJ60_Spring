@@ -14,16 +14,11 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	//getMemberList
-	public List<MemberDTO> getMemberList()throws Exception{
-		List<MemberDTO> ar = memberDAO.getMemberList();
-		return ar;
-	}
 	
-//	//getMemberDetail
-//	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception{
-//		return memberDAO.getMemberDetail(memberDTO);
-//	}
+	//setMemberUpdate
+	public int setMemberUpdate(MemberDTO memberDTO) throws Exception{
+		return memberDAO.setMemberUpdate(memberDTO);
+	}
 	
 	//getMemberLogin
 	public MemberDTO getMemberLogin(MemberDTO memberDTO)throws Exception{
@@ -39,5 +34,15 @@ public class MemberService {
 		return result;
 	}
 	
+	//getMemberList
+	public List<MemberDTO> getMemberList()throws Exception{
+		List<MemberDTO> ar = memberDAO.getMemberList();
+		return ar;
+	}
+	
+//	//getMemberDetail
+//	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception{
+//		return memberDAO.getMemberDetail(memberDTO);
+//	}
 	
 }

@@ -23,18 +23,14 @@ public class MemberDAO {
 	//어떤 table을 새로 만들거다 -> DAO, DTO는 새로 만들어야함
 	//Mapper는 새로 만들건지 따로 만들건지 생각
 	
+
 	
-	//getMemberList
-	public List<MemberDTO> getMemberList() throws Exception{
-		//SELECT * FROM MEMBER
-		return sqlSession.selectList(NAMESPACE+"getMemberList");
+	//setMemberUpdate
+	public int setMemberUpdate(MemberDTO memberDTO) throws Exception{
+		//UPDATE MEMBER SET MEMBERNAME = ?, MEMBERPHONE = ?, EMAIL=? WHERE ID = ?;
+		return sqlSession.update(NAMESPACE+"setMemberUpdate", memberDTO);
 	}
 	
-//	//getMemberDetail
-//	public MemberDTO getMemberDetail(MemberDTO memberDTO)throws Exception{
-//		//SELECT * FROM MEMBER WHERE = ?
-//		return sqlSession.selectOne(NAMESPACE+"getMemberDetail", memberDTO);
-//	}
 	
 	//getMemberLogin
 	public MemberDTO getMemberLogin(MemberDTO memberDTO) throws Exception{
@@ -51,26 +47,17 @@ public class MemberDAO {
 		return sqlSession.insert(NAMESPACE+"setMemberRoleAdd", memberDTO);
 	}
 	
-	//memberJoin
-//	public int setmemberAdd(MemberDTO memberDTO) throws Exception{
-//		
-//		Connection connection = DBConnection.getConnection();
-//		
-//		String sql = "INSERT INTO MEMBER "
-//				+ "VALUES(?, ?, ?, ?, ?)";
-//		
-//		PreparedStatement st = connection.prepareStatement(sql);
-//		
-//		st.setString(1, memberDTO.getId());
-//		st.setString(2, memberDTO.getPw());
-//		st.setString(3, memberDTO.getMemberName());
-//		st.setString(4, memberDTO.getMemberPhone());
-//		st.setString(5, memberDTO.getEmail());
-//		
-//		int result = st.executeUpdate();
-//		
-//		DBConnection.disConnection(st, connection);
-//		
-//		return result;	
+	
+	//getMemberList
+	public List<MemberDTO> getMemberList() throws Exception{
+		//SELECT * FROM MEMBER
+		return sqlSession.selectList(NAMESPACE+"getMemberList");
+	}
+	
+//	//getMemberDetail
+//	public MemberDTO getMemberDetail(MemberDTO memberDTO)throws Exception{
+//		//SELECT * FROM MEMBER WHERE = ?
+//		return sqlSession.selectOne(NAMESPACE+"getMemberDetail", memberDTO);
 //	}
+	
 }
