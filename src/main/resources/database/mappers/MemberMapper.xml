@@ -5,12 +5,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.pooh.s1.member.MemberDAO">
+  	<select id="getMemberList" resultType="MemberDTO">
+  		SELECT * FROM MEMBER
+  	</select>
+  	
+  	<select id="getMemberDetail" parameterType="MemberDTO">
+  		SELECT *
+  		FROM MEMBER
+  		WHERE = #{id}
+  	</select>
+  
 	<insert id="setMemberAdd" parameterType="MemberDTO">
 		INSERT INTO MEMBER
 		VALUES(#{id}, #{pw}, #{memberName}, #{memberPhone}, #{email})
 	</insert>
   
-	<insert id="" parameterType="MemberDTO">
+	<insert id="setMemberRoleAdd" parameterType="MemberDTO">
 		INSERT INTO MEMBER_ROLE(ID, ROLENUM)
 		VALUES(#{id}, (SELECT ROLENUM FROM ROLE WHERE ROLENAME='MEMBER'))
 		<!-- get -->
