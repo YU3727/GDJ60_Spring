@@ -25,8 +25,17 @@ public class MemberController {
 	
 	
 	@RequestMapping(value = "memberUpdate", method = RequestMethod.POST)
-	public ModelAndView setMemberUpdate(ModelAndView mv, MemberDTO memberDTO) throws Exception{
+	public ModelAndView setMemberUpdate(HttpSession session, ModelAndView mv, MemberDTO memberDTO) throws Exception{
+		//id는 로그인 한 사용자의 id를 꺼내오자. 매개변수로 session을 받아옴. Object타입이므로 MemberDTO 타입으로 형변환 해야한다
+		MemberDTO sessionMemberDTO = (MemberDTO)session.getAttribute("member");
+		//꺼낸 memberDTO의 id를 집어넣어주자
+		memberDTO.setId(sessionMemberDTO.getId());
 		int result = memberService.setMemberUpdate(memberDTO);
+		//수정에 성공했을 때만(result > 0) session을 바꿔주면 된다
+		if(result>0) {
+			session.setAttribute("member", memberDTO);
+		}
+		
 		mv.setViewName("member/memberPage");
 		return mv;	
 	}

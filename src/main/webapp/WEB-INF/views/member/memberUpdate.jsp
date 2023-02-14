@@ -21,8 +21,9 @@
 		<!-- 데이터는 로그인할떄 세션에 정보가 남아있다. 세션에 접근하기 위해 Attribute의 이름인 member로 접근한다 -->
 		<div class="row justify-content-center">
 		<form class="col-md-7" action="./memberUpdate" method="post">
-			<input type="hidden" name="id" value="${member.id}">
-			<input type="hidden" name="pw">
+			
+			<!-- id는 session에도 있다 -> conroller에서 꺼내오는거로 -->
+			<%-- <input type="hidden" name="id" value="${member.id}"> --%>
 		
 			<div class="mb-3">
 				<label for="memberName" class="form-label">회원이름</label>
