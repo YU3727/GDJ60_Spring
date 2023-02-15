@@ -7,8 +7,14 @@
 <!-- 원래는 풀패키지명을 써야하는데, 공통설정파일에 별칭을 줘서 짧게 작성 가능 -->
   <mapper namespace="com.pooh.s1.bankbook.BankBookDAO">
   	<!-- bankbook 메서드 5개중에 update 빼고 나머지 4개 하기 -->
-  	<select id="getBankBookList" resultType="BankBookDTO">
-  		SELECT * FROM BANKBOOK ORDER BY BOOKNUMBER DESC
+  	<select id="getBankBookList" parameterType="Pager" resultType="BankBookDTO">
+  		<!-- SELECT * FROM BANKBOOK ORDER BY BOOKNUMBER DESC -->
+  		SELECT * FROM
+			(
+			SELECT ROWNUM R, B.* FROM
+				(SELECT * FROM BANKBOOK
+				ORDER BY BOOKNUMBER DESC) B)
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
   	</select>
   	
   	<select id="getBankBookDetail" resultType="BankBookDTO" parameterType="BankBookDTO">

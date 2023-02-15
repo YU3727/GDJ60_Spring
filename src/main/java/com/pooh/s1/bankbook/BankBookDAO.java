@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pooh.s1.util.Pager;
+
 @Repository
 public class BankBookDAO {
 //230207 7교시 DAO 직접 만들기. DTO, DAO만 만듦.
@@ -20,9 +22,9 @@ public class BankBookDAO {
 	
 	
 	//getBankBookList
-	public List<BankBookDTO> getBankBookList() throws Exception{
+	public List<BankBookDTO> getBankBookList(Pager pager) throws Exception{
 		//SELECT * FROM BANKBOOK
-		return sqlSession.selectList(NAMESPACE+"getBankBookList");
+		return sqlSession.selectList(NAMESPACE+"getBankBookList", pager);
 	}//namespace : 어느 맵퍼냐, + id : 어느 메서드(맵퍼의id)
 	
 	//getBankBookDetail

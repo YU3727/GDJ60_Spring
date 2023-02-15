@@ -10,9 +10,10 @@
   	<typeAliases>
   		<!-- 없는 Class의 Alias를 먼저 만들어 두면 안된다. .xml은 서버가 제일 먼저 읽어서 실행에 문제가 있냐없냐 판단하는 파일이기 때문 -->
   		<typeAlias type="com.pooh.s1.product.ProductDTO" alias="ProductDTO"/>
-  		<typeAlias type="java.lang.Long" alias="Long"/>
   		<typeAlias type="com.pooh.s1.member.MemberDTO" alias="MemberDTO"/>
   		<typeAlias type="com.pooh.s1.member.RoleDTO" alias="RoleDTO"/>
   		<typeAlias type="com.pooh.s1.bankbook.BankBookDTO" alias="BankBookDTO"/>
+  		<typeAlias type="com.pooh.s1.util.Pager" alias="Pager"/>
+  		<typeAlias type="java.lang.Long" alias="Long"/>
   	</typeAliases>
   </configuration>
