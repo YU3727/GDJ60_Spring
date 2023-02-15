@@ -32,21 +32,40 @@ public class MemberController {
 		memberDTO.setId(sessionMemberDTO.getId());
 		int result = memberService.setMemberUpdate(memberDTO);
 		//수정에 성공했을 때만(result > 0) session을 바꿔주면 된다
-		if(result>0) {
-			session.setAttribute("member", memberDTO);
-		}
+//		if(result>0) {
+//			session.setAttribute("member", memberDTO);
+//		}
 		
-		mv.setViewName("member/memberPage");
+		mv.setViewName("redirect:./memberPage");
 		return mv;	
 	}
 	
 	@RequestMapping(value = "memberUpdate", method = RequestMethod.GET)
-	public ModelAndView setMemberUpdate(MemberDTO memberDTO) throws Exception{
+	public ModelAndView setMemberUpdate(HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		//memberpage와 동일
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		memberDTO = memberService.getMemberPage(memberDTO);
+		mv.addObject("dto", memberDTO);
 		mv.setViewName("member/memberUpdate");
 		return mv;
 	}
 	
+	@RequestMapping(value="memberPage", method = RequestMethod.GET)
+	public ModelAndView getmemberPage(HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		//session에는 id값만 담겨있기 때문에 나머지 정보를 받아와야한다
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		//이 memberDTO에는 session에 담긴 DTO의 정보가 아니라 위에서 새로 만든 DTO의 정보
+		//여기에는 getMemberPage 메서드를 이용해서, 다른 정보들을 불러온다.
+		memberDTO = memberService.getMemberPage(memberDTO);
+		mv.addObject("dto", memberDTO);
+		//session에는 id만 남아있고, ModelAndView
+		mv.setViewName("member/memberPage");
+		return mv;
+	}
 	
 	@RequestMapping(value = "memberLogout", method = RequestMethod.GET)
 	public ModelAndView getMemberLogout(HttpSession session) throws Exception{
@@ -56,13 +75,6 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		session.invalidate();
 		mv.setViewName("redirect:../");
-		return mv;
-	}
-	
-	@RequestMapping(value="memberPage")
-	public ModelAndView myPage() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("member/memberPage");
 		return mv;
 	}
 	
@@ -78,8 +90,10 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		memberDTO = memberService.getMemberLogin(memberDTO);
 		//request에서 session객체를 반환해줌(lifecycle이 작은 객체에서 큰 객체를 꺼내기 가능 - 무조건 존재하기때문)
-		HttpSession session = request.getSession();
-		session.setAttribute("member", memberDTO);
+		if(memberDTO != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("member", memberDTO);
+		}
 		mv.setViewName("redirect:../");
 		return mv;
 	}

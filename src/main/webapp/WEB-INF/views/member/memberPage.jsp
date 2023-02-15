@@ -21,20 +21,21 @@
 		<!-- 데이터는 로그인할떄 세션에 정보가 남아있다. 세션에 접근하기 위해 Attribute의 이름인 member로 접근한다 -->
 		<div class="row justify-content-center">
 		<form class="col-md-7" action="./memberLogin" method="post">
-		
+			
+			<!-- id만 받아와서 쓰는거 하기 위해 member에서 불러오는게 아니라 dto에서 불러와야함 -->
 			<div class="mb-3">
 			  <label for="memberName" class="form-label">회원이름</label>
-			  <input type="text" name="memberName" class="form-control" id="memberName" Value="${member.memberName}" readonly>
+			  <input type="text" name="memberName" class="form-control" id="memberName" Value="${dto.memberName}" readonly>
 			</div>
 			
 			<div class="mb-3">
 			  <label for="memberPhone" class="form-label">전화번호</label>
-			  <input type="text" name="memberPhone" class="form-control" id="memberPhone" value="${member.memberPhone}" readonly>
+			  <input type="text" name="memberPhone" class="form-control" id="memberPhone" value="${dto.memberPhone}" readonly>
 			</div>
 			
 			<div class="mb-3">
 			  <label for="email" class="form-label">이메일</label>
-			  <input type="text" name="email" class="form-control" id="email" value="${member.email}" readonly>
+			  <input type="text" name="email" class="form-control" id="email" value="${dto.email}" readonly>
 			</div>
 			
 			<div class="mb-3">

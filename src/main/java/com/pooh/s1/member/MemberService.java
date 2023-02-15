@@ -20,10 +20,35 @@ public class MemberService {
 		return memberDAO.setMemberUpdate(memberDTO);
 	}
 	
-	//getMemberLogin
+//	//getMemberLogin
+//	public MemberDTO getMemberLogin(MemberDTO memberDTO)throws Exception{
+//		return memberDAO.getMemberLogin(memberDTO);
+//	}
+	
+	//getMemberLogin - pw를 service에서 확인하는 방법
+	//230215 
 	public MemberDTO getMemberLogin(MemberDTO memberDTO)throws Exception{
+		//memberDTO : Client에서 입력한 ID, PW
+		MemberDTO result = memberDAO.getMemberLogin(memberDTO);
+		//result : ID와 일치하는 모든 정보
+		
+		//pw check
+		//result가 null이 들어왔을때의 exception을 방지하기 위해 앞의 null체크를 먼저 해준다
+		if(result != null && memberDTO.getPw().equals(result.getPw())) {
+			memberDTO.setPw(null); //여기서 null을 넣으면 DTO에 pw값이 null이 됨
+			//memberDTO에 ID만 있음
+			return memberDTO;
+		}else {
+			return null;
+		}
+	}
+	
+	//getMemberPage 
+	//230215 memberpage를 활용 - id가지고 일치하는 나머지 정보 불러오기 위한 메서드
+	public MemberDTO getMemberPage(MemberDTO memberDTO) throws Exception{
 		return memberDAO.getMemberLogin(memberDTO);
 	}
+	
 	
 	//setMemberAdd
 	public int setMemberAdd(MemberDTO memberDTO) throws Exception{

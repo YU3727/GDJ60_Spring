@@ -24,20 +24,21 @@
 			
 			<!-- id는 session에도 있다 -> conroller에서 꺼내오는거로 -->
 			<%-- <input type="hidden" name="id" value="${member.id}"> --%>
-		
+			
+			<!-- id만 받아와서 쓰는거 하기 위해 member에서 불러오는게 아니라 dto에서 불러와야함 -->
 			<div class="mb-3">
 				<label for="memberName" class="form-label">회원이름</label>
-				<input type="text" name="memberName" class="form-control" id="memberName" placeholder="이름을 입력하세요">
+				<input type="text" name="memberName" class="form-control" id="memberName" value="${dto.memberName}">
 			</div>
 			
 			<div class="mb-3">
 				<label for="memberPhone" class="form-label">전화번호</label>
-				<input type="text" name="memberPhone" class="form-control" id="memberPhone" placeholder="전화번호를 입력하세요">
+				<input type="text" name="memberPhone" class="form-control" id="memberPhone" value="${dto.memberPhone}">
 			</div>
 			
 			<div class="mb-3">
 				<label for="email" class="form-label">이메일</label>
-				<input type="text" name="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+				<input type="text" name="email" class="form-control" id="email" value="${dto.email}">
 			</div>
 		</div>
 		
@@ -45,7 +46,8 @@
 			<button class="btn btn-outline-success col-2" type="submit" value="등록">수정완료</button>	
 		</div>
 	
-		</form>
+	</form>
+	
 	</div>
 
 <c:import url="../template/common_js.jsp"></c:import>

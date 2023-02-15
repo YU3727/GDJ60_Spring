@@ -12,9 +12,15 @@
 		WHERE ID = #{id}
 	</update>
 
-  	<select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
+<!--   	<select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
   		SELECT * FROM MEMBER
   		WHERE ID = #{id} AND PW = #{pw} 
+  	</select> -->
+  	
+  	<!-- pw를 service에서 확인하기 -->
+	  <select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT * FROM MEMBER
+		WHERE ID = #{id}
   	</select>
   
 	<insert id="setMemberAdd" parameterType="MemberDTO">
