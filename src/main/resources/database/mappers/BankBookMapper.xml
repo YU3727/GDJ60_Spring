@@ -7,6 +7,12 @@
 <!-- 원래는 풀패키지명을 써야하는데, 공통설정파일에 별칭을 줘서 짧게 작성 가능 -->
   <mapper namespace="com.pooh.s1.bankbook.BankBookDAO">
   	<!-- bankbook 메서드 5개중에 update 빼고 나머지 4개 하기 -->
+  	
+  	
+  	<select id="getBankBookCount" resultType="Long">
+  		SELECT COUNT(BOOKNUMBER) FROM BANKBOOK
+  	</select>
+  	
   	<select id="getBankBookList" parameterType="Pager" resultType="BankBookDTO">
   		<!-- SELECT * FROM BANKBOOK ORDER BY BOOKNUMBER DESC -->
   		SELECT * FROM

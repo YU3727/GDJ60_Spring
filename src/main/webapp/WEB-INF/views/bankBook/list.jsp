@@ -57,6 +57,16 @@
 			</c:forEach>
 			</tbody>
 		</table>
+		
+		<div>
+			<!-- forEach의 속성 items는 배열, collection 등을 받아왔을 때 쓴다 -->
+			<!-- for(int i=1; i<=??; i++)[i] 이게 아래와 동일하다 -->
+			<%-- step은 커질 값, var는 pageScope에 있는 변수를 담을 수 있는 그릇? --%>
+			<c:forEach begin="1" end="${pager.totalCount div 10}" step="1" var="i">
+				<a href="./list?page=${i}">${pageScope.i}</a>
+			</c:forEach>
+		</div>
+		
 	</div>
 	
 	<div class="row col-md-7 mx-auto">
