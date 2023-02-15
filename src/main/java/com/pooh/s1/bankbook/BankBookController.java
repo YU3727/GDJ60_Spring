@@ -24,12 +24,8 @@ public class BankBookController {
 	public ModelAndView getBankBookList(Pager pager, ModelAndView mv)throws Exception{
 		//parameter와 매개변수의 멤버변수 setter 명이 같으면 데이터를 집어넣어준다.(spring)
 		//ModelAndView 객체를 만들어서 쓰거나 매개변수로 받아와서 쓰거나 둘중 하나.
-		
-		System.out.println("Service 전 : "+pager.getTotalCount());
-		
+
 		List<BankBookDTO> ar = bankBookService.getBankBookList(pager);
-		
-		System.out.println("Service 후 : "+pager.getTotalCount());
 		
 		//이제 JSP로 보내야한다.
 		//model에는 내가 보내야할 data를 담고, view에는 jsp 경로를 담아준다

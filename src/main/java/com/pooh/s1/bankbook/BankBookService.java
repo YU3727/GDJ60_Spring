@@ -17,14 +17,15 @@ public class BankBookService {
 	//getBankBookList
 	public List<BankBookDTO> getBankBookList(Pager pager) throws Exception{
 		
-		//계산작업을 더이상 하지않고, Pager 클래스에서 만들어둔 계산메서드를 호출한다
-		pager.makeRow();
 		
 		//List에서 게시글을 페이징처리 하기때문에 따로 메서드를 만들지 않고 여기서 처리한다
 		Long totalCount = bankBookDAO.getBankBookCount();
 		
 		//이렇게 써도 controller로 count값이 간다 왜? java라서 그렇다.
-		pager.setTotalCount(totalCount);
+		//pager.setTotalCount(totalCount);
+		pager.makeNum(totalCount);
+		//계산작업을 더이상 하지않고, Pager 클래스에서 만들어둔 계산메서드를 호출한다
+		pager.makeRow();
 		
 		List<BankBookDTO> ar = bankBookDAO.getBankBookList(pager);
 		return ar;

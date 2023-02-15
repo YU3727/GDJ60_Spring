@@ -15,14 +15,18 @@ public class Pager {
 	private Long lastRow;
 	
 	//전체 row의 개수
-	private Long totalCount;
+//	private Long totalCount;
 	
 	//jsp에 출력하는 용도
 	private Long startNum;
 	private Long lastNum;
 	
+	//시작/마지막 block에서 disabled 시키기 위한 용도
+	private boolean before;
+	private boolean after;
 	
 	public Pager() {
+		this.perPage=10L;
 	}
 	
 	//startRow, lastRow 계산하는 메서드
@@ -33,16 +37,22 @@ public class Pager {
 		this.lastRow = this.getPage()*this.getPerPage();	
 	}
 	
-	//startNum, lastNum
-	public void makeNum() {
+	//startNum, lastNum을 계산하는 메서드
+	public void makeNum(Long totalCount) {
+		
 		//1. 전체 row의 갯수 구하기
 		//2. 총 page의 갯수 구하기
-		Long totalPage = this.totalCount/this.getPerPage();
+		Long totalPage = totalCount/this.getPerPage();
 		//row가 10단위로 떨어지지 않을때 page는 하나씩 더 많아야한다.
-		if(this.totalCount%this.getPerPage() != 0) {
+		if(totalCount%this.getPerPage() != 0) {
 			//totalPage = totalPage + 1;
 			//totalPage += 1;
 			totalPage++;
+		}
+		
+		if(this.getPage() > totalPage) {
+			//현재 page가 totalPage를 넘지 않게 설정
+			this.setPage(totalPage);
 		}
 		
 		//3. 한 블럭에 출력할 번호의 개수(page 번호를 몇개씩 나타내줄것인가) -> 5개로 해보자
@@ -71,18 +81,60 @@ public class Pager {
 			2			6			10
 			3			11			15
 		*/
-		this.lastNum = curBlock*perBlock;
 		this.startNum = (curBlock-1)*perBlock+1;
-	
+		this.lastNum = curBlock*perBlock;
+		
+		this.after = true;
+		if(curBlock == totalBlock) {
+			lastNum = totalPage;
+			this.after = false;
+		}
+		
+		if(curBlock == 1) {
+			this.before = true;
+		}
 	
 	}
 	
-	public Long getTotalCount() {
-		return totalCount;
+//	public Long getTotalCount() {
+//		return totalCount;
+//	}
+//
+//	public void setTotalCount(Long totalCount) {
+//		this.totalCount = totalCount;
+//	}
+	
+	
+	public boolean isBefore() {
+		return before;
+	}
+	
+	public void setBefore(boolean before) {
+		this.before = before;
+	}
+	
+	public boolean isAfter() {
+		return after;
 	}
 
-	public void setTotalCount(Long totalCount) {
-		this.totalCount = totalCount;
+	public void setAfter(boolean after) {
+		this.after = after;
+	}
+
+	public Long getStartNum() {
+		return startNum;
+	}
+
+	public void setStartNum(Long startNum) {
+		this.startNum = startNum;
+	}
+
+	public Long getLastNum() {
+		return lastNum;
+	}
+
+	public void setLastNum(Long lastNum) {
+		this.lastNum = lastNum;
 	}
 
 	public Long getPerPage() {

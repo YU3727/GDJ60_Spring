@@ -58,13 +58,47 @@
 			</tbody>
 		</table>
 		
-		<div>
+		<div class="row">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			  
+			  	<li class="page-item">
+			      <a class="page-link" href="./list?page=1" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			  
+			    <li class="page-item ${pager.before ? 'disabled' : ''}">
+			      <a class="page-link" href="./list?page=${pager.startNum-1}" aria-label="Previous">
+			        <span aria-hidden="true">&lsaquo;</span>
+			      </a>
+			    </li>
+			    
+			    <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
+			    <li class="page-item"><a class="page-link" href="./list?page=${i}">${i}</a></li>			    
+			    </c:forEach>
+
+			    <li class="page-item ${pager.after eq false ? 'disabled' :''}">
+			      <a class="page-link" href="./list?page=${pager.lastNum+1}" aria-label="Next">
+			        <span aria-hidden="true">&rsaquo;</span>
+			      </a>
+			    </li>
+			    
+			    <li class="page-item">
+			      <a class="page-link" href="./list?page=#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		
+		
 			<!-- forEach의 속성 items는 배열, collection 등을 받아왔을 때 쓴다 -->
 			<!-- for(int i=1; i<=??; i++)[i] 이게 아래와 동일하다 -->
 			<%-- step은 커질 값, var는 pageScope에 있는 변수를 담을 수 있는 그릇? --%>
-			<c:forEach begin="1" end="${pager.totalCount div 10}" step="1" var="i">
+<%-- 			<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
 				<a href="./list?page=${i}">${pageScope.i}</a>
-			</c:forEach>
+			</c:forEach> --%>
 		</div>
 		
 	</div>
