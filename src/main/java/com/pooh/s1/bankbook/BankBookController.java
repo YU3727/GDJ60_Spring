@@ -2,10 +2,15 @@ package com.pooh.s1.bankbook;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pooh.s1.util.Pager;
@@ -65,8 +70,16 @@ public class BankBookController {
 	
 	//parameter를 받아서 DB에 insert 하는 메서드
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public ModelAndView setBankBookAdd(BankBookDTO bankBookDTO, ModelAndView mv) throws Exception{
-		int result = bankBookService.setBankBookAdd(bankBookDTO);
+	public ModelAndView setBankBookAdd(BankBookDTO bankBookDTO, ModelAndView mv, MultipartFile pic, HttpSession session) throws Exception{
+		//매개변수인 interface MultipartFile의 이름은 jsp에서 쓰는 input의 속성 name과 일치해야한다
+		//확인용
+		System.out.println("name :"+pic.getName());
+		System.out.println("originalFileName :"+pic.getOriginalFilename());
+		System.out.println("fileSize :"+pic.getSize());
+		System.out.println(session.getServletContext());
+//		pic.getBytes()
+		//서버-controller간 동작을 테스트 하려면 Service를 호출하는 메서드는 주석처리하고 테스트.(실제로 업로드 작업 x) ex. 파일업로드 체크 등
+		int result = bankBookService.setBankBookAdd(bankBookDTO, pic);
 		mv.setViewName("redirect:./list");
 		return mv;
 	}

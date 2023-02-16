@@ -4,5 +4,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- root-context에 넣은 이유는 database-context에는 db 관련된것만 넣어두기 위함. 다른 **-context를 만들어도 된다. -->
+	<!-- fileupload를 위한 객체생성, 조각난 파일을 합쳐주는 것 -->
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- upload 하는 파일당 최대 크기 제한(byte) 여기선 10MB -->
+		<property name="maxUploadSizePerFile" value="10485760"></property>
+		<!-- upload 하는 전체 파일의 크기 제한(byte) 여기선 30MB -->
+		<property name="maxUploadSize" value="31457280"></property>
+	</bean>
+		
 		
 </beans>

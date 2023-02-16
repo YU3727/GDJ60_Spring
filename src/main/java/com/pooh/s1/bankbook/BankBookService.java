@@ -2,9 +2,13 @@ package com.pooh.s1.bankbook;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.pooh.s1.util.FileManager;
 import com.pooh.s1.util.Pager;
 
 @Service //객체만드는 Annotation
@@ -13,6 +17,14 @@ public class BankBookService {
 	
 	@Autowired //의존성선언 + 주입 하는 Annotation
 	private BankBookDAO bankBookDAO;
+	
+	//Application이 필요하므로 의존성주입.
+	//textcase에서 test시에는 Null이 들어온다. 추가 API가 필요함.
+	@Autowired
+	private ServletContext servletContext;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	//getBankBookList
 	public List<BankBookDTO> getBankBookList(Pager pager) throws Exception{
@@ -37,8 +49,17 @@ public class BankBookService {
 	}
 	
 	//setBankBookAdd
-	public int setBankBookAdd(BankBookDTO bankBookDTO) throws Exception{
-		return bankBookDAO.setBankBookAdd(bankBookDTO);
+	public int setBankBookAdd(BankBookDTO bankBookDTO, MultipartFile pic) throws Exception{
+
+		//1. file을 HDD에 저장.
+		//Project 경로가 아닌 OS가 이용하는 경로
+		String realPath = servletContext.getRealPath("resources/upload/bankBook");
+		System.out.println(realPath);
+		
+		//받아온 파일이름을 DB에 저장해야함
+		String fileName = fileManager.fileSave(pic, realPath);
+		
+		return 0; //bankBookDAO.setBankBookAdd(bankBookDTO);
 	}
 	
 	//setBankBookUpdate
