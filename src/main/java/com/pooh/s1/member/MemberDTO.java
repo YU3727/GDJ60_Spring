@@ -12,7 +12,7 @@ public class MemberDTO {
 	private String memberName;
 	private String memberPhone;
 	private String email;
-	private List<RoleDTO> roleDTOs;
+	private RoleDTO roleDTO;
 	
 	public MemberDTO() {
 		
@@ -57,5 +57,14 @@ public class MemberDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public RoleDTO getRoleDTO() {
+		return roleDTO;
+	}
+
+	public void setRoleDTO(RoleDTO roleDTO) {
+		this.roleDTO = roleDTO;
+	}
+	
 	
 }

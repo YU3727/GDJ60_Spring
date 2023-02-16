@@ -23,7 +23,7 @@
 			      <img src="/resources/images/s1.jpg" class="d-block w-100" alt="...">
 			    </div>
 			    <div class="carousel-item">
-			      <img src="/resousrces/images/s2.jpg" class="d-block w-100" alt="...">
+			      <img src="/resources/images/s2.jpg" class="d-block w-100" alt="...">
 			    </div>
 			    <div class="carousel-item">
 			      <img src="/resources/images/s3.jpg" class="d-block w-100" alt="...">
@@ -41,6 +41,9 @@
 		</div>
 	</div>
 
+<div>
+	<h1>${sessionScope.member.memberName}</h1>
+</div>
 
 
 <!-- script 파일은 </body>바로 위에 많이들 써둔다 -->

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <!-- Navbar content -->
   <!-- bootstrap web page - Docs - Components - Navbar 참고 -->
@@ -22,8 +22,14 @@
 		
 		<ul class="navbar-nav">
 			<!-- 원하는 값이 없을떄는 SASS에 들어가서 compile해서 쓰거나, 직접 입력하는 식으로 사용 -->
-			<li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>
-			<li class="nav-item"><a class="nav-link" href="/member/memberAdd">JOIN</a></li>
+			<c:if test="${empty member}">
+				<li class="nav-item"><a class="nav-link" href="/member/memberLogin">LOGIN</a></li>
+				<li class="nav-item"><a class="nav-link" href="/member/memberAdd">JOIN</a></li>
+			</c:if>
+			<c:if test="${not empty member}">
+				<li class="nav-item"><a class="nav-link" href="/member/memberPage">MYPAGE</a></li>
+				<li class="nav-item"><a class="nav-link" href="/member/memberLogout">LOGOUT</a></li>
+			</c:if>
 			<li class="nav-item"><a class="nav-link" href="#">KO</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">EN</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">JP</a></li>

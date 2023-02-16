@@ -16,12 +16,18 @@
   		SELECT PRODUCTNUM_SEQ.NEXTVAL FROM DUAL
   	</select>
   
+ 	<!-- 끝나고 ;를 자동으로 찍어주기 때문에 쿼리문 영역에 ;는 생략해주면 된다. -->
  	<!-- resultType : 어디에 담아서 리턴해줄거냐? 이것 또한 풀패키지명을 써줘야한다 -->
-  	<select id="getProductList" resultType="com.pooh.s1.product.ProductDTO" statementType="PREPARED">
+  	<select id="getProductList" parameterType="Pagination" resultType="com.pooh.s1.product.ProductDTO" statementType="PREPARED">
   		SELECT PRODUCTNUM, PRODUCTNAME, PRODUCTSCORE
   		FROM PRODUCT
   		ORDER BY PRODUCTSCORE DESC
-  		<!-- 끝나고 ;를 자동으로 찍어주기 때문에 생략해주면 된다. -->
+<!-- 		SELECT * FROM 
+		(
+			SELECT ROWNUM R, P.* FROM
+				(SELECT * FROM PRODUCT 
+				ORDER BY PRODUCTNUM DESC) P)
+		WHERE R BETWEEN #{startRow} AND #{lastRow} -->	
   	</select>
   	
   	<!-- Detail -->
@@ -42,9 +48,12 @@
   	<!-- productNum은 어딘가에서 꺼내올거다 -> parameterType이 필요함 -->
   	<!-- resultType은 항상 int가 결과값으로 나온다. 그래서 따로 resultType을 쓰지 않음. select만 -->
   	<insert id="setProductAdd" parameterType="ProductDTO"> <!-- config 만들기 전에 원래주소는 "com.pooh.s1.product.ProductDTO" -->
+<!--   		INSERT INTO PRODUCT
+  		#{getter의 이름}
+  		VALUES(#{productNum}, #{productName}, #{productDetail}, 0.0) -->
+  		
   		INSERT INTO PRODUCT
-  		<!-- #{getter의 이름} -->
-  		VALUES(#{productNum}, #{productName}, #{productDetail}, 0.0)
+  		VALUES(PRODUCTNUM_SEQ.NEXTVAL, #{productName}, #{productDetail}, 0.0)
   	</insert>
   	
   	<!-- setProductDelete -->
@@ -56,9 +65,5 @@
   	
 	<!-- 나중에 기능을 만들겠다고 미리 써놓으면 에러가 발생함. 사용할 거만 만들어둬야한다.
 		+ Mapper도 schema 넣고 namespace까지는 넣어야 에러가 안뜬다 <mapper namespace=""></mapper>
-	  	<select id=""></select>
-		<insert id=""></insert>
-  		<update id=""></update>
-  		<delete id=""></delete>
   		-->  	
   </mapper>

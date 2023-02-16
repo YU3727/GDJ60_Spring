@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pooh.s1.util.Pagination;
+
 //별칭을 주려면 @Controller("c") 이런식으로. 별칭을 주지 않으면 bean name은 클래스이름의 첫글자를 소문자로 바꾼것을 기본으로 한다.
 @Controller
 @RequestMapping(value="/product/*") //root 밑에 product/로 시작하는 모든 것들은 다 ProductController로 보내달라는 의미
@@ -31,12 +33,12 @@ public class ProductController {
 	
 	//해야할 일이 list, add, update, delete 등이 있으므로, 얘들을 실행할 메서드를 하나씩 만들자
 	@RequestMapping(value="list") //여기는 입력받은 URL
-	public ModelAndView getProductList(ModelAndView mv) throws Exception{
+	public ModelAndView getProductList(Pagination pagination, ModelAndView mv) throws Exception{
 		//list 또한 jsp로 보내려고 하는것.
 		//model에 담는 법 또한 두가지이다. 매개변수로 Model을 넣거나, ModelAndView 객체를 만들어서 거기에 넣거나, ModelAndView를 매개변수로 넣거나... < 이건 D.S.가 객체를 만들어줌
 		//ModelAndView mv = new ModelAndView();
 		
-		List<ProductDTO> ar = productService.getProductList();
+		List<ProductDTO> ar = productService.getProductList(pagination);
 		System.out.println(ar.size()>0);
 		//실질적으로 필요한 JSP의 주소는 /WEB-INF/views/product/productList.jsp이지만
 		//DispatcherServlet에 내장된 IRVR가 prefix = "/WEB-INF/views/", suffix = ".jsp"를 자동으로 추가해준다

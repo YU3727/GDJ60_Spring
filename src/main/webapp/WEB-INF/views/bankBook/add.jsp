@@ -31,6 +31,16 @@
 		  <input type="text" name="bookRate" class="form-control" id="bookRate" placeholder="이자율 입력">
 		</div>
 	
+		<div class="mb-3">
+		  <label for="bookDetail" class="form-label">상세정보</label>
+		  <textarea type="text" name="bookDetail" class="form-control" id="bookDetail" placeholder="상세설명 입력" rows="5"></textarea>
+		</div>
+		
+		<div class="mb-3">
+		  <label for="files" class="form-label">이미지</label>
+		  <input type="file" class="form-control" id="files" name="pic">
+		</div>
+		
 <!-- 		<div class="mb-3">
 			<label class="form-label">판매여부</label>
 			<div class="form-check">
@@ -54,10 +64,6 @@
 		   <input name="bookSale" class="form-check-input" value="1" type="checkbox" role="switch" id="bookSale">
 		</div>
 		
-		<div class="mb-3">
-		  <label for="bookDetail" class="form-label">상세정보</label>
-		  <textarea type="text" name="bookDetail" class="form-control" id="bookDetail" placeholder="상세설명 입력" rows="5"></textarea>
-		</div>
 	</div>
 		
 

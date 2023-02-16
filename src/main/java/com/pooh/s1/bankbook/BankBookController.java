@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pooh.s1.util.Pager;
+
 @Controller
 //속성이 value 한개라면 value를 생략해도 된다. /bankBook/**는 모든 하위폴더를 의미
 @RequestMapping(value="/bankBook/*") 
@@ -19,9 +21,11 @@ public class BankBookController {
 	
 	//getBankBookList
 	@RequestMapping(value="list", method = RequestMethod.GET)
-	public ModelAndView getBankBookList(ModelAndView mv)throws Exception{
+	public ModelAndView getBankBookList(Pager pager, ModelAndView mv)throws Exception{
+		//parameter와 매개변수의 멤버변수 setter 명이 같으면 데이터를 집어넣어준다.(spring)
 		//ModelAndView 객체를 만들어서 쓰거나 매개변수로 받아와서 쓰거나 둘중 하나.
-		List<BankBookDTO> ar = bankBookService.getBankBookList();
+
+		List<BankBookDTO> ar = bankBookService.getBankBookList(pager);
 		
 		//이제 JSP로 보내야한다.
 		//model에는 내가 보내야할 data를 담고, view에는 jsp 경로를 담아준다
@@ -30,6 +34,7 @@ public class BankBookController {
 		//model에 attribute로 데이터 보내기(name, value)
 		//name은 jsp에서 데이터를 꺼낼때 사용함.
 		mv.addObject("list", ar);
+		mv.addObject("pager", pager);
 		return mv;
 	}
 	
