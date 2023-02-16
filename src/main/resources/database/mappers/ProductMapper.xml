@@ -53,7 +53,7 @@
   		VALUES(#{productNum}, #{productName}, #{productDetail}, 0.0) -->
   		
   		INSERT INTO PRODUCT
-  		VALUES(PRODUCTNUM_SEQ.NEXTVAL, #{productName}, #{productDetail}, 0.0)
+  		VALUES(#{productNum}, #{productName}, #{productDetail}, 0.0)
   	</insert>
   	
   	<!-- setProductDelete -->

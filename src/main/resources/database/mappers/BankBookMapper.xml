@@ -56,9 +56,14 @@
   		WHERE BOOKNUMBER = #{bookNumber}
   	</select>
   	
-  	<insert id="setBankBookAdd" parameterType="BankBookDTO"> <!-- select를 제외하면 리턴타입이 int인데 의미없다. 안받음 -->
+  	<!-- select를 제외하면 리턴타입이 int인데 의미없다. 안받음 -->
+  	<insert id="setBankBookAdd" parameterType="BankBookDTO"> 
+  		<!-- KeyProperty : DTO의 setter이름과 일치, order :  시퀀스를 쿼리문 실행전에 먼저 가져오세요 -->
+  		<selectKey keyProperty="bookNumber" order="BEFORE" resultType="Long"> 
+  			SELECT BANKNUM_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
   		INSERT INTO BANKBOOK(BOOKNUMBER, BOOKNAME, BOOKRATE, BOOKSALE, BOOKDETAIL)
-  		VALUES(BANKNUM_SEQ.NEXTVAL, #{bookName}, #{bookRate}, #{bookSale}, #{bookDetail})
+  		VALUES(#{bookNumber}, #{bookName}, #{bookRate}, #{bookSale}, #{bookDetail})
   	</insert>
   	
   	<delete id="setBankBookDelete" parameterType="BankBookDTO">
@@ -72,6 +77,13 @@
   		SET BOOKNAME = #{bookName}, BOOKRATE = #{bookRate}, BOOKSALE = #{bookSale}, BOOKDETAIL = #{bookDetail}
   		WHERE BOOKNUMBER = #{bookNumber}
   	</update>
+  	
+  	<insert id="setBankBookImgAdd" parameterType="BankBookImgDTO">
+  		INSERT INTO BANKBOOKIMG
+  		VALUES(BANKNUM_SEQ.NEXTVAL, #{fileName}, #{oriName}, #{bookNumber})
+  	</insert>
+  	
+  	
   </mapper>
   
 

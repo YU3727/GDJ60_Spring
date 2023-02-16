@@ -50,16 +50,25 @@ public class BankBookService {
 	
 	//setBankBookAdd
 	public int setBankBookAdd(BankBookDTO bankBookDTO, MultipartFile pic) throws Exception{
-
+		int result = bankBookDAO.setBankBookAdd(bankBookDTO);
+		bankBookDTO.getBookNumber();
 		//1. file을 HDD에 저장.
 		//Project 경로가 아닌 OS가 이용하는 경로
 		String realPath = servletContext.getRealPath("resources/upload/bankBook");
 		System.out.println(realPath);
-		
 		//받아온 파일이름을 DB에 저장해야함
 		String fileName = fileManager.fileSave(pic, realPath);
 		
-		return 0; //bankBookDAO.setBankBookAdd(bankBookDTO);
+		//2. DB에 저장
+		BankBookImgDTO bankBookImgDTO = new BankBookImgDTO();
+		bankBookImgDTO.setFileName(fileName);
+		bankBookImgDTO.setOriName(pic.getOriginalFilename());
+		//이 파일이 누구(bankbook)의 파일이냐? -> booknumber는 없다. Mapper를 다녀와도 시퀀스 처리를 했기 떄문에 DTO에 bookNumber가 없음
+		bankBookImgDTO.setBookNumber(bankBookDTO.getBookNumber());
+		
+		result = bankBookDAO.setBankBookImgAdd(bankBookImgDTO);
+		
+		return result; //bankBookDAO.setBankBookAdd(bankBookDTO);
 	}
 	
 	//setBankBookUpdate
