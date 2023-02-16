@@ -3,9 +3,20 @@ package com.pooh.s1.util;
 public class Pager {
 //230215 페이징처리를 위해 Mapper에서 사용할 클래스
 	
-	//객체타입으로 데이터를 받기 위해 멤버변수로 만들어둔다(page)
+	//mapper에 data type은 하나만 받을 수 있기 때문에 여기에 검색 기능을 담당하는 것들도 추가한다
+	private String kind;
+	private String search;
+	
+	
+	//객체타입(pager)으로 데이터를 받기 위해 멤버변수로 만들어둔다(page)
 	//한페이지에 출력할 row의 개수
 	private Long perPage;
+	
+	//한블럭당 출력할 번호의 개수
+	private Long perBlock;
+	
+	private Long totalPage;
+	
 	//client가 보고싶은 페이지 번호(parameter)
 	private Long page;
 	
@@ -39,10 +50,12 @@ public class Pager {
 	
 	//startNum, lastNum을 계산하는 메서드
 	public void makeNum(Long totalCount) {
+		//getter를 쓰는 이유는 그냥 멤버변수를 쓰면 null이나 이상한값이 들어가있을 수 있다. getter에 그런걸 방지하는 작업을 해뒀기 떄문에
+		//멤버변수로 쓰지않고 getter를 쓴다
 		
 		//1. 전체 row의 갯수 구하기
 		//2. 총 page의 갯수 구하기
-		Long totalPage = totalCount/this.getPerPage();
+		this.totalPage = totalCount/this.getPerPage();
 		//row가 10단위로 떨어지지 않을때 page는 하나씩 더 많아야한다.
 		if(totalCount%this.getPerPage() != 0) {
 			//totalPage = totalPage + 1;
@@ -56,10 +69,10 @@ public class Pager {
 		}
 		
 		//3. 한 블럭에 출력할 번호의 개수(page 번호를 몇개씩 나타내줄것인가) -> 5개로 해보자
-		Long perBlock = 5L;
+		
 		
 		//4. 총 블럭의 개수
-		Long totalBlock = totalPage/perBlock;
+		Long totalBlock = totalPage/getPerBlock();
 		if(totalPage%perBlock != 0) {
 			totalBlock++;
 		}
@@ -69,8 +82,8 @@ public class Pager {
 		//page 1-5 : cur = 1
 		//page 6-10 : cur = 2
 		//page 11-15 : cur = 3 ...
-		Long curBlock = this.getPage() / perBlock;
-		if(this.getPage()%perBlock != 0) {
+		Long curBlock = this.getPage() / getPerBlock();
+		if(this.getPage()%getPerBlock() != 0) {
 			curBlock++;
 		}
 		
@@ -81,8 +94,8 @@ public class Pager {
 			2			6			10
 			3			11			15
 		*/
-		this.startNum = (curBlock-1)*perBlock+1;
-		this.lastNum = curBlock*perBlock;
+		this.startNum = (curBlock-1)*getPerBlock()+1;
+		this.lastNum = curBlock*getPerBlock();
 		
 		this.after = true;
 		if(curBlock == totalBlock) {
@@ -104,7 +117,42 @@ public class Pager {
 //		this.totalCount = totalCount;
 //	}
 	
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getSearch() {
+		//search에 아무것도 안들어오면 전체를 검색
+		if(search == null) {
+			search = "";
+		}
+		return search; //"%"+search+"%";
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 	
+	public Long getTotalPage() {
+		//얘는 외부에서 값을 넣어줄 필요가 없기 떄문에 가져다 쓸 수 있게 getter만 만든다
+		return totalPage;
+	}
+	
+	public Long getPerBlock() {
+		if(this.perBlock == null || this.perBlock < 1) {
+			this.perBlock = 5L;
+		}
+		return perBlock;
+	}
+
+	public void setPerBlock(Long perBlock) {
+		this.perBlock = perBlock;
+	}
+
 	public boolean isBefore() {
 		return before;
 	}

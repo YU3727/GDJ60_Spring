@@ -5,20 +5,48 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 230207 8교시 -->
 <!-- 원래는 풀패키지명을 써야하는데, 공통설정파일에 별칭을 줘서 짧게 작성 가능 -->
+
   <mapper namespace="com.pooh.s1.bankbook.BankBookDAO">
-  	<!-- bankbook 메서드 5개중에 update 빼고 나머지 4개 하기 -->
+  
+  	<!-- 동일한 쿼리가 있다면 반복해서 쓰지말고 따로 뺴서 부품으로 쓰자 -->
+ 	 <sql id="searchCondition">
+  		<if test="kind == 'contents'">
+  			WHERE BOOKDETAIL LIKE '%' || #{search} || '%'
+  		</if>
+  		<if test="kind == 'title'">
+  			WHERE BOOKNAME LIKE '%' || #{search} || '%'
+  		</if>
+  	</sql>
   	
+  	<sql id="searchCondition2">
+		WHERE
+		<choose>
+			<!-- 여기서는 pager.kind에서 꺼내쓴다고 #{}을 쓰면 안된다 -->
+			<when test="kind == 'contents'">
+				BOOKDETAIL
+			</when>
+			<otherwise>
+				BOOKNAME
+			</otherwise>
+		</choose>
+		
+		LIKE '%' || #{search} || '%'
+  	</sql>
+  
   	
-  	<select id="getBankBookCount" resultType="Long">
+  	<select id="getBankBookCount" parameterType="Pager" resultType="Long">
   		SELECT COUNT(BOOKNUMBER) FROM BANKBOOK
+  		<include refid="searchCondition"></include> 		
   	</select>
   	
   	<select id="getBankBookList" parameterType="Pager" resultType="BankBookDTO">
   		<!-- SELECT * FROM BANKBOOK ORDER BY BOOKNUMBER DESC -->
+  		<!-- 최초 검색 결과에 조건을 줘야 ROWNUM에 빈틈이 없어진다 -->
   		SELECT * FROM
 			(
 			SELECT ROWNUM R, B.* FROM
 				(SELECT * FROM BANKBOOK
+				<include refid="searchCondition"></include>
 				ORDER BY BOOKNUMBER DESC) B)
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
   	</select>

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pooh.s1.util.DBConnection;
+import com.pooh.s1.util.Pager;
+import com.pooh.s1.util.Pagination;
 
 @Repository
 public class ProductDAO {
@@ -51,9 +53,8 @@ public class ProductDAO {
 	}
 	
 	//getProductList
-	public List<ProductDTO> getProductList() throws Exception{
-
-		return sqlSession.selectList(NAMESPACE+"getProductList");
+	public List<ProductDTO> getProductList(Pagination pagination) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"getProductList", pagination);
 	}
 	
 	//setAddProduct

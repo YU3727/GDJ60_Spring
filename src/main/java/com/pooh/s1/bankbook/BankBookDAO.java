@@ -22,8 +22,8 @@ public class BankBookDAO {
 	
 	//getBankBookCount
 	//게시글이 몇개인지 세는 메서드
-	public Long getBankBookCount() throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"getBankBookCount");
+	public Long getBankBookCount(Pager pager) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getBankBookCount", pager);
 	}
 	
 	//getBankBookList

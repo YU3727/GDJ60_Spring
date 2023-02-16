@@ -35,70 +35,91 @@
 			<tbody class="table-group-divider mx-auto">
 				<!-- 값이 담겨있는 model의 영역은 requestScope의 영역과 같음 -->
 				<!-- var는 이 page에서만 사용하기 때문에 pageScope이다 -->
-			<c:forEach items="${list}" var="dto">
-				<tr>
-					<td><a href="./detail?bookNumber=${dto.bookNumber}">${pageScope.dto.bookName}</a></td>
-					<td class="tbl_td">${dto.bookRate}</td>
-					<td class="tbl_td">
-						<%-- if else와 switch case의 혼합 --%>
-						<%-- when : if같은 느낌, otherwise : else같은 느낌 --%>
-						<!-- 123 -->
-						<c:choose>
-							<c:when test="${dto.bookSale eq 1}">판매중</c:when>
-							<c:otherwise>판매종료</c:otherwise>
-						</c:choose>
-						
-						<%-- 					
-						<c:if test="${dto.bookSale eq 1}">판매중</c:if>
-						<c:if test="${dto.bookSale eq 0}">판매종료</c:if>
-						--%>
-					</td>
-				</tr>
-			</c:forEach>
+				<c:forEach items="${list}" var="dto">
+					<tr>
+						<td><a href="./detail?bookNumber=${dto.bookNumber}">${pageScope.dto.bookName}</a></td>
+						<td class="tbl_td">${dto.bookRate}</td>
+						<td class="tbl_td">
+							<%-- if else와 switch case의 혼합 --%>
+							<%-- when : if같은 느낌, otherwise : else같은 느낌 --%>
+							<!-- 123 -->
+							<c:choose>
+								<c:when test="${dto.bookSale eq 1}">판매중</c:when>
+								<c:otherwise>판매종료</c:otherwise>
+							</c:choose>
+							
+							<%-- 					
+							<c:if test="${dto.bookSale eq 1}">판매중</c:if>
+							<c:if test="${dto.bookSale eq 0}">판매종료</c:if>
+							--%>
+						</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		
+		<!-- Paging -->
 		<div class="row">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
 			  
 			  	<li class="page-item">
-			      <a class="page-link" href="./list?page=1" aria-label="Previous">
+			      <a class="page-link" href="./list?page=1&kind=${pager.kind}&search=${pager.search}" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
 			  
-			    <li class="page-item ${pager.before ? 'disabled' : ''}">
-			      <a class="page-link" href="./list?page=${pager.startNum-1}" aria-label="Previous">
+			    <li class="page-item ${pager.before ? 'disabled' :''}">
+			      <a class="page-link" href="./list?page=${pager.startNum-1}&kind=${pager.kind}&search=${pager.search}" aria-label="Previous">
 			        <span aria-hidden="true">&lsaquo;</span>
 			      </a>
 			    </li>
 			    
 			    <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
-			    <li class="page-item"><a class="page-link" href="./list?page=${i}">${i}</a></li>			    
+			    	<li class="page-item"><a class="page-link" href="./list?page=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>			    
 			    </c:forEach>
 
 			    <li class="page-item ${pager.after eq false ? 'disabled' :''}">
-			      <a class="page-link" href="./list?page=${pager.lastNum+1}" aria-label="Next">
+			      <a class="page-link" href="./list?page=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}" aria-label="Next">
 			        <span aria-hidden="true">&rsaquo;</span>
 			      </a>
 			    </li>
 			    
 			    <li class="page-item">
-			      <a class="page-link" href="./list?page=#" aria-label="Next">
+			      <a class="page-link" href="./list?page=${pager.totalPage}&kind=${pager.kind}&search=${pager.search}" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
 			  </ul>
 			</nav>
-		
-		
+			
 			<!-- forEach의 속성 items는 배열, collection 등을 받아왔을 때 쓴다 -->
 			<!-- for(int i=1; i<=??; i++)[i] 이게 아래와 동일하다 -->
 			<%-- step은 커질 값, var는 pageScope에 있는 변수를 담을 수 있는 그릇? --%>
 <%-- 			<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
 				<a href="./list?page=${i}">${pageScope.i}</a>
 			</c:forEach> --%>
+		</div>
+		
+		<!-- 검색창 -->
+		<div class="row">
+			<form class=""row g-3" action="./list" method="get">
+				<div class="col-auto">
+					<label for="kind" class="visually-hidden">Kind</label>
+					<select class="form-select" name="kind" id="kind" aria-label="Default select example">
+						<option value="title" selected>상품명</option>
+						<option value="contents">상품내용</option>
+					</select>
+				</div>
+				<div class="col-auto">
+					<label for="search" class="visually-hidden">Search</label>
+					<input type="text" class="form-control" name="search" value="" id="search" placeholder="검색어를 입력하세요">
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary mb-3">검색</button>
+				</div>
+			</form>
+		
 		</div>
 		
 	</div>

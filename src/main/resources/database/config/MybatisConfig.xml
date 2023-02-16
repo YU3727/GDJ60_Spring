@@ -14,6 +14,7 @@
   		<typeAlias type="com.pooh.s1.member.RoleDTO" alias="RoleDTO"/>
   		<typeAlias type="com.pooh.s1.bankbook.BankBookDTO" alias="BankBookDTO"/>
   		<typeAlias type="com.pooh.s1.util.Pager" alias="Pager"/>
+  		<typeAlias type="com.pooh.s1.util.Pagination" alias="Pagination"/>
   		<typeAlias type="java.lang.Long" alias="Long"/>
   	</typeAliases>
   </configuration>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pooh.s1.util.Pagination;
+
 @Service
 public class ProductService { //test용 메서드
 //230130 6교시 Service는 DAO로 작업을 하기 전/후처리를 하기 위한 메서드명이다.
@@ -22,9 +24,9 @@ public class ProductService { //test용 메서드
 	
 	
 	//230201 4교시 list 가져오는 메서드 추가
-	public List<ProductDTO> getProductList() throws Exception{
+	public List<ProductDTO> getProductList(Pagination pagination) throws Exception{
 		//여기서는 DAO를 호출하자
-		return pDAO.getProductList();
+		return pDAO.getProductList(pagination);
 	}
 	
 	

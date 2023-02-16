@@ -19,7 +19,7 @@ public class BankBookService {
 		
 		
 		//List에서 게시글을 페이징처리 하기때문에 따로 메서드를 만들지 않고 여기서 처리한다
-		Long totalCount = bankBookDAO.getBankBookCount();
+		Long totalCount = bankBookDAO.getBankBookCount(pager);
 		
 		//이렇게 써도 controller로 count값이 간다 왜? java라서 그렇다.
 		//pager.setTotalCount(totalCount);
