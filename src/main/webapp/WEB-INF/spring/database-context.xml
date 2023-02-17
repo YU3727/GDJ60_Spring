@@ -2,6 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- property 파일을 읽어오는 객체 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="propertyPlaceholderConfigurer">
+		<property name="location" value="classpath:database/info/dbInfo.properties"></property>
+	</bean>
+	
 <!-- 230206 수업 -->
 
 	<!-- mybatis를 사용하기 위해 객체를 생성 -->
@@ -12,11 +18,11 @@
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
 		<!-- Class기 때문에 Setter를 이용한다 -->
 		<!-- setter 호출 : property -->
-		<property name="username" value="user01"></property>
-		<property name="password" value="user01"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
 		<!-- 노트북은 .180 내꺼는 .129 희진님꺼는 .95 -->
-		<property name="url" value="jdbc:oracle:thin:@192.168.1.95:1521:xe"></property>
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="${url}"></property>
+		<property name="driverClassName" value="${driver}"></property>
 		<!-- 생성자 호출 constructor-arg -->
 		<!-- <constructor-arg></constructor-arg> -->
 	</bean>
