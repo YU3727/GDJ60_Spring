@@ -52,6 +52,9 @@ public class BankBookService {
 	public int setBankBookAdd(BankBookDTO bankBookDTO, MultipartFile pic) throws Exception{
 		int result = bankBookDAO.setBankBookAdd(bankBookDTO);
 		bankBookDTO.getBookNumber();
+		
+		if(!pic.isEmpty()) {  //조건식 이것도 가능 pic.getSize() != 0
+			
 		//1. file을 HDD에 저장.
 		//Project 경로가 아닌 OS가 이용하는 경로
 		String realPath = servletContext.getRealPath("resources/upload/bankBook");
@@ -64,9 +67,12 @@ public class BankBookService {
 		bankBookImgDTO.setFileName(fileName);
 		bankBookImgDTO.setOriName(pic.getOriginalFilename());
 		//이 파일이 누구(bankbook)의 파일이냐? -> booknumber는 없다. Mapper를 다녀와도 시퀀스 처리를 했기 떄문에 DTO에 bookNumber가 없음
+		//Mapper에서 속성 selectKey를 이용해서 productNum을 먼저 받아온거처럼 mybatis에서 시퀀스번호를 불러오는 쿼리를 먼저 실행할 수 있다.
+		//Mapper에서 받아온 bookNumber로 어느 bankbook에 저장할지 특정지어준다.
 		bankBookImgDTO.setBookNumber(bankBookDTO.getBookNumber());
 		
 		result = bankBookDAO.setBankBookImgAdd(bankBookImgDTO);
+		}
 		
 		return result; //bankBookDAO.setBankBookAdd(bankBookDTO);
 	}
