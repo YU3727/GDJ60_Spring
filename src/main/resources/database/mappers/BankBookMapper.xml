@@ -51,10 +51,47 @@
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
   	</select>
   	
-  	<select id="getBankBookDetail" resultType="BankBookDTO" parameterType="BankBookDTO">
-  		SELECT * FROM BANKBOOK
-  		WHERE BOOKNUMBER = #{bookNumber}
+  	<select id="getBankBookDetail" parameterType="BankBookDTO" resultMap="bankBookDetailResult">
+  	<!-- resultType="BankBookDTO" -->
+<!--   		SELECT * FROM BANKBOOK
+  		WHERE BOOKNUMBER = #{bookNumber} -->
+  		SELECT B.*, I.*
+		FROM BANKBOOK B
+			INNER JOIN
+			BANKBOOKIMG I
+			ON(B.BOOKNUMBER = I.BOOKNUMBER)
+		WHERE B.BOOKNUMBER = #{bookNumber}
   	</select>
+  	
+  	
+  	<!-- type에는 최종적으로 리턴하고싶은 타입 -->
+	<resultMap type="BankBookDTO" id="bankBookDetailResult">
+  		<!-- id는 Primary Key 용도, 그 외 나머지는 result에 쓴다 -->
+  		<!-- column : PK의 column명, property : 위의 type의 멤버변수명(setter이름), 순서상관x -->
+  		<id column="BOOKNUMBER" property="bookNumber"/>
+  		<result column="BOOKNAME" property="bookName"/>
+  		<result column="BOOKDETAIL" property="bookDetail"/>
+  		<result column="BOOKRATE" property="bookRate"/>
+  		<result column="BOOKSALE" property="bookSale"/>
+	
+  		<!-- 1:1 관계 -->
+  		<!-- javaType에는 원래 풀패키지명을 써야함 -->
+  		<association property="bankBookImgDTO" javaType="BankBookImgDTO">
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="ORINAME" property="oriName"/>
+  			<!-- 위와 중복되는 BOOKNUMBER는 써도되고 안써도되고 -->
+  		</association>
+	
+  		<!-- 1:N 관계 -->
+  		<!-- <collection property=""></collection> -->
+	</resultMap>
+  		
+
+  			
+  	
+  	
+  	
   	
   	<!-- select를 제외하면 리턴타입이 int인데 의미없다. 안받음 -->
   	<insert id="setBankBookAdd" parameterType="BankBookDTO"> 
