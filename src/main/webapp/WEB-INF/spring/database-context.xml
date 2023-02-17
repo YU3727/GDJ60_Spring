@@ -14,7 +14,7 @@
 	<!-- bean/bean은 Spring이 객체를 만드는 코드 -->
 	<!-- 어느 패키지에 있는가? class, 이름이 무엇인가? id -->
 	<!-- dataSource가 우리가 만든 DBConnection의 역할을 한다 -->
-	<!-- Connection -->
+	<!-- DB Connection -->
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
 		<!-- Class기 때문에 Setter를 이용한다 -->
 		<!-- setter 호출 : property -->
