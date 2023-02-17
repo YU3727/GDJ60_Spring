@@ -138,4 +138,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#db 정보는 원래 노출되면 안된다(#은 주석처리)
+#dbInfo.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,maven
