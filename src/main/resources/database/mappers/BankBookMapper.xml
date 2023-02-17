@@ -57,7 +57,7 @@
   		WHERE BOOKNUMBER = #{bookNumber} -->
   		SELECT B.*, I.*
 		FROM BANKBOOK B
-			INNER JOIN
+			LEFT OUTER JOIN
 			BANKBOOKIMG I
 			ON(B.BOOKNUMBER = I.BOOKNUMBER)
 		WHERE B.BOOKNUMBER = #{bookNumber}
@@ -87,11 +87,6 @@
   		<!-- <collection property=""></collection> -->
 	</resultMap>
   		
-
-  			
-  	
-  	
-  	
   	
   	<!-- select를 제외하면 리턴타입이 int인데 의미없다. 안받음 -->
   	<insert id="setBankBookAdd" parameterType="BankBookDTO"> 

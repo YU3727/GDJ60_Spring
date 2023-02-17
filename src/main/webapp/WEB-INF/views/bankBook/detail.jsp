@@ -22,7 +22,9 @@
 			</h3>
 			<h3>Detail : ${DTO.bookDetail}</h3>
 			<div>
-				<img alt="" src="../resources/upload/bankBook/${DTO.bankBookImgDTO.fileName}">
+				<c:if test="${not empty DTO.bankBookImgDTO}">
+					<img alt="" src="../resources/upload/bankBook/${DTO.bankBookImgDTO.fileName}">
+				</c:if>
 			</div>
 			<a href="./delete?bookNumber=${DTO.bookNumber}">상품삭제</a>
 		</c:when>
