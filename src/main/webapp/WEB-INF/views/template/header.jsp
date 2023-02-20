@@ -24,7 +24,7 @@
 			<!-- 원하는 값이 없을떄는 SASS에 들어가서 compile해서 쓰거나, 직접 입력하는 식으로 사용 -->
 			<c:if test="${empty member}">
 				<li class="nav-item"><a class="nav-link" href="/member/memberLogin">LOGIN</a></li>
-				<li class="nav-item"><a class="nav-link" href="/member/memberAdd">JOIN</a></li>
+				<li class="nav-item"><a class="nav-link" href="/member/memberAgree">JOIN</a></li>
 			</c:if>
 			<c:if test="${not empty member}">
 				<li class="nav-item"><a class="nav-link" href="/member/memberPage">MYPAGE</a></li>

@@ -23,6 +23,10 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@RequestMapping(value = "memberAgree", method = RequestMethod.GET) //a태그는 모두 get
+	public void setMemberAgree() throws Exception{
+		
+	}
 	
 	@RequestMapping(value = "memberUpdate", method = RequestMethod.POST)
 	public ModelAndView setMemberUpdate(HttpSession session, ModelAndView mv, MemberDTO memberDTO) throws Exception{
