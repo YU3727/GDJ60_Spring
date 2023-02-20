@@ -119,7 +119,6 @@
 					<button type="submit" class="btn btn-primary mb-3">검색</button>
 				</div>
 			</form>
-		
 		</div>
 		
 	</div>
