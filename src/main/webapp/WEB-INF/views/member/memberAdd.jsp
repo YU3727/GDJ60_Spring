@@ -32,18 +32,17 @@
 			<label for="id" class="form-label">ID</label>
 			<input type="text" name="id" class="form-control" id="id" placeholder="id 입력">
 			<div id="idResult" class="hidden"></div>
-		  <!-- <input type="hidden" class="hidden" id="idh"> -->
 		</div>
 		
 		<div class="mb-3">
 			<label for="pw" class="form-label">Password</label>
-			<input type="text" name="pw" class="form-control" id="pw" placeholder="password 입력">
+			<input type="password" name="pw" class="form-control" id="pw" placeholder="password 입력">
 			<div id="pwResult" class="hidden"></div>
 		</div>
 
 		<div class="mb-3">
 			<label for="pw2" class="form-label">Password 확인</label>
-			<input type="text" name="pwCheck" class="form-control" id="pwCheck" placeholder="password 입력">
+			<input type="password" name="pwCheck" class="form-control" id="pwCheck" placeholder="password 입력">
 			<div id="pwCheckResult" class="hidden"></div>
 		</div>
 
