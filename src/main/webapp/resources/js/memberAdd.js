@@ -42,12 +42,14 @@ id.addEventListener("blur", function(){
     
     if(id.value!=0){
         idResult.innerHTML='';
-        idResult.className="blueResult";
+        idResult.classList.add("blueResult");
+        idResult.classList.remove("redResult");
         checkId = true;
         console.log(idResult.className); //확인용
     }else{
         idResult.innerHTML='id는 필수 사항입니다';
-        idResult.className="redResult";
+        idResult.classList.add("redResult");
+        idResult.classList.remove("blueResult");
         checkId = false;
         console.log(idResult.className); //확인용
     }
@@ -58,7 +60,9 @@ id.addEventListener("blur", function(){
 pw.addEventListener("blur", function(){
     if(pw.value.length==0){
         pwResult.innerHTML='pw는 필수 사항입니다';
-        pwResult.className="redResult";
+        //아래의 className을 덮어씌우는건 좋은방법은 아니다. 다른 스타일을 위한 클래스명이 있을 수 있기 때문에
+        pwResult.classList.add("redResult");
+        pwResult.classList.remove("blueResult")
         checkPw = false;
     }
 });
@@ -67,11 +71,13 @@ pw.addEventListener("keyup", function(){
     let length = pw.value.length;
     if(length >5 && length <13){
         pwResult.innerHTML='정상적인 비밀번호 입니다';
-        pwResult.className="blueResult";
+        pwResult.classList.add("blueResult");
+        pwResult.classList.remove("redResult");
         checkPw = true;
     }else{
         pwResult.innerHTML='비밀번호는 최소 6글자 이상, 최대 12글자 이하여야 합니다';
-        pwResult.className="redResult";
+        pwResult.classList.add("redResult");
+        pwResult.classList.remove("blueResult");
         checkPw = false;
     }
 });
@@ -88,15 +94,18 @@ pwCheck.addEventListener("blur", function(){
     //공백일때도 같다고 인식해버림 고쳐야한다
     if(pw.value.length==0 && pwCheck.value.length==0){
         pwCheckResult.innerHTML='비밀번호는 공백일 수 없습니다';
-        pwCheckResult.className="redResult";
+        pwCheckResult.classList.add("redResult");
+        pwCheckResult.classList.remove("blueResult");
         checkPwCheck = false;
     }else if(pw.value == pwCheck.value){
         pwCheckResult.innerHTML='비밀번호가 일치합니다';
-        pwCheckResult.className="blueResult";
+        pwCheckResult.classList.add("blueResult");
+        pwCheckResult.classList.remove("redResult");
         checkPwCheck = true;
     }else {
         pwCheckResult.innerHTML='비밀번호가 일치하지 않습니다';
-        pwCheckResult.className="redResult";
+        pwCheckResult.classList.add("redResult");
+        pwCheckResult.classList.remove("blueResult");
         checkPwCheck = false;
     }
 
@@ -107,11 +116,13 @@ pwCheck.addEventListener("blur", function(){
 name1.addEventListener("blur", function(){
     if(name1.value.length!=0){
         nameResult.innerHTML='';
-        nameResult.className="blueResult";
+        nameResult.classList.add("blueResult");
+        nameResult.classList.remove("redResult");
         checkName = true;
     }else{
         nameResult.innerHTML='이름은 필수 사항입니다';
-        nameResult.className="redResult";
+        nameResult.classList.add("redResult");
+        nameResult.classList.remove("blueResult");
         checkName = false;
     }
 });
@@ -121,11 +132,13 @@ name1.addEventListener("blur", function(){
 phone.addEventListener("blur", function(){
     if(phone.value.length!=0){
         phoneResult.innerHTML='';
-        phoneResult.className="blueResult";
+        phoneResult.classList.add("blueResult");
+        phoneResult.classList.remove("redResult");
         checkPhone = true;
     }else{
         phoneResult.innerHTML='전화번호는 필수 사항입니다';
-        phoneResult.className="redResult";
+        phoneResult.classList.add("redResult");
+        phoneResult.classList.remove("blueResult");
         checkPhone = false;
     }
 });
@@ -135,11 +148,13 @@ phone.addEventListener("blur", function(){
 email.addEventListener("blur", function(){
     if(email.value.length!=0){
         emailResult.innerHTML='';
-        emailResult.className="blueResult";
+        emailResult.classList.add("blueResult");
+        emailResult.classList.remove("redResult");
         checkEmail = true;
     }else{
         emailResult.innerHTML='이메일은 필수 사항입니다';
-        emailResult.className="redResult";
+        emailResult.classList.add("redResult");
+        emailResult.classList.remove("blueResult");
         checkEmail = false;
     }
 })
