@@ -8,11 +8,16 @@
 <meta charset="UTF-8">
 <title>Join us</title>
 	<c:import url="../template/common_css.jsp"></c:import>
+	<!-- 수업용 임시 -->
 	<style>
-		.hidden{
+		.redResult{
 			color: red;
 			font-size: 50%;
-			border: 0px white;
+			margin: 0 2px;
+		}
+		.blueResult{
+			color: blue;
+			font-size: 50%;
 			margin: 0 2px;
 		}
 	</style>

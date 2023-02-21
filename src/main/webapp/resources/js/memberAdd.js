@@ -14,7 +14,7 @@ const nameResult = document.getElementById("nameResult");
 const phoneResult = document.getElementById("phoneResult");
 const emailResult = document.getElementById("emailResult");
 
-//왜 button이나 input 태그가 아니라 폼에다가 걸어야 할까? 생각해보기
+//왜 button이나 input 태그가 아니라 폼에다가 걸어야 할까? -> form 자체에 걸어놔야 강제 이벤트발생 submit으로 form 내의 내용을 전송 가능하기때문인가?
 const frm = document.getElementById("frm");
 const btn = document.getElementById("btn");
 
@@ -39,12 +39,17 @@ let checkEmail = false;
 //1. id 검증
 id.addEventListener("blur", function(){
     //조건을 넣을때 중요한 것을 조건식에 넣고 아닌것을 else에 들어가게끔
+    
     if(id.value!=0){
         idResult.innerHTML='';
+        idResult.className="blueResult";
         checkId = true;
+        console.log(idResult.className); //확인용
     }else{
         idResult.innerHTML='id는 필수 사항입니다';
+        idResult.className="redResult";
         checkId = false;
+        console.log(idResult.className); //확인용
     }
 });
 
@@ -53,6 +58,7 @@ id.addEventListener("blur", function(){
 pw.addEventListener("blur", function(){
     if(pw.value.length==0){
         pwResult.innerHTML='pw는 필수 사항입니다';
+        pwResult.className="redResult";
         checkPw = false;
     }
 });
@@ -61,9 +67,11 @@ pw.addEventListener("keyup", function(){
     let length = pw.value.length;
     if(length >5 && length <13){
         pwResult.innerHTML='정상적인 비밀번호 입니다';
+        pwResult.className="blueResult";
         checkPw = true;
     }else{
         pwResult.innerHTML='비밀번호는 최소 6글자 이상, 최대 12글자 이하여야 합니다';
+        pwResult.className="redResult";
         checkPw = false;
     }
 });
@@ -80,12 +88,15 @@ pwCheck.addEventListener("blur", function(){
     //공백일때도 같다고 인식해버림 고쳐야한다
     if(pw.value.length==0 && pwCheck.value.length==0){
         pwCheckResult.innerHTML='비밀번호는 공백일 수 없습니다';
+        pwCheckResult.className="redResult";
         checkPwCheck = false;
     }else if(pw.value == pwCheck.value){
         pwCheckResult.innerHTML='비밀번호가 일치합니다';
-        checkPwCheck = true;  
+        pwCheckResult.className="blueResult";
+        checkPwCheck = true;
     }else {
         pwCheckResult.innerHTML='비밀번호가 일치하지 않습니다';
+        pwCheckResult.className="redResult";
         checkPwCheck = false;
     }
 
@@ -96,9 +107,11 @@ pwCheck.addEventListener("blur", function(){
 name1.addEventListener("blur", function(){
     if(name1.value.length!=0){
         nameResult.innerHTML='';
+        nameResult.className="blueResult";
         checkName = true;
     }else{
         nameResult.innerHTML='이름은 필수 사항입니다';
+        nameResult.className="redResult";
         checkName = false;
     }
 });
@@ -108,9 +121,11 @@ name1.addEventListener("blur", function(){
 phone.addEventListener("blur", function(){
     if(phone.value.length!=0){
         phoneResult.innerHTML='';
+        phoneResult.className="blueResult";
         checkPhone = true;
     }else{
         phoneResult.innerHTML='전화번호는 필수 사항입니다';
+        phoneResult.className="redResult";
         checkPhone = false;
     }
 });
@@ -120,9 +135,11 @@ phone.addEventListener("blur", function(){
 email.addEventListener("blur", function(){
     if(email.value.length!=0){
         emailResult.innerHTML='';
+        emailResult.className="blueResult";
         checkEmail = true;
     }else{
         emailResult.innerHTML='이메일은 필수 사항입니다';
+        emailResult.className="redResult";
         checkEmail = false;
     }
 })
