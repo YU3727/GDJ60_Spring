@@ -15,5 +15,7 @@
 		<property name="maxUploadSize" value="31457280"></property>
 	</bean>
 		
-		
+	<!-- test시 가짜 ServletContext객체를 생성. Null이 들어오는 문제를 해결하기 위해서 -->
+	<bean class="org.springframework.mock.web.MockServletContext" id="servletContext"></bean>
+	
 </beans>
