@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #d1{
+            width: 150px;
+            height: 150px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event 1</h1>
+
+    <div id="d1">
+        <input type="text" id="input1">
+    </div>
+
+    <div>
+        <input type="text" id="input2">
+        <select id="input3">
+            <option value="KT">KT</option>
+            <option value="SK">SK</option>
+            <option value="LG">LG</option>
+        </select>
+
+        <!-- 이벤트 호출방법1, 전치사 on + 이벤트이름 -->
+        <button onclick="f1()">click</button>
+        <button id="btn">click</button>
+
+    </div>
+
+    <script src="./event1.js"></script>
+</body>
+</html>
