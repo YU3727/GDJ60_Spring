@@ -41,7 +41,7 @@
 				<label for="files" class="form-label">이미지</label>
 				<input type="file" class="form-control" id="files" name="pic">
 			</div> -->
-			<button type="button" id="fileAdd">ADD</button>
+			<button type="button" id="fileAdd">Image Add</button>
 		</div>
 		
 <!-- 		<div class="mb-3">
@@ -80,6 +80,10 @@
 </div>
 
 <script src="../resources/js/fileManager.js"></script>
+<script>
+	setMax(3);
+	// setParam('f');
+</script>
 <c:import url="../template/common_js.jsp"></c:import>
 </body>
 </html>
