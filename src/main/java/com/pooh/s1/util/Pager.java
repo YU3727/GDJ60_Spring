@@ -5,6 +5,7 @@ public class Pager {
 	
 	//mapper에서의 사용을 위해 추가(pager 상속받고 다른 pager 만들어도 됨)
 	private Long bookNumber;
+	private Long Num;
 	
 	//mapper에 data type은 하나만 받을 수 있기 때문에 여기에 검색 기능을 담당하는 것들도 추가한다
 	private String kind;
@@ -126,6 +127,13 @@ public class Pager {
 //	}
 	
 	
+	public Long getNum() {
+		return Num;
+	}
+	
+	public void setNum(Long num) {
+		Num = num;
+	}
 	
 	public Long getBookNumber() {
 		return bookNumber;

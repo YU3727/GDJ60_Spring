@@ -1,4 +1,4 @@
-package com.pooh.s1.bankbook;
+package com.pooh.s1.board.notice;
 
 import static org.junit.Assert.*;
 
@@ -11,27 +11,24 @@ import com.pooh.s1.MyTestCase;
 import com.pooh.s1.board.BbsDTO;
 import com.pooh.s1.util.Pager;
 
+public class NoticeDAOTest extends MyTestCase{
 
-public class BankBookCommentDAOTest extends MyTestCase{
-	
 	@Autowired
-	private BankBookCommentDAO bankBookCommentDAO;
+	private NoticeDAO noticeDAO;
 	
-	//test할 메서드 작성
-	//list
 	@Test
 	public void getBoardListTest() throws Exception{
 		Pager pager = new Pager();
-		pager.setBookNumber(385L);
-//		long count = bankBookCommentDAO.getTotalCount(pager);
+		pager.setNum(1L);
+//		long count = noticeDAO.getTotalCount(pager);
+//		assertNotEquals(0, count);
 		
-		pager.setKind("contents");
+		pager.setKind("writer");
 		pager.setSearch("U");
-		pager.makeRow(); //startRow, lastRow를 계산
+		pager.makeRow();
 		
-		List<BbsDTO> ar = bankBookCommentDAO.getBoardList(pager);
+		List<BbsDTO> ar = noticeDAO.getBoardList(pager);
 		assertNotEquals(0, ar.size());
+		
 	}
-	
-	
 }

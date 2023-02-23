@@ -7,6 +7,7 @@ import com.pooh.s1.util.Pager;
 public interface BbsDAO {
 
 	//최상위 부모 DAO 인터페이스
+	//인터페이스는 추상메서드와 상수로만 구성되어있음. 자식이 물려받아서 메서드를 완성시켜야함
 	
 	//totalCount - 페이징 처리를 위해 전체 글 개수를 리턴
 	public Long getTotalCount(Pager pager) throws Exception;

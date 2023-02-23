@@ -1,0 +1,22 @@
+package com.pooh.s1.board;
+
+import java.util.List;
+
+import com.pooh.s1.util.Pager;
+
+public interface BbsService {
+
+	//최상위 부모 Service
+	
+	//list - 모든 DTO를 다 담을 수 있는 형으로 선언
+	public List<BbsDTO> getBoardList(Pager pager) throws Exception;
+	
+	//insert
+	public int getBoardAdd(BbsDTO bbsDTO) throws Exception;
+	
+	//update
+	public int getBoardUpdate(BbsDTO bbsDTO) throws Exception;
+	
+	//delete
+	public int getBoardDelete(BbsDTO bbsDTO) throws Exception;
+}

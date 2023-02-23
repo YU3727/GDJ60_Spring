@@ -17,7 +17,6 @@ public class BankBookCommentDAO implements BbsDAO{
 	//부모쪽에 변경이 생기면 변경사항을 알려주는 기능도 된다 : source - override/implements method 또는 메서드이름 자동완성
 	@Autowired
 	private SqlSession sqlSession;
-	
 	private final String NAMESPACE = "com.pooh.s1.bankbook.BankBookCommentDAO.";
 	
 	@Override
@@ -29,7 +28,7 @@ public class BankBookCommentDAO implements BbsDAO{
 	@Override
 	public List<BbsDTO> getBoardList(Pager pager) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NAMESPACE+"getBoardList", pager);
 	}
 
 	@Override

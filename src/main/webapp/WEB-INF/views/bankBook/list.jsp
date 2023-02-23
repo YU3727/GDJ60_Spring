@@ -92,16 +92,15 @@
 			    </li>
 			  </ul>
 			</nav>
-			
+		</div>
 			<!-- forEach의 속성 items는 배열, collection 등을 받아왔을 때 쓴다 -->
 			<!-- for(int i=1; i<=??; i++)[i] 이게 아래와 동일하다 -->
 			<%-- step은 커질 값, var는 pageScope에 있는 변수를 담을 수 있는 그릇? --%>
 <%-- 			<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
 				<a href="./list?page=${i}">${pageScope.i}</a>
 			</c:forEach> --%>
-		</div>
 		
-		<!-- 검색창 -->
+		<!-- search -->
 		<div class="row">
 			<form class=""row g-3" action="./list" method="get">
 				<div class="col-auto">
