@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-02-14T09:01:28.957Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="WyqrSeMJ_V6Aw02M4b7e" version="20.8.20" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2023-02-23T00:21:32.374Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="1yfClpKVIq0RZUGZ-sFH" version="20.8.23" type="github" pages="4">
   <diagram name="Flow" id="SFtcmK7Nqqrt-ngyzojN">
-    <mxGraphModel dx="704" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="504" dy="572" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -201,15 +201,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="UZKCKIMM1cQln6kZ_rzy-45" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="UZKCKIMM1cQln6kZ_rzy-42" target="UZKCKIMM1cQln6kZ_rzy-40" edge="1">
+        <mxCell id="UZKCKIMM1cQln6kZ_rzy-45" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="391" y="560" as="sourcePoint" />
-            <mxPoint x="441" y="510" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="460" y="560" />
-              <mxPoint x="460" y="470" />
-              <mxPoint x="180" y="470" />
-            </Array>
+            <mxPoint x="310" y="530" as="sourcePoint" />
+            <mxPoint x="220" y="530" as="targetPoint" />
+            <Array as="points" />
           </mxGeometry>
         </mxCell>
         <mxCell id="UZKCKIMM1cQln6kZ_rzy-46" value="Delete" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="UZKCKIMM1cQln6kZ_rzy-45" vertex="1" connectable="0">
@@ -229,12 +225,13 @@
         <mxCell id="UZKCKIMM1cQln6kZ_rzy-49" value="redirect" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="60" y="485" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="UZKCKIMM1cQln6kZ_rzy-50" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="UZKCKIMM1cQln6kZ_rzy-47" edge="1">
+        <mxCell id="UZKCKIMM1cQln6kZ_rzy-50" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="UZKCKIMM1cQln6kZ_rzy-47" edge="1" target="UZKCKIMM1cQln6kZ_rzy-42">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="391" y="720" as="sourcePoint" />
             <mxPoint x="460" y="560" as="targetPoint" />
             <Array as="points">
               <mxPoint x="460" y="720" />
+              <mxPoint x="460" y="560" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -255,10 +252,10 @@
         <mxCell id="UZKCKIMM1cQln6kZ_rzy-54" value="조금 더 큰 흐름" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="211" y="775" width="110" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ZMDJ8Z7MwRsi8SXzyfe7-2" value="Session" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="ZMDJ8Z7MwRsi8SXzyfe7-2" value="Session" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="336" y="25" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="ZMDJ8Z7MwRsi8SXzyfe7-4" value="member:MemberDTO&lt;br&gt;NAME : A" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="ZMDJ8Z7MwRsi8SXzyfe7-4" value="member:MemberDTO&lt;br&gt;NAME : A" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="400" y="35" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
