@@ -9,7 +9,7 @@
   	
   	<select id="getTotalCount" resultType="Long" parameterType="Pager">
   	SELECT COUNT(NUM) FROM BANKBOOKCOMMENT
-	WHERE BOOKNUMBER = #{}
+	WHERE BOOKNUMBER = #{bookNumber}
   	</select>
   	
   </mapper>
