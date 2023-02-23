@@ -20,8 +20,8 @@ public class BankBookService {
 	
 	//Application이 필요하므로 의존성주입.
 	//textcase에서 test시에는 Null이 들어온다. 추가 API가 필요함.
-	@Autowired
-	private ServletContext servletContext;
+//	@Autowired
+//	private ServletContext servletContext;
 	
 	@Autowired
 	private FileManager fileManager;

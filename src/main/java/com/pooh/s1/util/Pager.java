@@ -3,10 +3,12 @@ package com.pooh.s1.util;
 public class Pager {
 //230215 페이징처리를 위해 Mapper에서 사용할 클래스
 	
+	//mapper에서의 사용을 위해 추가(pager 상속받고 다른 pager 만들어도 됨)
+	private Long bookNumber;
+	
 	//mapper에 data type은 하나만 받을 수 있기 때문에 여기에 검색 기능을 담당하는 것들도 추가한다
 	private String kind;
 	private String search;
-	
 	
 	//객체타입(pager)으로 데이터를 받기 위해 멤버변수로 만들어둔다(page)
 	//한페이지에 출력할 row의 개수
@@ -122,6 +124,16 @@ public class Pager {
 //	public void setTotalCount(Long totalCount) {
 //		this.totalCount = totalCount;
 //	}
+	
+	
+	
+	public Long getBookNumber() {
+		return bookNumber;
+	}
+	
+	public void setBookNumber(Long bookNumber) {
+		this.bookNumber = bookNumber;
+	}
 	
 	public String getKind() {
 		return kind;
