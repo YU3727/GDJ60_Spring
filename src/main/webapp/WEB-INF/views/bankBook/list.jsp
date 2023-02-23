@@ -102,7 +102,7 @@
 		
 		<!-- search -->
 		<div class="row">
-			<form class=""row g-3" action="./list" method="get">
+			<form class="row g-3" action="./list" method="get">
 				<div class="col-auto">
 					<label for="kind" class="visually-hidden">Kind</label>
 					<select class="form-select" name="kind" id="kind" aria-label="Default select example">

@@ -82,7 +82,7 @@
 	<!-- search -->
 	<!-- 만들어뒀던거 쓸수는 있는데 select의 option 태그를 좀 바꿔야함 -->
 	<div class="row">
-		<form class=""row g-3" action="./list" method="get" id="searchForm">
+		<form class="row g-3" action="./list" method="get" id="searchForm">
 			<input type="hidden" name="page" value="1" id="page">
 			<div class="col-auto">
 				<label for="kind" class="visually-hidden">Kind</label>
