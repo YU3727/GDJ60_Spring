@@ -13,6 +13,13 @@
 <body>
 <c:import url="../template/header.jsp"></c:import>
 <div class="container-fluid">
+	<div class="row my-5">
+		<!-- 어느 영역(notice, qna, bankbook 등...)에서 온 데이터인지는 Controller까지만 알고있다. jsp는 모름 -->
+		<!-- 어느 영역으로 부터 온 데이터인지 알고싶으면, 위처럼 ModelAttribute로 table 이름을 넣어주면 된다 -->
+		<h1>${boardName} List</h1>
+	</div>
+
+
 	<div class="row">
 		<%-- <% List<BbsDTO> ar = (List<BbsDTO>)request.getAttribute("list"); %> --%>
 		<table class="table table-hover">

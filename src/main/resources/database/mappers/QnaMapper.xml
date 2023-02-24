@@ -7,7 +7,7 @@
   <mapper namespace="com.pooh.s1.board.qna.QnaDAO">
   
     <!-- 공통부분 -->
-  	<sql id="NoticeCondition">
+  	<sql id="QnaCondition">
   		<where>
 	  		<if test="kind=='title'">
 	  			TITLE LIKE '%' || #{search} || '%'
@@ -25,7 +25,7 @@
   	<!-- totalCount -->
   	<select id="getTotalCount" resultType="Long" parameterType="Pager">
   		SELECT COUNT(NUM) FROM QNA
-  		<include refid="NoticeCondition"></include>
+  		<include refid="QnaCondition"></include>
   	</select>
   
   	<!-- List -->
@@ -33,7 +33,7 @@
   		SELECT * FROM
 	  		(SELECT ROWNUM R, Q.* FROM
 		  		(SELECT NUM, TITLE, WRITER, REGDATE, HIT FROM QNA
-		  		<include refid="NoticeCondition"></include>
+		  		<include refid="QnaCondition"></include>
 	  		ORDER BY NUM DESC) Q)
   		WHERE R BETWEEN #{startRow} AND #{lastRow}	
   	</select>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,9 +21,15 @@ public class NoticeController {
 	@Autowired
 	private BbsService noticeService;
 	
+	@ModelAttribute("boardName")
+	public String getBoardName() {
+		return "notice";
+	}
+	
+	
 	//list
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public ModelAndView getBoardList(Pager pager) throws Exception{
+	public ModelAndView getBoardList(@ModelAttribute Pager pager) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		//pager에 kind, serach, page를 보냄
 		List<BbsDTO> ar = noticeService.getBoardList(pager);

@@ -19,9 +19,13 @@ public class QnaService implements BoardService{
 
 	@Override
 	public List<BbsDTO> getBoardList(Pager pager) throws Exception {
+		//DB에서 몇개 꺼내올지 계산
 		pager.makeRow();
+		//페이징 계산을 위해 토탈카운트 계산
 		Long count = qnaDAO.getTotalCount(pager);
+		//실제 페이징 계산
 		pager.makeNum(count);
+		//리스트 받아오기
 		return qnaDAO.getBoardList(pager);
 	}
 

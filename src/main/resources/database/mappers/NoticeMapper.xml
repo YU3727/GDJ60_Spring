@@ -41,6 +41,8 @@
   	</select>
   	
   	<!-- Add -->
+  	<insert id="setBoardAdd">
   	
+  	</insert>
   
   </mapper>
