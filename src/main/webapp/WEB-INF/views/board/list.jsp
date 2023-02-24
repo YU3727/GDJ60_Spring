@@ -39,13 +39,19 @@
 				<c:forEach items="${list}" var="dto">
 					<tr>
 						<td>${dto.num}</td>
-						<td><a href="./detail?num=${dto.num}">${dto.title}</a></td>
+						<td>
+							<!-- notice에는 depth가 없어서 exception이 발생한다. 여기도 try/catch같이 Exception 처리가 가능 -->
+							<c:catch>
+							<!-- begin = 1인 이유 : 0일땐 찍히면 안되고, 조건식이 end보다 작거나 같을때 이기 때문 -->
+							<c:forEach begin="1" end="${dto.depth}" varStatus="i">--<c:if test="${i.last}">></c:if></c:forEach>
+							</c:catch>					
+							<a href="./detail?num=${dto.num}">${dto.title}</a></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.hit}</td>
 					</tr>
 				</c:forEach>
-			</tbody>		
+			</tbody>
 		</table>
 	</div>
 	
@@ -108,7 +114,10 @@
 			</div>
 		</form>
 	</div>
-
+	
+	<div class="row">
+		<a href="./add" class="btn btn-primary">글작성</a>
+	</div>
 
 	
 </div>

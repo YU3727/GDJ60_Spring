@@ -36,27 +36,26 @@
 		  <textarea name="contents" class="form-control" id="contents" placeholder="insert contents here" rows="5"></textarea>
 		</div>
 		
-<!-- 		<div id="fileList">
-			<div class="mb-3">
+		<div id="fileList">
+<!-- 			<div class="mb-3">
 				<label for="files" class="form-label">이미지</label>
-				<input type="file" class="form-control" id="files" name="pic">
-			</div>
-			<button type="button" id="fileAdd">Image Add</button>
-		</div> -->
+				<input type="file" class="form-control" id="files" name="files">
+				<button type="button" id="del01~">X</button>
+			</div> -->
+			<button type="button" id="fileAdd">File Add</button>
+		</div>
 		
 
 		<div class="row justify-content-center mx-auto">
 			<button class="btn btn-outline-success col-2" type="submit">글쓰기</button>	
 		</div>
 
-
-
 	</form>
 </div>
 
 <script src="../resources/js/fileManager.js"></script>
 <script>
-	setMax(3);
+	setMax(5);
 	// setParam('f');
 </script>
 <c:import url="../template/common_js.jsp"></c:import>

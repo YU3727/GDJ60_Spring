@@ -32,7 +32,8 @@
   	<select id="getBoardList" parameterType="Pager" resultType="QnaDTO">
   		SELECT * FROM
 	  		(SELECT ROWNUM R, Q.* FROM
-		  		(SELECT NUM, TITLE, WRITER, REGDATE, HIT FROM QNA
+	  													<!-- 답글정렬을 위해 DEPTH까지 가져오기 -->
+		  		(SELECT NUM, TITLE, WRITER, REGDATE, HIT, DEPTH FROM QNA
 		  		<include refid="QnaCondition"></include>
 	  		<!-- ORDER BY NUM DESC) Q) -->
 	  		ORDER BY REF DESC, STEP ASC) Q) <!-- 답글 정렬을 위해 정렬방식 수정 -->
