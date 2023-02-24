@@ -4,13 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pooh.s1.board.BbsDTO;
 import com.pooh.s1.board.BbsService;
+import com.pooh.s1.board.BoardDTO;
 import com.pooh.s1.util.Pager;
 
 @Controller
@@ -18,7 +21,7 @@ import com.pooh.s1.util.Pager;
 public class QnaController {
 	
 	@Autowired
-	private BbsService qnaService;
+	private QnaService qnaService;
 	
 	@ModelAttribute("boardName")
 	public String getBoardName() {
@@ -36,5 +39,71 @@ public class QnaController {
 		mv.setViewName("board/list");
 		return mv;
 	}
-
+	
+	@GetMapping("add")
+	public String setBoardAdd() throws Exception{
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("board/add");
+		return "board/add";
+	}
+	
+	@PostMapping("add")
+	public ModelAndView setBoardAdd(QnaDTO qnaDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		int result = qnaService.setBoardAdd(qnaDTO);
+		
+		String message = "등록에 실패했습니다";
+		if(result > 0) {
+			message = "글 등록 성공!";
+		}
+		
+		//여기에 쓰는 이름은 공통적으로 쓰는 jsp에서 받는 변수명과 일치시켜야함 그래야 jsp에서 데이터를 꺼내주니까
+		mv.addObject("result", message);
+		mv.addObject("url", "./list"); //글 등록하고 나서도 url 주소는 /qna/add니까 list 주소를 담아서 jsp로 보내주면 거기서 보내준다
+		mv.setViewName("common/result");
+		return mv;
+	}
+	
+	@GetMapping("detail")
+	public ModelAndView getBoardDetail(QnaDTO qnaDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		BoardDTO boardDTO = qnaService.getBoardDetail(qnaDTO);
+		
+		mv.addObject("dto", boardDTO);
+		mv.setViewName("board/detail");
+		return mv;
+	}
+	
+	
+	//답글을 다는 기능
+	@GetMapping("reply")
+	public ModelAndView setReplyAdd(BoardDTO boardDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		//어느 글에대한 답글인가를 알기 위해 멤버변수 num이 필요함 -> num을 포함하는 모든 dto 사용 가능하나, boardDTO에 담음
+		//매개변수 앞에 @ModelAttribute가 생략되어있으므로 따로 담지않아도 jsp에서 사용할 수 있다
+		//jsp에서 사용할 이름은 매개변수 타입의 첫글자를 소문자로 바꾼것이 된다.(여기서는 boardDTO.num으로 꺼내면 됨)
+		//여기서 받아오는 num은 부모의 글번호 num을 받아오는것인가? ok
+		
+		mv.setViewName("board/reply");
+		return mv;
+	}
+	
+	//답글을 다는 기능
+	@PostMapping("reply")
+	public ModelAndView setReplyAdd(QnaDTO qnaDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = qnaService.setReplyAdd(qnaDTO);
+		String message = "글 등록 실패";
+		if(result > 0) {
+			message = "글 등록 성공";
+		}
+		
+		mv.addObject("result", message);
+		mv.addObject("url", "./list");
+//		아래는 부모글로 돌아가기
+//		mv.addObject("url", "./detail?num="+qnaDTO.getNum());
+		mv.setViewName("common/result");
+		return mv;
+	}
 }

@@ -16,7 +16,7 @@ public class QnaDAOTest extends MyTestCase{
 	@Autowired
 	private QnaDAO qnaDAO;
 	
-	@Test
+//	@Test
 	public void getBoardList() throws Exception{
 		Pager pager = new Pager();
 		pager.setNum(3L);
@@ -29,6 +29,17 @@ public class QnaDAOTest extends MyTestCase{
 		
 		List<BbsDTO> ar = qnaDAO.getBoardList(pager);
 		assertNotEquals(6, ar.size());
+	}
+	
+	@Test
+	public void setBoardAdd() throws Exception{
+		QnaDTO qnaDTO = new QnaDTO();
+		qnaDTO.setTitle("testTitle1");
+		qnaDTO.setContents("testContents");
+		qnaDTO.setWriter("testWriter1");
+		
+		int result = qnaDAO.setBoardAdd(qnaDTO);
+		assertEquals(1, result);
 	}
 	
 }

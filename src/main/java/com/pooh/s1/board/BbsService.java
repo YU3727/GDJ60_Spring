@@ -12,11 +12,11 @@ public interface BbsService {
 	public List<BbsDTO> getBoardList(Pager pager) throws Exception;
 	
 	//insert
-	public int getBoardAdd(BbsDTO bbsDTO) throws Exception;
+	public int setBoardAdd(BbsDTO bbsDTO) throws Exception;
 	
 	//update
-	public int getBoardUpdate(BbsDTO bbsDTO) throws Exception;
+	public int setBoardUpdate(BbsDTO bbsDTO) throws Exception;
 	
 	//delete
-	public int getBoardDelete(BbsDTO bbsDTO) throws Exception;
+	public int setBoardDelete(BbsDTO bbsDTO) throws Exception;
 }

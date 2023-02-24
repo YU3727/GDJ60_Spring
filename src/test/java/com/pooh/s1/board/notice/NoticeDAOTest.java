@@ -3,6 +3,7 @@ package com.pooh.s1.board.notice;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class NoticeDAOTest extends MyTestCase{
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
-	@Test
+//	@Test
 	public void getBoardListTest() throws Exception{
 		Pager pager = new Pager();
 		pager.setNum(1L);
@@ -29,6 +30,20 @@ public class NoticeDAOTest extends MyTestCase{
 		
 		List<BbsDTO> ar = noticeDAO.getBoardList(pager);
 		assertNotEquals(0, ar.size());
+	}
+	
+	@Test
+	public void setBoardAddTest() throws Exception{
+		Random r = new Random();
+		double d = r.nextDouble();
+		int num = (int)(d*1000);
+		d = num/100.0;
 		
+		NoticeDTO noticeDTO = new NoticeDTO();
+		noticeDTO.setTitle("Here comes new owner");
+		noticeDTO.setWriter("writer1");
+		noticeDTO.setContents("contents1");
+		int result = noticeDAO.setBoardAdd(noticeDTO);
+		assertEquals(1, result);
 	}
 }

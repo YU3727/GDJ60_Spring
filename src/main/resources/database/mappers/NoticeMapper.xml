@@ -40,9 +40,18 @@
   		WHERE R BETWEEN #{startRow} AND #{lastRow}	
   	</select>
   	
-  	<!-- Add -->
-  	<insert id="setBoardAdd">
+  	<!-- Detail -->
+  	<select id="getBoardDetail" parameterType="BoardDTO" resultType="NoticeDTO">
+  		SELECT * FROM NOTICE WHERE NUM = #{num}
+  	</select>
   	
+  	<!-- Add -->
+  	<!-- DAO에서 데이터 올 때  -->
+  	<insert id="setBoardAdd" parameterType="BbsDTO">
+  		<!-- testcase를 사용할 때 BbsDTO에는 title이 없는데 왜 에러가 안뜨느냐? -->
+  		<!-- test에서 객체를 만들 때 NoticeDTO를 만들었기 때문이다. Spring이 알아서 찾아서 형변환 해줌.. -->
+  		INSERT INTO NOTICE(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT)
+  		VALUES(NOTICE_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysdate, 0)
   	</insert>
   
   </mapper>

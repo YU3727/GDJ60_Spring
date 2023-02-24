@@ -15,7 +15,7 @@ import com.pooh.s1.util.Pager;
 public class NoticeService implements BoardService {
 
 	@Autowired
-	private BbsDAO noticeDAO;
+	private NoticeDAO noticeDAO;
 	
 	@Override
 	public List<BbsDTO> getBoardList(Pager pager) throws Exception {
@@ -27,19 +27,19 @@ public class NoticeService implements BoardService {
 	}
 
 	@Override
-	public int getBoardAdd(BbsDTO bbsDTO) throws Exception {
+	public int setBoardAdd(BbsDTO bbsDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return noticeDAO.setBoardAdd(bbsDTO);
+	}
+
+	@Override
+	public int setBoardUpdate(BbsDTO bbsDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getBoardUpdate(BbsDTO bbsDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getBoardDelete(BbsDTO bbsDTO) throws Exception {
+	public int setBoardDelete(BbsDTO bbsDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -47,7 +47,7 @@ public class NoticeService implements BoardService {
 	@Override
 	public BoardDTO getBoardDetail(BoardDTO boardDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return noticeDAO.getBoardDetail(boardDTO);
 	}
 
 }

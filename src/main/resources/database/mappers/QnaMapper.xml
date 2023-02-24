@@ -29,13 +29,45 @@
   	</select>
   
   	<!-- List -->
-  	<select id="getBoardList" resultType="QnaDTO" parameterType="Pager">
+  	<select id="getBoardList" parameterType="Pager" resultType="QnaDTO">
   		SELECT * FROM
 	  		(SELECT ROWNUM R, Q.* FROM
 		  		(SELECT NUM, TITLE, WRITER, REGDATE, HIT FROM QNA
 		  		<include refid="QnaCondition"></include>
-	  		ORDER BY NUM DESC) Q)
+	  		<!-- ORDER BY NUM DESC) Q) -->
+	  		ORDER BY REF DESC, STEP ASC) Q) <!-- 답글 정렬을 위해 정렬방식 수정 -->
   		WHERE R BETWEEN #{startRow} AND #{lastRow}	
   	</select>
-  
+  	
+  	<!-- Detail -->
+  	<select id="getBoardDetail" parameterType="BoardDTO" resultType="QnaDTO">
+  		SELECT * FROM QNA WHERE NUM = #{num}
+  	</select>
+  	
+  	<!-- add -->
+  	<!-- ref : 해당 글의 글번호, STEP, DEPTH : 0으로 -->
+  	<insert id="setBoardAdd" parameterType="BbsDTO">
+  		<selectKey keyProperty="num" order="BEFORE" resultType="Long">
+  			SELECT QNA_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
+  		
+ 		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
+  		VALUES(#{num}, #{title}, #{contents}, #{writer}, sysdate, 0, #{num}, 0, 0)
+  	</insert>
+  	
+  	<!-- 답글의 step 계산쿼리 -->
+  	<update id="setStepUpdate" parameterType="QnaDTO">
+  		<!-- 자기 자신의 Column을 가지고 오려면  -->
+  		UPDATE QNA SET STEP = STEP+1
+  		<!-- 'ref가 부모의 ref와 같고, step이 부모의 step보다 큰것'을 식으로 표현 -> parameter로는 ref, step 모두 있는 QnaDAO가 필요 -->
+  		WHERE REF = #{ref} AND STEP > #{step}
+  	</update>
+  	
+  	<!-- 답글 add -->
+  	<insert id="setReplyAdd" parameterType="QnaDTO">
+  		<!-- 원본글 + ref, step, depth까지 다 있어야 하므로 QnaDTO에 담아 보내야한다 -->
+  		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
+  		VALUES(QNA_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysdate, 0, #{ref}, #{step}, #{depth})
+  	</insert>
+  	
   </mapper>
