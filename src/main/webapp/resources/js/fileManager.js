@@ -111,14 +111,19 @@ fileAdd.addEventListener("click", function(){
 
 //새로 만들어진 delete 버튼에 이벤트 전달하기(캡쳐링)
 //부모 -> 자식 방향으로; 부모는 div태그(id=fileList), 자식은 add버튼 눌러서 만들어진 버튼
+//e.target은 div의 자식을 선택하는 선택자.
 fileList.addEventListener("click", function(e){
     //확인용
     // console.log(e.currentTarget, e.target);
     // console.log(e.target.classList.contains('dels'));
 
     if(e.target.classList.contains('dels')){
-        let id = e.target.getAttribute('data-del-idx');
-        document.getElementById(id).remove();
+        // let id = e.target.getAttribute('data-del-idx');
+        // document.getElementById(id).remove();
+        // count--;
+
+        //버튼을 클릭했을 때 부모를 찾는 상대선택자(.parentNode)
+        e.target.parentNode.remove();
         count--;
     }
 })

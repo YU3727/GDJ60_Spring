@@ -41,9 +41,40 @@
   	</select>
   	
   	<!-- Detail -->
-  	<select id="getBoardDetail" parameterType="BoardDTO" resultType="QnaDTO">
-  		SELECT * FROM QNA WHERE NUM = #{num}
+  	<select id="getBoardDetail" parameterType="BoardDTO" resultMap="getBoardResultDetail">
+  		<!-- SELECT * FROM QNA WHERE NUM = #{num} -->
+  		SELECT * FROM QNA Q
+  		LEFT OUTER JOIN
+  		QNAFILES F
+  		ON(Q.NUM = F.NUM)
+  		WHERE Q.NUM = #{num}
   	</select>
+  	
+  	<!-- QnaDTO와 QnaFileDTO를 연결짓기위해 resultMap 사용 -->
+  	<!-- 속성 type은 최종적으로 리턴하고싶은 데이터타입 -->
+  	<!-- 위의 resultType을 resultMap으로 수정하고 resultMap의 id -->
+  	<resultMap type="QnaDTO" id="getBoardResultDetail">
+  		<!-- id는 table의 pk, result는 나머지 // column = table의 column명, property = DTO의 setter이름 -->
+  		<id column="NUM" property="num"/>
+  		<result column="TITLE" property="title"/>
+  		<result column="WRITER" property="writer"/>
+  		<result column="CONTENTS" property="contents"/>
+  		<result column="REGDATE" property="regDate"/>
+  		<result column="HIT" property="hit"/>
+  		<result column="DEPTH" property="depth"/>
+  		
+  		<!-- 1:N의 관계일 때 쓰는것 -->
+  		<!-- property : QnaDTO의 has 관계인 DTO의 멤버변수명을 써줌(setter의 이름?). 여기서는 boardFileDTOs -->
+  		<!-- javaType : property의 데이터타입. ofType : Generic 입력(javaType안에 어떤 데이터 타입이 모여있는지) -->
+  		<collection property="boardFileDTOs" javaType="List" ofType="BoardFileDTO">
+  			<!-- 여기서부터는 boardFileDTO의 정보 // 동일한 데이터는 꺼내지 않아도 됨.(여기서는 num)-->
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="ORINAME" property="oriName"/>
+  		</collection>
+  	</resultMap>
+  	
+  	
   	
   	<!-- add -->
   	<!-- ref : 해당 글의 글번호, STEP, DEPTH : 0으로 -->
@@ -54,6 +85,13 @@
   		
  		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
   		VALUES(#{num}, #{title}, #{contents}, #{writer}, sysdate, 0, #{num}, 0, 0)
+  	</insert>
+  	
+  	<!-- file add -->
+  	<insert id="setBoardFileAdd" parameterType="BoardFileDTO">
+  		INSERT INTO QNAFILES (FILENUM, NUM, FILENAME, ORINAME)
+  		VALUES (QNA_SEQ.NEXTVAL, #{num}, #{fileName}, #{oriName})
+  		<!-- 시퀀스 번호는 공유해도 된다. 안겹치기만 하면 OK -->
   	</insert>
   	
   	<!-- 답글의 step 계산쿼리 -->

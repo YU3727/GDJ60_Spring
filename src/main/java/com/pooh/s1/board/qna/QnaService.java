@@ -1,15 +1,21 @@
 package com.pooh.s1.board.qna;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pooh.s1.board.BbsDAO;
 import com.pooh.s1.board.BbsDTO;
 import com.pooh.s1.board.BoardDAO;
 import com.pooh.s1.board.BoardDTO;
+import com.pooh.s1.board.BoardFileDTO;
 import com.pooh.s1.board.BoardService;
+import com.pooh.s1.util.FileManager;
 import com.pooh.s1.util.Pager;
 
 @Service
@@ -18,6 +24,8 @@ public class QnaService implements BoardService{
 	@Autowired
 	private QnaDAO qnaDAO;
 //	private BoardDAO qnaDAO; 얘도 가능
+	@Autowired
+	private FileManager fileManager;
 
 	@Override
 	public List<BbsDTO> getBoardList(Pager pager) throws Exception {
@@ -32,9 +40,42 @@ public class QnaService implements BoardService{
 	}
 
 	@Override
-	public int setBoardAdd(BbsDTO bbsDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return qnaDAO.setBoardAdd(bbsDTO);
+	public int setBoardAdd(BbsDTO bbsDTO, MultipartFile [] multipartFiles, HttpSession session) throws Exception {
+		//jsp에서 사용하는 input의 name속성명과 동일하게
+		//글쓴 것 insert와 파일 insert중에 뭘 먼저해야하는가? -> erdCloud에 가서 보면 글이 있어야 파일이 있을 수 있음(FK 관계에 의해 - 데이터 무결성)
+		//1. 글 insert
+		int result = qnaDAO.setBoardAdd(bbsDTO);
+		System.out.println("FILE SIZE " + multipartFiles.length);
+		//1. file HDD에 저장
+		File file = new File("/upload/qna");
+		//파일 객체가 주는 주소 확인용
+		System.out.println("path : "+file.getPath());
+		System.out.println("realpath :"+file.getAbsolutePath());
+		
+		String realPath = session.getServletContext().getRealPath("/resources/upload/qna");
+		System.out.println(realPath);
+		
+		//받아온게 파일 배열이니까 저장작업을 반복해야한다
+		for(MultipartFile multipartFile : multipartFiles) {
+			//파일 사이즈가 0이면 또는 비어있는지를 확인함
+			if(multipartFile.isEmpty()) {
+				continue; //조건식으로 올라가라
+			}
+			String fileName = fileManager.fileSave(multipartFile, realPath);
+			
+			//DAO, MAPPER 다 만들었으니 Service에서 호출하면 된다.
+			//2. DB INSERT
+			//객체만 만들면 기본값(0, null)이 들어가있음. mapper로 받아온 데이터를 넣으려고 하는거지 자동으로 들어가지 않음. 데이터 삽입은 아래에서.
+			BoardFileDTO boardFileDTO = new BoardFileDTO();
+			//실제 입력이 필요한 데이터는 Mapper에서 볼 수 있다. 여기서는 NUM, FILENAME, ORINAME 세가지 이걸 Service에서 입력해준다.
+			boardFileDTO.setNum(bbsDTO.getNum());
+			boardFileDTO.setFileName(fileName);
+			boardFileDTO.setOriName(multipartFile.getOriginalFilename());
+			
+			result = qnaDAO.setBoardFileAdd(boardFileDTO);
+		}
+		
+		return result;
 	}
 
 	@Override

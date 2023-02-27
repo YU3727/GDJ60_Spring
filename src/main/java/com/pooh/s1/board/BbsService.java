@@ -2,6 +2,10 @@ package com.pooh.s1.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.pooh.s1.util.Pager;
 
 public interface BbsService {
@@ -12,7 +16,9 @@ public interface BbsService {
 	public List<BbsDTO> getBoardList(Pager pager) throws Exception;
 	
 	//insert
-	public int setBoardAdd(BbsDTO bbsDTO) throws Exception;
+	//파일 추가를 위해 MultipartFile, HttpSession추가.(servlet context 꺼내려고)
+	//service까지는 매개변수명 동일하게, 컨트롤러에서는 jsp명의 속성명 name과 일치
+	public int setBoardAdd(BbsDTO bbsDTO, MultipartFile [] multipartFiles, HttpSession session) throws Exception;
 	
 	//update
 	public int setBoardUpdate(BbsDTO bbsDTO) throws Exception;

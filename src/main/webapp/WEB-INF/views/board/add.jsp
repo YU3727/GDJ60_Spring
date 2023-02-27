@@ -20,7 +20,7 @@
 	</div>
 	
 	<div class="row justify-content-center">
-	<form class="col-md-7" action="./add" method="post" enctype="multipart/form-data"> <!-- 안바꾸고 쓰면 안되나? -->
+	<form class="col-md-7" action="./add" method="post" enctype="multipart/form-data"> <!-- 미리 확인해야한다 + -context.xml의 mutipartresolver도 -->
 		<div class="mb-3">
 		  <label for="writer" class="form-label">작성자</label>
 		  <input type="text" name="writer" class="form-control" id="writer">
@@ -36,7 +36,7 @@
 		  <textarea name="contents" class="form-control" id="contents" placeholder="insert contents here" rows="5"></textarea>
 		</div>
 		
-		<div id="fileList">
+		<div id="fileList" class="my-5">
 <!-- 			<div class="mb-3">
 				<label for="files" class="form-label">이미지</label>
 				<input type="file" class="form-control" id="files" name="files">
@@ -56,7 +56,7 @@
 <script src="../resources/js/fileManager.js"></script>
 <script>
 	setMax(5);
-	// setParam('f');
+	setParam('files');
 </script>
 <c:import url="../template/common_js.jsp"></c:import>
 </body>

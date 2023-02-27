@@ -14,6 +14,8 @@ public interface BoardDAO extends BbsDAO{
 	
 	//add
 	
+	//fileAdd - 매개변수로 쓸 DTO를 만들어야함
+	public int setBoardFileAdd(BoardFileDTO boardFileDTO) throws Exception;
 	
 	//update
 	
