@@ -44,13 +44,13 @@
   	<select id="getBoardDetail" parameterType="BoardDTO" resultMap="getBoardResultDetail">
   		<!-- SELECT * FROM QNA WHERE NUM = #{num} -->
   		SELECT * FROM QNA Q
-  		LEFT OUTER JOIN
-  		QNAFILES F
-  		ON(Q.NUM = F.NUM)
+	  		LEFT OUTER JOIN
+	  		QNAFILES QF
+	  		ON(Q.NUM = QF.NUM)
   		WHERE Q.NUM = #{num}
   	</select>
   	
-  	<!-- QnaDTO와 QnaFileDTO를 연결짓기위해 resultMap 사용 -->
+  	<!-- QnaDTO와 BoardFileDTO를 연결짓기위해 resultMap 사용 -->
   	<!-- 속성 type은 최종적으로 리턴하고싶은 데이터타입 -->
   	<!-- 위의 resultType을 resultMap으로 수정하고 resultMap의 id -->
   	<resultMap type="QnaDTO" id="getBoardResultDetail">
@@ -82,7 +82,6 @@
   		<selectKey keyProperty="num" order="BEFORE" resultType="Long">
   			SELECT QNA_SEQ.NEXTVAL FROM DUAL
   		</selectKey>
-  		
  		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
   		VALUES(#{num}, #{title}, #{contents}, #{writer}, sysdate, 0, #{num}, 0, 0)
   	</insert>
@@ -108,5 +107,16 @@
   		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
   		VALUES(QNA_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysdate, 0, #{ref}, #{step}, #{depth})
   	</insert>
+  	
+  	<!-- delete -->
+  	<delete id="setBoardDelete" parameterType="BbsDTO">
+  		DELETE QNA WHERE NUM=#{num}
+  	</delete>
+  	
+  	<!-- file 삭제를 위한 조회쿼리 -->
+  	<!-- DAO에서 주는 파라메터를 입력하기 -->
+  	<select id="getBoardFileList" resultType="BoardFileDTO" parameterType="BbsDTO">
+  		SELECT * FROM QNAFILES WHERE NUM=#{num}
+  	</select>
   	
   </mapper>

@@ -110,4 +110,24 @@ public class QnaController {
 		mv.setViewName("common/result");
 		return mv;
 	}
+	
+	@GetMapping("delete")
+	public ModelAndView setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("common/result");
+		
+		int result = qnaService.setBoardDelete(bbsDTO, session);
+		String message = "삭제 실패";
+		if(result > 0) {
+			message = "삭제 성공";
+		}
+		
+		//common/result.jsp로
+		mv.addObject("result", message);
+		mv.addObject("url", "./list");
+		return mv;
+		//이렇게하면 파일 없을 때는 에러 뜨는데, table 만들 때 FK CONSTRAINT 걸때 ON DELETE CASCADE 걸거나 ON DELETE SET NULL; 추가해줌
+		//요즘에는 글 제목을 바꾸고, 열어볼수 없게끔 한다.(실제로는 UPDATE)
+		//회원 탈퇴도 마찬가지로 UPDATE를 통해 사용할 수 없게 만든다.
+	}
 }

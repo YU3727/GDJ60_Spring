@@ -20,7 +20,8 @@
 			<!-- list를 가져옴, 이 리스트를 변수 var(fileDTO)에 담음 -->
 			<c:forEach items="${dto.boardFileDTOs}" var="fileDTO">
 				<!-- notice와 함께 쓰는 jsp. 그러므로 boardName에서 꺼내오고, 그 아래 파일명은 fileDTO에서 꺼내오면 된다 -->
-				<a href="../resources/upload/${boardName}/${fileDTO.fileName}">${fileDTO.oriName}</a>
+				<%-- <a href="../resources/upload/${boardName}/${fileDTO.fileName}">${fileDTO.oriName}</a> --%>
+				<a href="./fileDown?fileNum=${fileDTO.fileNum}">${fileDTO.oriName}</a>
 			</c:forEach>
 			
 			<!-- notice일때는 필요없고 qna일때는 필요한 답글기능 -->

@@ -1,5 +1,7 @@
 package com.pooh.s1.board;
 
+import java.util.List;
+
 public interface BoardDAO extends BbsDAO{
 
 	//어떤 기능이 있는가?를 생각 -> List, Detail, Add, Update, delete
@@ -13,7 +15,7 @@ public interface BoardDAO extends BbsDAO{
 	public BoardDTO getBoardDetail(BoardDTO boardDTO) throws Exception;
 	
 	//add
-	
+		
 	//fileAdd - 매개변수로 쓸 DTO를 만들어야함
 	public int setBoardFileAdd(BoardFileDTO boardFileDTO) throws Exception;
 	
@@ -21,6 +23,9 @@ public interface BoardDAO extends BbsDAO{
 	
 	
 	//delete
+	
+	//BoardFileList - notie, qna 다 써야하니까 여기다가 추가
+	public List<BoardFileDTO> getBoardFileList(BbsDTO bbsDTO) throws Exception;
 	
 	
 }

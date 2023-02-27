@@ -85,9 +85,24 @@ public class QnaService implements BoardService{
 	}
 
 	@Override
-	public int setBoardDelete(BbsDTO bbsDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception {
+		//나중에 비밀번호 확인작업같은거 하면 여기서
+		
+		//CASCADE 옵션이 있으면, 글에 묶인 파일을 먼저 조회해와야 한다.(대신 따로 자식파일을 지울 필요는 없음)
+		List<BoardFileDTO> ar = qnaDAO.getBoardFileList(bbsDTO);
+		int result = qnaDAO.setBoardDelete(bbsDTO);
+		
+		//파일명 조회를 위해 mapper에 쿼리를 만들어야한다 - getBoardFileList
+		if(result > 0) {
+			//저장할때도 os랑 얘기해서 직접 하고, 지울때도 마찬가지.
+			//HDD에 있는 파일을 지우기 위해서는, 경로와 파일명이 필요하다. 즉, session이 필요하다
+			String realPath = session.getServletContext().getRealPath("resources/upload/qna");
+			
+			for(BoardFileDTO boardFileDTO : ar) {
+				boolean check = fileManager.fileDelete(realPath, boardFileDTO.getFileName());	
+			}
+		}
+		return result;
 	}
 
 	@Override

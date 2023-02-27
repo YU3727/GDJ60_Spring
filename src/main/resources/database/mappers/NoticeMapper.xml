@@ -41,17 +41,59 @@
   	</select>
   	
   	<!-- Detail -->
-  	<select id="getBoardDetail" parameterType="BoardDTO" resultType="NoticeDTO">
-  		SELECT * FROM NOTICE WHERE NUM = #{num}
+  	<select id="getBoardDetail" parameterType="BoardDTO" resultMap="getBoardResultDetail">
+  		<!-- SELECT * FROM NOTICE WHERE NUM = #{num} -->
+  		<!-- Notice와 BoardFileDTO의 연결을 위해 join, resultMap 쓰기 -->
+  		SELECT * FROM NOTICE N
+  			LEFT OUTER JOIN
+  			NOTICEFILES NF
+  			ON(N.NUM = NF.NUM)
+ 		WHERE N.NUM=#{num}
   	</select>
+  	
+  	<!-- detail page에서 첨부파일을 보여주기 위한 쿼리 -->
+  	<!-- NoticeDTO와 BoardFileDto 연결, 1:n 관계 -->
+  	<resultMap type="NoticeDTO" id="getBoardResultDetail">
+  		<id column="NUM" property="num"/>
+  		<result column="TITLE" property="title"/>
+  		<result column="CONTENTS" property="contents"/>
+  		<result column="WRITER" property="writer"/>
+  		<result column="REGDATE" property="regDate"/>
+  		<result column="HIT" property="hit"/>
+  		
+  		<collection property="boardFileDTOs" javaType="List" ofType="BoardFileDTO">
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="ORINAME" property="oriName"/>
+  		</collection>
+  	</resultMap>
   	
   	<!-- Add -->
   	<!-- DAO에서 데이터 올 때  -->
   	<insert id="setBoardAdd" parameterType="BbsDTO">
   		<!-- testcase를 사용할 때 BbsDTO에는 title이 없는데 왜 에러가 안뜨느냐? -->
   		<!-- test에서 객체를 만들 때 NoticeDTO를 만들었기 때문이다. Spring이 알아서 찾아서 형변환 해줌.. -->
+  		<selectKey keyProperty="num" order="BEFORE" resultType="Long">
+  			SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
   		INSERT INTO NOTICE(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT)
-  		VALUES(NOTICE_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysdate, 0)
+  		VALUES(#{num}, #{title}, #{contents}, #{writer}, sysdate, 0)
   	</insert>
-  
+  	
+  	<!-- fileAdd -->  
+  	<insert id="setBoardFileAdd" parameterType="BoardFileDTO">
+  		INSERT INTO NOTICEFILES (FILENUM, NUM, FILENAME, ORINAME)
+  		VALUES (NOTICE_SEQ.NEXTVAL, #{num}, #{fileName}, #{oriName})
+  	</insert>
+  	
+  	<!-- delete -->
+  	<delete id="setBoardDelete" parameterType="BbsDTO">
+  		DELETE NOTICE WHERE NUM=#{num}
+  	</delete>
+  	
+  	<!-- file 삭제를 위한 조회 -->
+  	<select id="getBoardFileList" resultType="BoardFileDTO" parameterType="BbsDTO">
+  		SELECT * FROM NOTICEFILES WHERE NUM=#{num}
+  	</select>
+  	
   </mapper>
