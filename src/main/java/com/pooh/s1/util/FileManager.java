@@ -14,6 +14,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileManager {
 //230216 file upload
 	
+	//File을 HDD에서 삭제하는 역할
+	//어느 '경로'의 '누구'를 삭제할거냐?
+	public boolean fileDelete(String path, String fileName) {
+		File file = new File(path, fileName);
+		
+		return file.delete();	
+	}
+	
+	
+	
 	//File을 HDD에 저장하는 역할
 	//공통적으로 사용하기 위해 각각의 Service에 작성해야할 코드를 클래스로 따로 뻈음
 	public String fileSave(MultipartFile multipartFile, String path) throws Exception{

@@ -19,6 +19,13 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"></beans:property>
+	</beans:bean>
+	
+	<!-- File Download - Custom View를 해석하기위한 Resolver의 객체생성 -->
+	<!-- BeanName은 따로 지정하지 않으면 클래스이름을 첫글자로 바꾼 것으로 설정된다. 설정하고싶으면 @Service("beanName")으로 따로 적어준다 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"></beans:property>
 	</beans:bean>
 	
 	<context:component-scan base-package="com.pooh.s1" />

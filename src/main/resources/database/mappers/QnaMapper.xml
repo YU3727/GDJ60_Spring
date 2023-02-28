@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema 추가 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.pooh.s1.board.qna.QnaDAO">
+  
+    <!-- 공통부분 -->
+  	<sql id="QnaCondition">
+  		<where>
+	  		<if test="kind=='title'">
+	  			TITLE LIKE '%' || #{search} || '%'
+	  		</if>
+	  		<if test="kind=='contents'">
+	  			CONTENTS LIKE '%' || #{search} || '%'
+	  		</if>
+	  		<if test="kind=='writer'">
+	  			WRITER LIKE '%' || #{search} || '%'
+	  		</if>
+  		</where>
+  	</sql>
+  	
+  	
+  	<!-- totalCount -->
+  	<select id="getTotalCount" resultType="Long" parameterType="Pager">
+  		SELECT COUNT(NUM) FROM QNA
+  		<include refid="QnaCondition"></include>
+  	</select>
+  
+  	<!-- List -->
+  	<select id="getBoardList" parameterType="Pager" resultType="QnaDTO">
+  		SELECT * FROM
+	  		(SELECT ROWNUM R, Q.* FROM
+	  													<!-- 답글정렬을 위해 DEPTH까지 가져오기 -->
+		  		(SELECT NUM, TITLE, WRITER, REGDATE, HIT, DEPTH FROM QNA
+		  		<include refid="QnaCondition"></include>
+	  		<!-- ORDER BY NUM DESC) Q) -->
+	  		ORDER BY REF DESC, STEP ASC) Q) <!-- 답글 정렬을 위해 정렬방식 수정 -->
+  		WHERE R BETWEEN #{startRow} AND #{lastRow}	
+  	</select>
+  	
+  	<!-- Detail -->
+  	<select id="getBoardDetail" parameterType="BoardDTO" resultMap="getBoardResultDetail">
+  		<!-- SELECT * FROM QNA WHERE NUM = #{num} -->
+  		SELECT * FROM QNA Q
+	  		LEFT OUTER JOIN
+	  		QNAFILES QF
+	  		ON(Q.NUM = QF.NUM)
+  		WHERE Q.NUM = #{num}
+  	</select>
+  	
+  	<!-- QnaDTO와 BoardFileDTO를 연결짓기위해 resultMap 사용 -->
+  	<!-- 속성 type은 최종적으로 리턴하고싶은 데이터타입 -->
+  	<!-- 위의 resultType을 resultMap으로 수정하고 resultMap의 id -->
+  	<resultMap type="QnaDTO" id="getBoardResultDetail">
+  		<!-- id는 table의 pk, result는 나머지 // column = table의 column명, property = DTO의 setter이름 -->
+  		<id column="NUM" property="num"/>
+  		<result column="TITLE" property="title"/>
+  		<result column="WRITER" property="writer"/>
+  		<result column="CONTENTS" property="contents"/>
+  		<result column="REGDATE" property="regDate"/>
+  		<result column="HIT" property="hit"/>
+  		<result column="DEPTH" property="depth"/>
+  		
+  		<!-- 1:N의 관계일 때 쓰는것 -->
+  		<!-- property : QnaDTO의 has 관계인 DTO의 멤버변수명을 써줌(setter의 이름?). 여기서는 boardFileDTOs -->
+  		<!-- javaType : property의 데이터타입. ofType : Generic 입력(javaType안에 어떤 데이터 타입이 모여있는지) -->
+  		<collection property="boardFileDTOs" javaType="List" ofType="BoardFileDTO">
+  			<!-- 여기서부터는 boardFileDTO의 정보 // 동일한 데이터는 꺼내지 않아도 됨.(여기서는 num)-->
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="ORINAME" property="oriName"/>
+  		</collection>
+  	</resultMap>
+  	
+  	
+  	
+  	<!-- add -->
+  	<!-- ref : 해당 글의 글번호, STEP, DEPTH : 0으로 -->
+  	<insert id="setBoardAdd" parameterType="BbsDTO">
+  		<selectKey keyProperty="num" order="BEFORE" resultType="Long">
+  			SELECT QNA_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
+ 		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
+  		VALUES(#{num}, #{title}, #{contents}, #{writer}, sysdate, 0, #{num}, 0, 0)
+  	</insert>
+  	
+  	<!-- file add -->
+  	<insert id="setBoardFileAdd" parameterType="BoardFileDTO">
+  		INSERT INTO QNAFILES (FILENUM, NUM, FILENAME, ORINAME)
+  		VALUES (QNA_SEQ.NEXTVAL, #{num}, #{fileName}, #{oriName})
+  		<!-- 시퀀스 번호는 공유해도 된다. 안겹치기만 하면 OK -->
+  	</insert>
+  	
+  	<!-- 답글의 step 계산쿼리 -->
+  	<update id="setStepUpdate" parameterType="QnaDTO">
+  		<!-- 자기 자신의 Column을 가지고 오려면  -->
+  		UPDATE QNA SET STEP = STEP+1
+  		<!-- 'ref가 부모의 ref와 같고, step이 부모의 step보다 큰것'을 식으로 표현 -> parameter로는 ref, step 모두 있는 QnaDAO가 필요 -->
+  		WHERE REF = #{ref} AND STEP > #{step}
+  	</update>
+  	
+  	<!-- 답글 add -->
+  	<insert id="setReplyAdd" parameterType="QnaDTO">
+  		<!-- 원본글 + ref, step, depth까지 다 있어야 하므로 QnaDTO에 담아 보내야한다 -->
+  		INSERT INTO QNA(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
+  		VALUES(QNA_SEQ.NEXTVAL, #{title}, #{contents}, #{writer}, sysdate, 0, #{ref}, #{step}, #{depth})
+  	</insert>
+  	
+  	<!-- delete -->
+  	<delete id="setBoardDelete" parameterType="BbsDTO">
+  		DELETE QNA WHERE NUM=#{num}
+  	</delete>
+  	
+  	<!-- file 삭제를 위한 조회쿼리 -->
+  	<!-- DAO에서 주는 파라메터를 입력하기 -->
+  	<select id="getBoardFileList" resultType="BoardFileDTO" parameterType="BbsDTO">
+  		SELECT * FROM QNAFILES WHERE NUM=#{num}
+  	</select>
+  	
+  	<!-- file 하나를 조회하기위한 쿼리 -->
+  	<select id="getBoardFileDetail" resultType="BoardFileDTO" parameterType="BoardFileDTO">
+  		SELECT * FROM QNAFILES WHERE FILENUM=#{fileNum}
+  	</select>
+  	
+  </mapper>
