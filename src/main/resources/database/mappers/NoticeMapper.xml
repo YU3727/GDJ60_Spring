@@ -91,9 +91,14 @@
   		DELETE NOTICE WHERE NUM=#{num}
   	</delete>
   	
-  	<!-- file 삭제를 위한 조회 -->
+  	<!-- file 삭제를 위한 조회쿼리 -->
   	<select id="getBoardFileList" resultType="BoardFileDTO" parameterType="BbsDTO">
   		SELECT * FROM NOTICEFILES WHERE NUM=#{num}
+  	</select>
+  	
+  	<!-- file 하나를 조회하기위한 쿼리 -->
+  	<select id="getBoardFileDetail" resultType="BoardFileDTO" parameterType="BoardFileDTO">
+  		SELECT * FROM NOTICEFILES WHERE FILENUM=#{fileNum}
   	</select>
   	
   </mapper>

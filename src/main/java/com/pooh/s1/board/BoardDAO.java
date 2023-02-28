@@ -27,5 +27,6 @@ public interface BoardDAO extends BbsDAO{
 	//BoardFileList - notie, qna 다 써야하니까 여기다가 추가
 	public List<BoardFileDTO> getBoardFileList(BbsDTO bbsDTO) throws Exception;
 	
-	
+	//BoardFileDetail - 파일 하나 조회 -> boardService에도
+	public BoardFileDTO getBoardFileDetail(BoardFileDTO boardFileDTO) throws Exception;
 }

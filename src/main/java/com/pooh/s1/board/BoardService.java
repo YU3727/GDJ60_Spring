@@ -12,4 +12,5 @@ public interface BoardService extends BbsService{
 //	public int setBoardAdd(BbsDTO bbsDTO, MultipartFile [] multipartFiles) throws Exception; //얘를 쓰면 두번 받아야함...
 //	public int setBoardAdd(BoardDTO boardDTO, MultipartFile [] files) throws Exception; //얘도 가능
 	
+	public BoardFileDTO getBoardFileDetail(BoardFileDTO boardFileDTO) throws Exception;
 }

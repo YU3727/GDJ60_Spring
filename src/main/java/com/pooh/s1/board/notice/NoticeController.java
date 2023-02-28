@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pooh.s1.board.BbsDTO;
 import com.pooh.s1.board.BbsService;
 import com.pooh.s1.board.BoardDTO;
+import com.pooh.s1.board.BoardFileDTO;
 import com.pooh.s1.board.BoardService;
 import com.pooh.s1.util.Pager;
 
@@ -98,6 +99,13 @@ public class NoticeController {
 		
 		mv.addObject("result", message);
 		mv.addObject("url", "./list");
+		return mv;
+	}
+	
+	@GetMapping("fileDown")
+	public ModelAndView getBoardFileDetail(BoardFileDTO boardFileDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
 		return mv;
 	}
 	

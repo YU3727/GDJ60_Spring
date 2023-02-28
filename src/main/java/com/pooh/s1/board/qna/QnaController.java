@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pooh.s1.board.BbsDTO;
 import com.pooh.s1.board.BbsService;
 import com.pooh.s1.board.BoardDTO;
+import com.pooh.s1.board.BoardFileDTO;
 import com.pooh.s1.util.Pager;
 
 @Controller
@@ -129,5 +130,23 @@ public class QnaController {
 		//이렇게하면 파일 없을 때는 에러 뜨는데, table 만들 때 FK CONSTRAINT 걸때 ON DELETE CASCADE 걸거나 ON DELETE SET NULL; 추가해줌
 		//요즘에는 글 제목을 바꾸고, 열어볼수 없게끔 한다.(실제로는 UPDATE)
 		//회원 탈퇴도 마찬가지로 UPDATE를 통해 사용할 수 없게 만든다.
+	}
+	
+	@GetMapping("fileDown")
+	public ModelAndView getFileDown(BoardFileDTO boardFileDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		//fileNum으로 조회하려고 함 -> Mapper
+		boardFileDTO = qnaService.getBoardFileDetail(boardFileDTO);
+		
+		//return 까지는 ModelAndView로 보내는건 같고, 목적지가 FileDown이라는 CustomView로 보내려고 한다.
+		//D.S.가 보내주는 것이기 때문에, Spring(D.S.) 또한 CustomView의 존재를 알아야한다.(IRVR은 servlet-context.xml에 등록해둬서 아는 것)
+		//servlet-context에 가서 custom view resolver를 만들어주자.
+		
+		mv.addObject("boardFile", boardFileDTO);
+		//Servlet-context.xml에 view의 우선순위를 지정해두었다.
+		//AbstractView를 상속받은 클래스에 한해서 BeanNameViewResolver가 먼저 탐색을 해본다.
+		mv.setViewName("fileDownView");
+		
+		return mv;
 	}
 }
