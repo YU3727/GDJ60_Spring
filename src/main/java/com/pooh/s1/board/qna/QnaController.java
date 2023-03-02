@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -158,6 +159,38 @@ public class QnaController {
 		
 		mv.addObject("dto", boardDTO); //dto라는 속성명으로 보내야 interceptor에서 캐치가능
 		mv.setViewName("board/update");
+		return mv;
+	}
+	
+	
+	//-------------------------------------------------------------------------
+	
+	//url처리를 하는게 아니기 때문에 get/postMapping을 하진 않음
+	//exception을 처리하는 Annotation을 준다(exception클래스명.class)
+	@ExceptionHandler(NullPointerException.class)
+	public ModelAndView fixException() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("message", "잘못된 접근입니다<br>관리자에게 문의 하세요");
+		mv.setViewName("common/error_500");
+		
+		return mv;
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView fixException2() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("message", "잘못된 접근입니다<br>관리자에게 문의 하세요");
+		mv.setViewName("common/error_500");
+		
+		return mv;
+	}
+	
+	@ExceptionHandler(Throwable.class)
+	public ModelAndView fixException3() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("message", "잘못된 접근입니다<br>관리자에게 문의 하세요");
+		mv.setViewName("common/error_500");
+		
 		return mv;
 	}
 }
