@@ -18,16 +18,16 @@ public class MemberCheckInterceptor extends HandlerInterceptorAdapter{
 		// TODO Auto-generated method stub
 		//Controller 진입 전
 		//return이 true라면 다음 Controller로 진행, false라면 Controller로 진행X(개발자가 다른곳으로 보내야함, fowarding, redirect)
-		System.out.println("Controller 진입 전");
 		//회원이면 session에 정보가 있을거고, 있으면 "member" 속성명의 데이터를 가져와라. 없으면 null일것.
 		
 		//memberDTO를 넣었지만 session에서 꺼내면 object 타입
+		System.out.println("Member Check Interceptor");
 		Object obj = request.getSession().getAttribute("member"); //member는 개발자가 입력하는대로
 		boolean check;
 		
 		if(obj != null) {
 			//이상 없으면 통과
-			check = true;
+			return true;
 			
 		} else {
 			//이상 있으면 돌려보냄
@@ -49,9 +49,9 @@ public class MemberCheckInterceptor extends HandlerInterceptorAdapter{
 			
 			//2. Redirect	
 			response.sendRedirect("../../../../../member/memberLogin"); //root에서 더이상 올라갈 수 없기때문에 이렇게 해도 ok. 큰 프로젝트는 이런식으로 쓴다
-			check = false;
+			
 		}
-		return check;
+		return false;
 	}
 	
 //	@Override

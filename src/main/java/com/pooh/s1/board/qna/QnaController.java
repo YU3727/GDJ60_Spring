@@ -150,4 +150,14 @@ public class QnaController {
 		
 		return mv;
 	}
+	
+	@GetMapping("update")
+	public ModelAndView setBoardUpdate(BoardDTO boardDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		boardDTO = qnaService.getBoardDetail(boardDTO);
+		
+		mv.addObject("dto", boardDTO); //dto라는 속성명으로 보내야 interceptor에서 캐치가능
+		mv.setViewName("board/update");
+		return mv;
+	}
 }
