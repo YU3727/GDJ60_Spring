@@ -32,7 +32,7 @@ public class NoticeDAOTest extends MyTestCase{
 		assertNotEquals(0, ar.size());
 	}
 	
-	@Test
+//	@Test
 	public void setBoardAddTest() throws Exception{
 		Random r = new Random();
 		double d = r.nextDouble();

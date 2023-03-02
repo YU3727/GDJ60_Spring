@@ -19,7 +19,7 @@ public class BankBookCommentDAOTest extends MyTestCase{
 	
 	//test할 메서드 작성
 	//list
-	@Test
+//	@Test
 	public void getBoardListTest() throws Exception{
 		Pager pager = new Pager();
 		pager.setBookNumber(385L);

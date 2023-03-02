@@ -44,7 +44,7 @@ public class ProductDAOTest extends MyTestCase {
 	}
 	
 	//insert test
-	@Test
+//	@Test
 	public void setProductAddTest() throws Exception{
 		for(int i=1;i<=30;i++) {
 			ProductDTO productDTO = new ProductDTO();

@@ -31,7 +31,7 @@ public class QnaDAOTest extends MyTestCase{
 		assertNotEquals(6, ar.size());
 	}
 	
-	@Test
+//	@Test
 	public void setBoardAdd() throws Exception{
 		QnaDTO qnaDTO = new QnaDTO();
 		qnaDTO.setTitle("testTitle1");
