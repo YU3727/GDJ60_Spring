@@ -39,6 +39,11 @@
 			</div>
 			
 			<div class="mb-3">
+			  <label for="roleName" class="form-label">권한등급</label>
+			  <input type="text" name="roleName" class="form-control" id="roleName" value="${dto.roleDTO.roleName}" readonly>
+			</div>
+			
+			<div class="mb-3">
 				<a href="./memberUpdate" btn btn-danger>정보수정</a>
 			</div>
 		</div>

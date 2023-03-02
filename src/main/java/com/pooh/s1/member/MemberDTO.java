@@ -1,7 +1,5 @@
 package com.pooh.s1.member;
 
-import java.util.List;
-
 public class MemberDTO {
 //230202 8교시
 	
@@ -65,6 +63,5 @@ public class MemberDTO {
 	public void setRoleDTO(RoleDTO roleDTO) {
 		this.roleDTO = roleDTO;
 	}
-	
 	
 }

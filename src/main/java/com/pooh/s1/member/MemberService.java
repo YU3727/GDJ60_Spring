@@ -37,6 +37,8 @@ public class MemberService {
 		if(result != null && memberDTO.getPw().equals(result.getPw())) {
 			memberDTO.setPw(null); //여기서 null을 넣으면 DTO에 pw값이 null이 됨
 			//memberDTO에 ID만 있음
+			memberDTO.setRoleDTO(result.getRoleDTO());
+			//이제 memberDTO에 ID와 roleDTO 정보만 담겨있음
 			return memberDTO;
 		}else {
 			return null;

@@ -23,7 +23,7 @@
 	<form class="col-md-7" action="./add" method="post" enctype="multipart/form-data"> <!-- 미리 확인해야한다 + -context.xml의 mutipartresolver도 -->
 		<div class="mb-3">
 		  <label for="writer" class="form-label">작성자</label>
-		  <input type="text" name="writer" class="form-control" id="writer">
+		  <input type="text" name="writer" readonly value="${member.id}" class="form-control" id="writer">
 		</div>
 		
 		<div class="mb-3">

@@ -46,7 +46,14 @@
 							<c:forEach begin="1" end="${dto.depth}" varStatus="i">--<c:if test="${i.last}">></c:if></c:forEach>
 							</c:catch>					
 							<a href="./detail?num=${dto.num}">${dto.title}</a></td>
-						<td>${dto.writer}</td>
+						<td>
+							<c:choose>
+								<c:when test="${boardName eq 'notice'}">
+									관리자
+								</c:when>
+								<c:otherwise>${dto.writer}</c:otherwise>
+							</c:choose>
+						</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.hit}</td>
 					</tr>
@@ -115,13 +122,26 @@
 		</form>
 	</div>
 	
-	<div class="row">
-		<a href="./add" class="btn btn-primary">글작성</a>
-	</div>
-
+	<!-- login 한 사람만 보였으면 좋겠다 -->
+	<!-- notice게시판인 경우 ADMIN 등급만 글작성이 가능해야한다 -->
+	<c:if test="${not empty sessionScope.member}">
+		<c:if test="${boardName=='notice' and member.roleDTO.roleName eq 'ADMIN'}">
+			<div class="row">
+				<a href="./add" class="btn btn-primary">글작성</a>
+			</div>			
+		</c:if>
+		<c:if test="${boardName=='qna'}">
+			<div class="row">
+				<a href="./add" class="btn btn-primary">글작성</a>
+			</div>
+		</c:if>
+	</c:if>
 	
 </div>
 <c:import url="../template/common_js.jsp"></c:import>
 <script src="../resources/js/pagination.js"></script>
+<script type="text/javascript">
+	setData('${pager.search}')
+</script>
 </body>
 </html>

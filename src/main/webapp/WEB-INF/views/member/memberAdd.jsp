@@ -46,7 +46,7 @@
 		</div>
 
 		<div class="mb-3">
-			<label for="pw2" class="form-label">Password 확인</label>
+			<label for="pwCheck" class="form-label">Password 확인</label>
 			<input type="password" name="pwCheck" class="form-control" id="pwCheck" placeholder="password 입력">
 			<div id="pwCheckResult" class=""></div>
 		</div>

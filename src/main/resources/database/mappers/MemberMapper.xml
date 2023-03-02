@@ -6,7 +6,7 @@
   
   <mapper namespace="com.pooh.s1.member.MemberDAO">
 	
-	<update id="setMemberUpdate" parameterType="MemberDTO">
+	<update id="setMemberUpdate" parameterType="MemberDTO" >
 		UPDATE MEMBER
 		SET MEMBERNAME = #{memberName}, MEMBERPHONE = #{memberPhone}, EMAIL = #{email}
 		WHERE ID = #{id}
@@ -18,10 +18,30 @@
   	</select> -->
   	
   	<!-- pw를 service에서 확인하기 -->
-	  <select id="getMemberLogin" parameterType="MemberDTO" resultType="MemberDTO">
-		SELECT * FROM MEMBER
-		WHERE ID = #{id}
+	  <select id="getMemberLogin" parameterType="MemberDTO" resultMap="getMemberLoginResult">
+		<!-- SELECT * FROM MEMBER WHERE ID = #{id} -->
+  		SELECT R.*, M.* FROM MEMBER M
+			INNER JOIN
+			MEMBER_ROLE MR
+			ON(M.ID = MR.ID)
+			INNER JOIN 
+			ROLE R 
+			ON(R.ROLENUM = MR.ROLENUM)
+		WHERE M.ID=#{id}
   	</select>
+  	
+ 	<resultMap type="MemberDTO" id="getMemberLoginResult">
+  		<id column="ID" property="id"/>
+  		<result column="PW" property="pw"/>
+  		<result column="MEMBERNAME" property="memberName"/>
+  		<result column="MEMBERPHONE" property="memberPhone"/>
+  		<result column="EMAIL" property="email"/>
+  		
+  		<association property="roleDTO" javaType="RoleDTO">
+  			<id column="ROLENUM" property="roleNum"/>
+  			<result column="ROLENAME" property="roleName"/>
+  		</association>
+  	</resultMap>
   
 	<insert id="setMemberAdd" parameterType="MemberDTO">
 		INSERT INTO MEMBER
@@ -34,8 +54,7 @@
 		<!-- get -->
 	</insert>
 	
-	
-	  	<select id="getMemberList" resultType="MemberDTO">
+	<select id="getMemberList" resultType="MemberDTO">
   		SELECT * FROM MEMBER
   	</select>
   	

@@ -28,6 +28,20 @@
 		<beans:property name="order" value="0"></beans:property>
 	</beans:bean>
 	
+	<!-- 어떤 url이 왔을 떄, 어떤 interceptor를 실행할건지에 대한 정보 제공 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/qna/*"/>
+			<exclude-mapping path="/qna/list"/> <!-- list는 제외하고 나머지에 필터링을 걸어줌. 이게 용이하다 -->
+			<!-- 객체를 여기에서 만들어서 써라 : <beans:bean></beans:bean> -->
+			<!-- 객체를 참조해서 써라 -->
+			<beans:ref bean="memberCheckInterceptor"/>
+		</interceptor>
+	
+	</interceptors>
+	
+	
+	
 	<context:component-scan base-package="com.pooh.s1" />
 	
 	

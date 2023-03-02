@@ -35,8 +35,10 @@
 				<form action="./update" id="frm" method="get">
 					<!-- name은 파라미터 이름, value는 파라미터의 값 -->
 					<input type="hidden" name="num" value="${dto.num}">
-					<button id="update" type="submit" class="btn btn-primary">UPDATE</button>
-					<button id="delete" type="button" class="btn btn-info">DELETE</button>
+					<c:if test="${member.id eq dto.writer}">
+						<button id="update" type="submit" class="btn btn-primary">UPDATE</button>
+						<button id="delete" type="button" class="btn btn-info">DELETE</button>
+					</c:if>
 				</form>
 			</div>
 			

@@ -62,6 +62,7 @@ public class NoticeController {
 	public ModelAndView setBoardAdd(NoticeDTO noticeDTO, MultipartFile [] files, HttpSession session) throws Exception{
 		//여기서는 noticeDTO에 있는 모든 데이터타입이 있는것을 매개변수로 써야한다. noticeDTO나 boardDTO가 가능. BbsDTO는 x(title이 없음)
 		ModelAndView mv = new ModelAndView();
+		
 		int result = noticeService.setBoardAdd(noticeDTO, files, session);
 		//성공실패 여부를 controller에서 변환해서 보내거나, jsp에서 변환시켜 보내는 두가지 방법이 있다.
 		//그러나 common/result.jsp는 공통적으로 쓸 목적이기 때문에 controller에서 메시지를 만들어서 보내주는게 맞다.
@@ -69,7 +70,7 @@ public class NoticeController {
 		if(result>0) {
 			message="글이 등록 되었습니다";
 		}
-		
+
 		mv.addObject("result", message);
 		mv.addObject("url", "./list"); //notice/list로 감
 		mv.setViewName("common/result");
@@ -86,7 +87,7 @@ public class NoticeController {
 		return mv;
 	}
 	
-	@GetMapping("delete")
+	@PostMapping("delete")
 	public ModelAndView setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("common/result");

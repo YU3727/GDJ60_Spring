@@ -56,8 +56,9 @@ public class QnaController {
 		//매개변수명은 add.jsp에서 쓴 input 타입의 name 속성명과 같게
 		ModelAndView mv = new ModelAndView();
 		int result = qnaService.setBoardAdd(qnaDTO, files, session);
+		//보안을 위해서는 원래, 여기서 session에서 로그인한 멤버의 DTO를 꺼내서 매개변수 qnaDTO에 넣어줘야한다.
 		
-		String message = "등록에 실패했습니다";
+		String message = "등	록에 실패했습니다";
 		if(result > 0) {
 			message = "글 등록 성공!";
 		}
@@ -112,7 +113,7 @@ public class QnaController {
 		return mv;
 	}
 	
-	@GetMapping("delete")
+	@PostMapping("delete")
 	public ModelAndView setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("common/result");
