@@ -43,6 +43,8 @@ public class TestFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		Object obj = req.getSession().getAttribute("member");
 		
+		req.getRequestURI(); // /qna/list
+		
 		if(obj != null) {
 		
 			//다음 필터가 있으면 다음 필터로 이동, 없으면 D.S.로 이동

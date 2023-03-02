@@ -28,7 +28,7 @@
 		<beans:property name="order" value="0"></beans:property>
 	</beans:bean>
 	
-	<!-- 어떤 url이 왔을 떄, 어떤 interceptor를 실행할건지에 대한 정보 제공 -->
+	<!-- 어떤 url이 왔을 때, 어떤 interceptor를 실행할건지에 대한 정보 제공 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/qna/*"/>
@@ -37,6 +37,14 @@
 			<!-- 객체를 참조해서 써라 -->
 			<beans:ref bean="memberCheckInterceptor"/>
 		</interceptor>
+	
+		<interceptor>
+			<mapping path="/noitce/*"/>
+			<exclude-mapping path="/notice/list"/>
+			<exclude-mapping path="/notice/detail"/>
+			<beans:ref bean="adminCheckInterceptor"/>
+		</interceptor>
+	
 	
 	</interceptors>
 	
