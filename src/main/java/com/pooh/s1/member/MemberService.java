@@ -14,6 +14,19 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
+	//id 중복 검증을 위한 service메서드
+	public boolean getMemberIdCheck(MemberDTO memberDTO) throws Exception{
+		//매개변수에 id를 담아 보내야함
+		memberDTO = memberDAO.getMemberLogin(memberDTO);
+		
+		boolean check = true; //중복 아니면 true, 중복이면 false
+		//값이 있으면 가져올거고, 없으면 null일거니까
+		if(memberDTO!=null) {
+			check = false;
+		}
+		return check;
+	}
+	
 	
 	//setMemberUpdate
 	public int setMemberUpdate(MemberDTO memberDTO) throws Exception{

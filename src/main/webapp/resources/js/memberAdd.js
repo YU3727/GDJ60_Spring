@@ -40,19 +40,54 @@ let checkEmail = false;
 id.addEventListener("blur", function(){
     //조건을 넣을때 중요한 것을 조건식에 넣고 아닌것을 else에 들어가게끔
     
-    if(id.value!=0){
-        idResult.innerHTML='';
-        idResult.classList.add("blueResult");
-        idResult.classList.remove("redResult");
-        checkId = true;
-        console.log(idResult.className); //확인용
-    }else{
-        idResult.innerHTML='id는 필수 사항입니다';
-        idResult.classList.add("redResult");
-        idResult.classList.remove("blueResult");
-        checkId = false;
-        console.log(idResult.className); //확인용
-    }
+    //중복검사(Ajax를 사용)
+    let xhttp = new XMLHttpRequest();
+
+    //url, method
+    xhttp.open('POST', './memberIdCheck');
+
+    //header 정보 세팅
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    //요청 발생, Post일 경우 parameter 전송
+    //parameter 이름과 memberDTO의 setter 이름이 같게 세팅
+    xhttp.send("id="+id.value);
+
+    //응답처리
+    xhttp.addEventListener('readystatechange', function(){
+        if(this.readyState==4 && this.status==200){
+            // console.log(this.responseText.trim());
+            if(this.responseText.trim()=='true'){
+                checkId = true;
+                idResult.innerHTML='사용가능한 ID';
+                idResult.classList.add("blueResult");
+                idResult.classList.remove("redResult");
+            }else{
+                checkId = false;
+                idResult.innerHTML='중복된 ID';
+                idResult.classList.add("redResult");
+                idResult.classList.remove("blueResult");
+            }
+        }
+        if(this.readyState==4 && this.status!=200){
+            //에러가 났다
+        }
+    });
+
+
+    // if(id.value.length!=0){
+    //     idResult.innerHTML='';
+    //     idResult.classList.add("blueResult");
+    //     idResult.classList.remove("redResult");
+    //     checkId = true;
+    //     console.log(idResult.className); //확인용
+    // }else{
+    //     idResult.innerHTML='id는 필수 사항입니다';
+    //     idResult.classList.add("redResult");
+    //     idResult.classList.remove("blueResult");
+    //     checkId = false;
+    //     console.log(idResult.className); //확인용
+    // }
 });
 
 

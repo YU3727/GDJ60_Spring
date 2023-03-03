@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +23,22 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	
+	//Ajax 요청을 처리하기위한 메서드
+	@PostMapping("memberIdCheck")
+	public ModelAndView getMemberIdCheck(MemberDTO memberDTO) throws Exception{
+		//login 하는거 가지고 체크가능
+		boolean check = memberService.getMemberIdCheck(memberDTO);
+		ModelAndView mv = new ModelAndView();
+		
+		//redirect로 보내면 request에 담은 정보가 다 사라진다. 불가능 남은건 jsp로 보내는것
+		//back-end 특성상 요청이 들어오면 응답을 보내야하므로, true/false를 찍을 수 있는 jsp가 필요하다
+		mv.addObject("result", check);
+		mv.setViewName("common/ajaxResult"); //응답을 member/memberAdd로 해버리면 새 페이지 자체가 응답으로 나감.
+		return mv;
+	}
+	
 	
 	@RequestMapping(value = "memberAgree", method = RequestMethod.GET) //a태그는 모두 get
 	public void setMemberAgree() throws Exception{
