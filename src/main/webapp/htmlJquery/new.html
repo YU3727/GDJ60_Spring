@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>new window</h1>
+    <button id="close">CLOSE</button>
+
+
+    <script>
+        const closer = document.getElementById("close");
+        closer.addEventListener("click", function(){
+            //닫기 전에 나를 열어준 애를 reload 시켜줌(팝업 로그인창 같은거 쓸때)
+            //opener : 열어준 웹 브라우저의 window 객체라고 생각
+            //self : 자기자신
+            opener.close();
+            window.self.close();
+        })
+
+    </script>
+</body>
+</html>
