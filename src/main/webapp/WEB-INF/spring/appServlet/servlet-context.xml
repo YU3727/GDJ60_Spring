@@ -32,17 +32,17 @@
 	<beans:bean class="com.pooh.s1.interceptors.AdminCheckInterceptor" id="adminCheckInterceptor"></beans:bean>
 	
 	<!-- 어떤 url이 왔을 때, 어떤 interceptor를 실행할건지에 대한 정보 제공 -->
-	<interceptors>
+<!-- 	<interceptors>
 		<interceptor>
 			<mapping path="/qna/*"/>
 			<mapping path="/member/*"/>
-			<exclude-mapping path="/qna/list"/> <!-- list는 제외하고 나머지에 필터링을 걸어줌. 이게 용이하다 -->
+			<exclude-mapping path="/qna/list"/> list는 제외하고 나머지에 필터링을 걸어줌. 이게 용이하다
 			<exclude-mapping path="/member/memberAdd"/>
 			<exclude-mapping path="/member/memberAgree"/>
 			<exclude-mapping path="/member/memberLogin"/>
 			<exclude-mapping path="/member/memberIdCheck"/>
-			<!-- 객체를 여기에서 만들어서 써라 : <beans:bean></beans:bean> -->
-			<!-- 객체를 참조해서 써라 -->
+			객체를 여기에서 만들어서 써라 : <beans:bean></beans:bean>
+			객체를 참조해서 써라
 			<beans:ref bean="memberCheckInterceptor"/>
 		</interceptor>
 	
@@ -50,22 +50,21 @@
 			<mapping path="/notice/*"/>
 			<exclude-mapping path="/notice/list"/>
 			<exclude-mapping path="/notice/detail"/>
+			<exclude-mapping path="/notice/listTop"/>
 			<beans:ref bean="adminCheckInterceptor"/>
-			<!-- <beans:bean class="com.pooh.s1.interceptors.AdminCheckInterceptor"></beans:bean> -->
-			<!-- 여기서만 쓸거면 beans:bean, 다른곳에서도 쓸거면 @Component annotation 달거나 xml에 beans:bean으로 객체 만들기 위임하고 ref -->
+			<beans:bean class="com.pooh.s1.interceptors.AdminCheckInterceptor"></beans:bean>
+			여기서만 쓸거면 beans:bean, 다른곳에서도 쓸거면 @Component annotation 달거나 xml에 beans:bean으로 객체 만들기 위임하고 ref
 		</interceptor>
 		
 		<interceptor>
-			<!-- 하나의 interceptor에 하나의 url pattern만 mapping할 수 있는건 아니다. 여러개도 가능. -->
+			하나의 interceptor에 하나의 url pattern만 mapping할 수 있는건 아니다. 여러개도 가능.
 			<mapping path="/qna/update"/>
 			<mapping path="/qna/delete"/>
 			<mapping path="/notice/update"/>
 			<mapping path="/notice/delete"/>
 			<beans:ref bean="ownerCheckInterceptor"/>
 		</interceptor>
-	
-	
-	</interceptors>
+	</interceptors> -->
 	
 	
 	

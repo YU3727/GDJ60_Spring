@@ -40,15 +40,14 @@
 			</div>
 		</div>
 	</div>
-
-<div>
-	<h1>${sessionScope.member.memberName}</h1>
-	<button id="btn">Ajax</button>
-</div>
-
+	
+	<!-- Ajax 써보기 -->
+	<div class="container-fluid my-5" id="noticeList">
+	
+	</div>
 
 <!-- script 파일은 </body>바로 위에 많이들 써둔다 -->
 <c:import url="./template/common_js.jsp"></c:import>
-<script src="/resources/js/ajaxTest.js"></script>
+<script src="/resources/js/noticeTop5.js"></script>
 </body>
 </html>

@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-@ControllerAdvice
+//interceptor랑 exceptioncontroller는 배포직전에 처리
+//@ControllerAdvice
 public class ExceptionController {
 
 	//@ControllerAdvice : 예외를 전문적으로 처리하는 Controller Annotation
