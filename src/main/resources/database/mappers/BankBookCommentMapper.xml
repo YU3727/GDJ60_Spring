@@ -40,10 +40,21 @@
   		WHERE R BETWEEN #{startRow} AND #{lastRow}
   	</select>
   	
-  	<!-- CommentAdd -->
+  	<!-- Add -->
   	<insert id="setBoardAdd" parameterType="BbsDTO">
   		INSERT INTO BANKBOOKCOMMENT(NUM, BOOKNUMBER, CONTENTS, REGDATE, WRITER)
 		VALUES(BANKBOOKCOMMENT_SEQ.NEXTVAL, #{bookNumber}, #{contents}, sysdate, #{writer})
   	</insert>
+  	
+  	<!-- Delete -->
+  	<delete id="setBoardDelete" parameterType="BbsDTO">
+  		DELETE BANKBOOKCOMMENT WHERE NUM=#{num}
+  	</delete>
+  	
+  	<!-- Update -->
+  	<update id="setBoardUpdate" parameterType="BbsDTO">
+  		UPDATE BANKBOOKCOMMENT SET CONTENTS=#{contents} WHERE NUM=#{num}
+  	</update>
+  	
   	
   </mapper>

@@ -25,7 +25,7 @@ result.addEventListener("click", function(e){
     //버튼을 눌렀을때만 로그가 찍히니까 버튼에 이벤트를 건 효과와 같음
 
     //어느 버튼을 눌렀는지 확인하려면 id를 알아내야함
-    //이 버튼과 부모의 연결고리를 알아야함... global attribute data-**: data-div-idx
+    //이 버튼과 부모의 연결고리를 알아야함... global attribute - data-**: data-div-idx
     //우선 속성명 먼저 확인
     //버튼 클릭했을 때 div의 id속성명과 button의 data-div-idx 속성명 확인
         //e.target 여기까지가 button

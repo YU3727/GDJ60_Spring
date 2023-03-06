@@ -43,13 +43,14 @@ public class BankBookCommentService implements BbsService{
 	@Override
 	public int setBoardUpdate(BbsDTO bbsDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return bankBookCommentDAO.setBoardUpdate(bbsDTO);
 	}
 
 	@Override
 	public int setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		//session은 파일 지울때 쓰던거
+		return bankBookCommentDAO.setBoardDelete(bbsDTO);
 	}
 	
 }

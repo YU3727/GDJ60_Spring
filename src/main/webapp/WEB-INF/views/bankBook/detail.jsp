@@ -39,7 +39,6 @@
 
 	<div class="my-5" id="replyList">
 
-
 	</div>
 
 	<!-- 댓글 추가 버튼 -->

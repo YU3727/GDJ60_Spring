@@ -33,5 +33,13 @@ public class BankBookCommentDAOTest extends MyTestCase{
 		assertNotEquals(0, ar.size());
 	}
 	
-	
+//	@Test
+	public void setBoardUpdateTest() throws Exception{
+		BankBookCommentDTO bankBookCommentDTO = new BankBookCommentDTO();
+		bankBookCommentDTO.setNum(61L);
+		bankBookCommentDTO.setContents("Testcase에서 수정했어요");
+		
+		int result = bankBookCommentDAO.setBoardUpdate(bankBookCommentDTO);
+		assertEquals(1, result);
+	}
 }

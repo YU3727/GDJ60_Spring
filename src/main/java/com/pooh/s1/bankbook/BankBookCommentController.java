@@ -51,8 +51,8 @@ public class BankBookCommentController {
 		
 		//session에서 writer 꺼내기
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-//		bankBookCommentDTO.setWriter(memberDTO.getId());
-		bankBookCommentDTO.setWriter("iu");
+		bankBookCommentDTO.setWriter(memberDTO.getId());
+//		bankBookCommentDTO.setWriter("iu");	//귀찮으니까 고정
 		
 		int result = bankBookCommentService.setBoardAdd(bankBookCommentDTO, null, null);
 		//bookNumber, contents는 parameter로 넘어옴.(jsp에서 설정)
@@ -62,5 +62,36 @@ public class BankBookCommentController {
 		return mv;
 	}
 	
+	
+	//Ajax
+	@PostMapping("delete")
+	public ModelAndView setBoardDelete(BankBookCommentDTO bankBookCommentDTO) throws Exception{
+		//매개변수를 num만 받으면 된다.(글 삭제를 위해) -> BbsDTO, BoardDTO, BankBookCommentDTO 뭘로 받든 상관없음
+		ModelAndView mv = new ModelAndView();
+		
+		//boardDelete 만들고 삭제메서드 호출하기
+		int result = bankBookCommentService.setBoardDelete(bankBookCommentDTO, null);
+		
+		//이번엔 요청한 Ajax에 응답을 보내줘야하므로, 여기서 처리하지않고 결과를 보내준다
+		mv.addObject("result", result);
+		mv.setViewName("common/ajaxResult");
+		return mv;
+	}
+	
+	
+	//Ajax
+	@PostMapping("update")
+	public ModelAndView setBoardUpdate(BankBookCommentDTO bankBookCommentDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		//확인용 - 변수 잘 담겨져서 넘어온다
+		System.out.println(bankBookCommentDTO.getContents());
+		System.out.println(bankBookCommentDTO.getNum());
+		
+		int result = bankBookCommentService.setBoardUpdate(bankBookCommentDTO);
+		
+		mv.addObject("result", result);
+		mv.setViewName("common/ajaxResult");
+		return mv;
+	}
 	
 }
