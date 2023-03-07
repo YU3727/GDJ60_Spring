@@ -12,57 +12,101 @@ let updatePhase = 0;
 
 //Ajax, 댓글 등록 이벤트
 replyAdd.addEventListener("click", function(){
-    console.log("ok");
-    
-    let xhttp = new XMLHttpRequest();
-    xhttp.open('POST', '../bankBookComment/add');
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    console.log("bookNumber: "+replyAdd.getAttribute('data-idx-bookNumber'));
 
-    //요청 발생, Post일 경우 parameter 전송
-    //parameter 이름과 memberDTO의 setter 이름이 같게 세팅
-    xhttp.send("contents="+replyContents.value+"&bookNumber="+replyAdd.getAttribute('data-idx-bookNumber'));
+    //JS에서 사용할 가상의 Form 태그 생성(FormData)
+    const form = new FormData(); //html의 <form></form>이 만들어졌다고 생각
+    //form tag 내부에 내용을 추가하는 작업 수행, parameter는 name, value로 구성.
+    form.append("contents", replyContents.value); // <form><input type="text" name="contents" value="~~"></form>
+    form.append("bookNumber", replyAdd.getAttribute('data-idx-bookNumber')) //<form><input type="text" name="contents" value="~~"><input type="text" name="bookNumber" value="123"></form>
 
-    xhttp.addEventListener('readystatechange', function(){
-        if(this.readyState==4 && this.status==200){
-            //성공했을 때 입력할 내용 실행
-            if(this.responseText.trim()==1){
-                alert("댓글이 등록 되었습니다");
-                replyContents.value='';
-                //다시 댓글리스트를 불러오기(갱신을 위해)
-                getList(1);
-            }else {
-                alert("등록에 실패했습니다");
-            }  
-        }
+
+    //fetch - 사용은 이걸로 해야한다
+    //JS에서 중괄호는 객체를 만든다는 의미. 멤버변수를 자기마음대로 추가할 수 있다
+    //값을 구분할때는 쉼표(,)를 쓴다
+    //fetch는 XMLHttpRequest의 open ~ send까지 다 한것
+    fetch('../bankBookComment/add', {
+        method:'POST',
+        headers:{'Content-type':"application/x-www-form-urlencoded"},
+        body:form //"contents="+replyContents.value+"&bookNumber="+replyAdd.getAttribute('data-idx-bookNumber')
+    }).then((response)=>response.text()) //response는 응답객체라고 생각. response.text는 응답에서 text 꺼내기. 중괄호 생략시 return 자동으로 해줌
+    .then((res)=>{
+        if(res.trim()==1){
+            alert("댓글이 등록 되었습니다");
+            replyContents.value='';
+            getList(1);
+        }else {
+            alert("등록에 실패했습니다");
+        }  
+    }).catch(()=>{
+        //예외처리 기능
+        console.log('에러 발생');
     });
+
+
+    //XMLHttpRequest - 원리는 이걸로 공부
+    // let xhttp = new XMLHttpRequest();
+    // xhttp.open('POST', '../bankBookComment/add');
+    // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // //요청 발생, Post일 경우 parameter 전송
+    // //parameter 이름과 memberDTO의 setter 이름이 같게 세팅
+    // xhttp.send("contents="+replyContents.value+"&bookNumber="+replyAdd.getAttribute('data-idx-bookNumber'));
+
+    // xhttp.addEventListener('readystatechange', function(){
+    //     if(this.readyState==4 && this.status==200){
+    //         //성공했을 때 입력할 내용 실행
+    //         if(this.responseText.trim()==1){
+    //             alert("댓글이 등록 되었습니다");
+    //             replyContents.value='';
+    //             //다시 댓글리스트를 불러오기(갱신을 위해)
+    //             getList(1);
+    //         }else {
+    //             alert("등록에 실패했습니다");
+    //         }  
+    //     }
+    // });
 });
 
 
+//list
 getList(1);
 
 //Ajax, bankBookDetail에 reply list 5개 뿌리기
 //JavaScript에서 매개변수 선언할때는 let 안붙임
 function getList(page){
 
-    let count=0;
+    //Ajax - fetch
+    fetch('/bankBookComment/list?&bookNumber='+replyAdd.getAttribute('data-idx-bookNumber')+'&page='+page, {
+        method:'GET'
+        //GET과 HEAD 메서드는 body속성을 가질수 없다(에러 발생)
+        // headers:{},
+        // body:()
+    })
+    .then((response)=>response.text())
+    .then((res)=>{
+        replyList.innerHTML=res.trim();
+    })
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.open('GET', '../bankBookComment/list?&bookNumber='+replyAdd.getAttribute('data-idx-bookNumber')+'&page='+page);
-    xhttp.send();
 
-    xhttp.addEventListener('readystatechange', function(){
-        if(this.readyState==4 && this.status==200){
-            // console.log(this.responseText);
-            replyList.innerHTML=this.responseText.trim();
-            count++;
-        }
-        // console.log("count1 : "+count);
-    });
+    // let count=0;
+    // let xhttp = new XMLHttpRequest();
+    // xhttp.open('GET', '/bankBookComment/list?&bookNumber='+replyAdd.getAttribute('data-idx-bookNumber')+'&page='+page);
+    // xhttp.send();
 
-    //여기서는 0일수도 1일수도 있다. 동기방식이면 1이 나오는데, 비동기방식이기 때문에 응답을 대기하지않고 자신의 할일을 한다.
-    //이벤트가 걸려있는부분은 이벤트가 발생할 때 응답을 처리하고, 나머지 코드를 진행한다. 비동기방식에서 응답을 받은후에 일처리를 하고싶으면
-    //이벤트발생 코드 내에 작성을 해야한다
-    // console.log("count2 : "+count);
+    // xhttp.addEventListener('readystatechange', function(){
+    //     if(this.readyState==4 && this.status==200){
+    //         // console.log(this.responseText);
+    //         replyList.innerHTML=this.responseText.trim();
+    //         count++;
+    //     }
+    //     // console.log("count1 : "+count);
+    // });
+
+    // //여기서는 0일수도 1일수도 있다. 동기방식이면 1이 나오는데, 비동기방식이기 때문에 응답을 대기하지않고 자신의 할일을 한다.
+    // //이벤트가 걸려있는부분은 이벤트가 발생할 때 응답을 처리하고, 나머지 코드를 진행한다. 비동기방식에서 응답을 받은후에 일처리를 하고싶으면
+    // //이벤트발생 코드 내에 작성을 해야한다
+    // // console.log("count2 : "+count);
 }
 
 //pagination
@@ -87,24 +131,48 @@ replyList.addEventListener("click", function(e){
 replyList.addEventListener("click", function(e){
     let deleteButton = e.target;
     if(deleteButton.classList.contains("del")){
-        // console.log("delete");
-        let xhttp = new XMLHttpRequest();
-        xhttp.open('POST', '../bankBookComment/delete');
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("num="+deleteButton.getAttribute("data-comment-num"));
 
-        xhttp.addEventListener('readystatechange', function(){
-            if(this.readyState==4 && this.status==200){
-                let result = this.responseText.trim();
-                if(result>0){
-                    alert('댓글이 삭제되었습니다');
-                    //얘는 여기에 써야 제대로 작동함, 이벤트리스너 끝나고 쓰면 이벤트 실행 전의 리스트를 불러와서 의미가없다
-                    getList(1);
-                }else{
-                    alert('삭제 실패');
-                }
+        //fetch 함수 호출
+        fetch('../bankBookComment/delete', {
+            method:'POST',
+            headers:{
+                "Content-type":"application/x-www-form-urlencoded"
+            },
+            body:"num="+deleteButton.getAttribute("data-comment-num")
+            //응답객체에서 data를 추출하는 과정
+        }).then((response)=>response.text())  //.then(function(response){return response.text()})
+            //추출한 data를 사용하는 단계
+        .then((res)=>{
+            if(res.trim()>0){
+                alert('댓글이 삭제되었습니다');
+                getList(1);
+            }else{
+                alert('삭제 실패');   
             }
+            //Exception 처리
+        }).catch(()=>{
+            alert('삭제 실패');
         });
+
+
+        // // console.log("delete");
+        // let xhttp = new XMLHttpRequest();
+        // xhttp.open('POST', '../bankBookComment/delete');
+        // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // xhttp.send("num="+deleteButton.getAttribute("data-comment-num"));
+
+        // xhttp.addEventListener('readystatechange', function(){
+        //     if(this.readyState==4 && this.status==200){
+        //         let result = this.responseText.trim();
+        //         if(result>0){
+        //             alert('댓글이 삭제되었습니다');
+        //             //얘는 여기에 써야 제대로 작동함, 이벤트리스너 끝나고 쓰면 이벤트 실행 전의 리스트를 불러와서 의미가없다
+        //             getList(1);
+        //         }else{
+        //             alert('삭제 실패');
+        //         }
+        //     }
+        // });
     }
     e.preventDefault();
 })
@@ -231,29 +299,47 @@ replyList.addEventListener("click", function(e){
 
 //확인버튼
 contentsConfirm.addEventListener("click", function(){
-    console.log('update post');
 
     //보낼 데이터 num, contents 준비 끝
     let updateContents = document.getElementById("contents").value; //contents는 가져옴
     let num = contentsConfirm.getAttribute("data-comment-num");
 
-    //Ajax 만들어서 보내기
-    let xhttp = new XMLHttpRequest();
-        xhttp.open('POST', '../bankBookComment/update');
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("num="+num+"&contents="+updateContents);
+    //Ajax - fetch
+    fetch('../bankBookComment/update', {
+        method:'POST',
+        headers:{"Content-type":"application/x-www-form-urlencoded"},
+        body:"num="+num+"&contents="+updateContents
+    }).then((response)=>{
+        return response.text() //중괄호를 넣고싶으면 return을 넣어주자. 생략시 자동 return
+    }).then((res)=>{
+        if(res.trim()>0){
+            alert('댓글이 수정되었습니다');
+            closeModal.click();
+            getList(1);
+        }else{
+            alert('수정 실패');
+        }
+    }).catch(()=>{
+        alert('수정 실패');
+    })
 
-        xhttp.addEventListener('readystatechange', function(){
-            if(this.readyState==4 && this.status==200){
-                let result = this.responseText.trim();
-                if(result>0){
-                    alert('댓글이 수정되었습니다');
-                    //update 마치고 나서 Modal창이 닫히게 한다
-                    closeModal.click();
-                    getList(1);
-                }else{
-                    alert('수정 실패');
-                }
-            }
-        });
+    //Ajax 만들어서 보내기
+    // let xhttp = new XMLHttpRequest();
+    //     xhttp.open('POST', '../bankBookComment/update');
+    //     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //     xhttp.send("num="+num+"&contents="+updateContents);
+
+    //     xhttp.addEventListener('readystatechange', function(){
+    //         if(this.readyState==4 && this.status==200){
+    //             let result = this.responseText.trim();
+    //             if(result>0){
+    //                 alert('댓글이 수정되었습니다');
+    //                 //update 마치고 나서 Modal창이 닫히게 한다
+    //                 closeModal.click();
+    //                 getList(1);
+    //             }else{
+    //                 alert('수정 실패');
+    //             }
+    //         }
+    //     });
 })
