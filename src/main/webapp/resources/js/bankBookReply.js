@@ -18,7 +18,7 @@ replyAdd.addEventListener("click", function(){
     const form = new FormData(); //html의 <form></form>이 만들어졌다고 생각
     //form tag 내부에 내용을 추가하는 작업 수행, parameter는 name, value로 구성.
     form.append("contents", replyContents.value); // <form><input type="text" name="contents" value="~~"></form>
-    form.append("bookNumber", replyAdd.getAttribute('data-idx-bookNumber')) //<form><input type="text" name="contents" value="~~"><input type="text" name="bookNumber" value="123"></form>
+    form.append("bookNumber", replyAdd.getAttribute('data-idx-bookNumber')); //<form><input type="text" name="contents" value="~~"><input type="text" name="bookNumber" value="123"></form>
 
 
     //fetch - 사용은 이걸로 해야한다
@@ -27,9 +27,10 @@ replyAdd.addEventListener("click", function(){
     //fetch는 XMLHttpRequest의 open ~ send까지 다 한것
     fetch('../bankBookComment/add', {
         method:'POST',
-        headers:{'Content-type':"application/x-www-form-urlencoded"},
+        headers:{}, //formData 자체의 header가 넘어가는거같다
         body:form //"contents="+replyContents.value+"&bookNumber="+replyAdd.getAttribute('data-idx-bookNumber')
-    }).then((response)=>response.text()) //response는 응답객체라고 생각. response.text는 응답에서 text 꺼내기. 중괄호 생략시 return 자동으로 해줌
+    })
+    .then((response)=>response.text()) //response는 응답객체라고 생각. response.text는 응답에서 text 꺼내기. 중괄호 생략시 return 자동으로 해줌
     .then((res)=>{
         if(res.trim()==1){
             alert("댓글이 등록 되었습니다");
@@ -38,7 +39,8 @@ replyAdd.addEventListener("click", function(){
         }else {
             alert("등록에 실패했습니다");
         }  
-    }).catch(()=>{
+    })
+    .catch(()=>{
         //예외처리 기능
         console.log('에러 발생');
     });
@@ -59,7 +61,7 @@ replyAdd.addEventListener("click", function(){
     //         if(this.responseText.trim()==1){
     //             alert("댓글이 등록 되었습니다");
     //             replyContents.value='';
-    //             //다시 댓글리스트를 불러오기(갱신을 위해)
+    //             //다시 댓글리스트를 불러오기(갱신을 위해)    
     //             getList(1);
     //         }else {
     //             alert("등록에 실패했습니다");
