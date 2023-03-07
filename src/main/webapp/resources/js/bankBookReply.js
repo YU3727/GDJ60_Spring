@@ -4,6 +4,10 @@ const replyList = document.getElementById("replyList");
 // const pageLink = document.querySelectorAll(".page-link"); //css선택자처럼
 //elementsByClassName = HTML~형태, querySelectorAll = NodeList
 
+const contentsConfirm = document.getElementById("contentsConfirm");
+const closeModal = document.getElementById("closeModal");
+
+
 let updatePhase = 0;
 
 //Ajax, 댓글 등록 이벤트
@@ -99,11 +103,9 @@ replyList.addEventListener("click", function(e){
                 }else{
                     alert('삭제 실패');
                 }
-
             }
         });
     }
-
     e.preventDefault();
 })
 
@@ -195,19 +197,17 @@ replyList.addEventListener("click", function(e){
 //                         console.log("updatephase3: "+updatePhase);
 //                         updatePhase=0;
 //                     }
-    
 //                 }
 //             });
 //         }
 //     }
-
 //     e.preventDefault();
 // })
 
 
 
 
-//update
+//update - Ajax2
 //강사님꺼
 replyList.addEventListener("click", function(e){
     let updateButton = e.target;
@@ -215,56 +215,45 @@ replyList.addEventListener("click", function(e){
         //상대선택자 - 상대경로로 찾아가기. 클릭한 버튼의 부모<td>, 그 부모의 형제 찾아가기
         // console.log(updateButton.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling);
         let num = updateButton.getAttribute("data-comment-num");
-        let contents = document.getElementById('contents'+num);
-        // console.log(contents);
+        let contents = document.getElementById('contents'+num); //td - 이전 내용이 있는곳
 
-        //text-area 넣는방법 두가지
-        //1. innerHTML로 넣기
-        // contents.innerHTML="<textarea>"+contents.innerText+"</textarea>";
+        //modal 창 사용해서 수정하기(bootStrap)
+        let contentsTextArea = document.getElementById("contents"); //Modal textarea - 수정할 폼
+        //value로 값 미리 입력해주기
+        contentsTextArea.value=contents.innerText;
 
-        //2. 이미 뿌려질때 <textarea></textarea>를 감싸서 보내기 + readonly 속성부여, 테두리는 없애고
-        //원하는대로 선택이 되는지 확인
-        // console.log(document.querySelector("#contents"+num).firstChild);
-        contents.firstChild.removeAttribute("readonly");
-
-        //수정버튼 생성과 추가
-        let btn = document.createElement("button");
-        let attr = document.createAttribute("class");
-        attr.value='btn btn-primary';
-        btn.setAttributeNode(attr);
-        contents.appendChild(btn);
-
-        attr = document.createTextNode('확인');
-        btn.appendChild(attr);
-
-        //취소버튼 추가
-        //입력하다가 취소 누르면 입력전의 데이터를 넣어줘야하니까 입력전 내용을 변수에 담아두기
-        //입력후 확인 : 변수에 담긴 데이터 대신 새 데이터 집어넣고 수정 / 입력후 취소 : 변수에 담겨져있던 데이터를 그대로 업데이트(값 변화없이)
-
-        //버튼을 만들고 이벤트를 걸면서 보내주는걸로 해도 된다.(위임 받아도 되고)
-        btn.addEventListener("click", function(){
-            //업데이트 보내려면 num, contents 두개만 보내주면 된다
-            console.log(num);
-            console.log(contents.firstChild.value);
-
-            //위 데이터 2개를 서버로 보내기만 하면 된다
-            let xhttp = new XMLHttpRequest();
-            xhttp.open('POST', '../bankBookComment/update');
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send('num='+num+'&contents='+contents.firstChild.value);
-
-            xhttp.addEventListener('readystatechange', function(){
-                if(this.readyState==4 && this.status==200){
-                    let result = this.responseText.trim();
-                    if(result>0){
-                        alert('댓글이 수정되었습니다');
-                        getList(1);
-                    }else{
-                        alert('수정 실패');
-                    }
-                }
-            });
-        })
+        //modal의 확인 버튼에 속성부여
+        contentsConfirm.setAttribute("data-comment-num", num);
     }
     e.preventDefault();
+})
+
+
+//확인버튼
+contentsConfirm.addEventListener("click", function(){
+    console.log('update post');
+
+    //보낼 데이터 num, contents 준비 끝
+    let updateContents = document.getElementById("contents").value; //contents는 가져옴
+    let num = contentsConfirm.getAttribute("data-comment-num");
+
+    //Ajax 만들어서 보내기
+    let xhttp = new XMLHttpRequest();
+        xhttp.open('POST', '../bankBookComment/update');
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("num="+num+"&contents="+updateContents);
+
+        xhttp.addEventListener('readystatechange', function(){
+            if(this.readyState==4 && this.status==200){
+                let result = this.responseText.trim();
+                if(result>0){
+                    alert('댓글이 수정되었습니다');
+                    //update 마치고 나서 Modal창이 닫히게 한다
+                    closeModal.click();
+                    getList(1);
+                }else{
+                    alert('수정 실패');
+                }
+            }
+        });
 })

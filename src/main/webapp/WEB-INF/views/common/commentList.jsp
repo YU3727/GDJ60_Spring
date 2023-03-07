@@ -7,16 +7,15 @@
 <table class="table table-striped">
 	<c:forEach items="${list}" var="dto">
 	  <tr>
-		<!-- <td id="contents${dto.num}">${dto.contents}</td> -->
 		<td id="contents${dto.num}">
-			<textarea readonly>${dto.contents}</textarea>
+			${dto.contents}
 		</td>
 		<td>${dto.writer}</td>
 		<td>${dto.regDate}</td>
 		<!-- 댓글 수정/삭제 버튼 추가, 작성자(dto.writer)와 로그인한 사람(member.id)이 일치하면 세션에서 member라는 속성명으로 로그인정보를 넘겨줬기 때문 -->
 		<td>
 			<c:if test="${dto.writer eq member.id}">
-				<button id="uButton" class="btn btn-warning update" data-comment-num="${dto.num}">UPDATE</button>
+				<button id="uButton" class="btn btn-warning update" data-bs-toggle="modal" data-bs-target="#contentsModal" data-comment-num="${dto.num}">UPDATE</button>
 			</c:if>
 		</td>
 		<td>
