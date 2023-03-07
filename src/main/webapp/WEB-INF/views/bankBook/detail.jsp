@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../template/common_css.jsp"></c:import>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
@@ -75,6 +76,24 @@
 		</div>
 		</div>
 	</div>
+	
+	
+	
+	<!-- 테스트 후 삭제할 영역 -->
+	<div class="my-5">
+		<button type="button" id="b1">button1</button>
+		<input type="text" id="t1">
+		<div class="my-5">
+			<input type="checkbox" class="ch" name="ch" id="" value="v1">
+			<input type="checkbox" class="ch" name="ch" id="" value="v2">
+			<input type="checkbox" class="ch" name="ch" id="" value="v3">
+			<input type="checkbox" class="ch" name="ch" id="" value="v4">
+
+		</div>
+
+	</div>
+	
+	<!-- ---------------- -->
 
 
 <c:import url="../template/common_js.jsp"></c:import>

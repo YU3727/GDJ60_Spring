@@ -1,4 +1,4 @@
-const replyAdd = document.getElementById("replyAdd");
+// const replyAdd = document.getElementById("replyAdd");
 const replyContents = document.getElementById("replyContents");
 const replyList = document.getElementById("replyList");
 // const pageLink = document.querySelectorAll(".page-link"); //css선택자처럼
@@ -11,14 +11,23 @@ const closeModal = document.getElementById("closeModal");
 let updatePhase = 0;
 
 //Ajax, 댓글 등록 이벤트
-replyAdd.addEventListener("click", function(){
-    console.log("bookNumber: "+replyAdd.getAttribute('data-idx-bookNumber'));
+// replyAdd.addEventListener("click", function(){
+//     console.log("bookNumber: "+replyAdd.getAttribute('data-idx-bookNumber'));
+//     
 
-    //JS에서 사용할 가상의 Form 태그 생성(FormData)
-    const form = new FormData(); //html의 <form></form>이 만들어졌다고 생각
-    //form tag 내부에 내용을 추가하는 작업 수행, parameter는 name, value로 구성.
-    form.append("contents", replyContents.value); // <form><input type="text" name="contents" value="~~"></form>
-    form.append("bookNumber", replyAdd.getAttribute('data-idx-bookNumber')); //<form><input type="text" name="contents" value="~~"><input type="text" name="bookNumber" value="123"></form>
+//     //JS에서 사용할 가상의 Form 태그 생성(FormData)
+//     const form = new FormData(); //html의 <form></form>이 만들어졌다고 생각
+//     //form tag 내부에 내용을 추가하는 작업 수행, parameter는 name, value로 구성.
+//     form.append("contents", replyContents.value); // <form><input type="text" name="contents" value="~~"></form>
+//     form.append("bookNumber", replyAdd.getAttribute('data-idx-bookNumber')); //<form><input type="text" name="contents" value="~~"><input type="text" name="bookNumber" value="123"></form>
+   
+
+//Jquery로 이벤트 걸기
+$("#replyAdd").click(function(){
+
+    const form = new FormData();
+    form.append("contents", $("#replyContents").val());
+    form.append("bookNumber", $("#replyAdd").attr("data-idx-bookNumber"));
 
 
     //fetch - 사용은 이걸로 해야한다
@@ -35,6 +44,7 @@ replyAdd.addEventListener("click", function(){
         if(res.trim()==1){
             alert("댓글이 등록 되었습니다");
             replyContents.value='';
+            $("replyContents").val("");
             getList(1);
         }else {
             alert("등록에 실패했습니다");
@@ -130,7 +140,61 @@ replyList.addEventListener("click", function(e){
 //delete - css 디자인을 위해 만든 클래스명 말고 다른걸 쓰자
 //위에거랑 클릭 이벤트가 같은데 되나 확인해야함.
 //잘 작동된다. 이벤트는 부모한테 거는게 아니라 자식한테 거는거처럼 하기때문에
-replyList.addEventListener("click", function(e){
+// replyList.addEventListener("click", function(e){
+//     let deleteButton = e.target;
+//     if(deleteButton.classList.contains("del")){
+
+//         //fetch 함수 호출
+//         fetch('../bankBookComment/delete', {
+//             method:'POST',
+//             headers:{
+//                 "Content-type":"application/x-www-form-urlencoded"
+//             },
+//             body:"num="+deleteButton.getAttribute("data-comment-num")
+//             //응답객체에서 data를 추출하는 과정
+//         }).then((response)=>response.text())  //.then(function(response){return response.text()})
+//             //추출한 data를 사용하는 단계
+//         .then((res)=>{
+//             if(res.trim()>0){
+//                 alert('댓글이 삭제되었습니다');
+//                 getList(1);
+//             }else{
+//                 alert('삭제 실패');   
+//             }
+//             //Exception 처리
+//         }).catch(()=>{
+//             alert('삭제 실패');
+//         });
+
+
+//         // // console.log("delete");
+//         // let xhttp = new XMLHttpRequest();
+//         // xhttp.open('POST', '../bankBookComment/delete');
+//         // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//         // xhttp.send("num="+deleteButton.getAttribute("data-comment-num"));
+
+//         // xhttp.addEventListener('readystatechange', function(){
+//         //     if(this.readyState==4 && this.status==200){
+//         //         let result = this.responseText.trim();
+//         //         if(result>0){
+//         //             alert('댓글이 삭제되었습니다');
+//         //             //얘는 여기에 써야 제대로 작동함, 이벤트리스너 끝나고 쓰면 이벤트 실행 전의 리스트를 불러와서 의미가없다
+//         //             getList(1);
+//         //         }else{
+//         //             alert('삭제 실패');
+//         //         }
+//         //     }
+//         // });
+//     }
+//     e.preventDefault();
+// })
+
+
+
+//Jquery로 delete 기능 구현
+//click event를 클래스명이 del인 곳으로 위임하기
+$("#replyList").on("click", ".del", function(e){
+
     let deleteButton = e.target;
     if(deleteButton.classList.contains("del")){
 
@@ -178,6 +242,7 @@ replyList.addEventListener("click", function(e){
     }
     e.preventDefault();
 })
+
 
 
 //update - 내가 만든거. 내용이 안들어가는거만 수정하면 될거같음 ㅠㅠ
@@ -345,3 +410,88 @@ contentsConfirm.addEventListener("click", function(){
     //         }
     //     });
 })
+
+
+
+
+//test 후 삭제할 영역
+    //1. 선택
+    // const b1 = document.getElementById("b1");
+    // const b1 = document.querySelector("#b1"); //css 선택자로 사용
+    // b1.addEventListener('click', function(){});
+    // document.getElementById("t1").value;
+
+    //Jquery, css선택자로 사용
+    //$('#b1') 이게 document.getElementById("b1"); / .click() 이게 b1.addEventListener('click', function(){})에 해당
+    // $('#b1').click(()=>{
+    //     // console.log('button click');
+    //     let v = $('#t1').val();
+    //     console.log(v);
+    // }); 
+
+    //Event 걸기
+    //$('#t1').blur(function(){})
+    // $('#t1').blur(()=>{
+    //     console.log('blur event');
+    // })
+
+    
+    //on을 쓰는 event 방식을 사용하는 이유
+    //1. 하나의 element에 여러개의 이벤트를 걸고싶을때
+    //2. **event 위임을 하고자 할 때 (중요)
+    
+    // //1
+    // $('#t1').on({
+    //     click:function(){
+    //         console.log('t1 click');
+    //     },
+    //     blur:()=>{
+    //         console.log('t1 blur');
+    //     }
+    // })
+    
+    // $('#b1').on("click", ()=>{})
+
+    // //2
+    // //replyList에서 update로 이벤트 위임을 하고자 할 때
+    // $('#replyList').on("click", ".update", ()=>{});
+
+
+    //checkbox 약관동의
+    // document.getElementsByClassName("ch");
+    // for(let c of ch){
+    //     c.addEventListener("click", ()=>{
+
+    //     })
+    // }
+
+    //Jqeury checkbox 약관동의
+    //클래스명 ch를 가진 element는 여러개지만, Jquery에서는 반복문을 돌리지 않아도 이벤트가 다 걸린다
+    //화살표함수
+    // $(".ch").click((e)=>{
+    //     console.log("e: ",e);
+    //     console.log(this); //화살표 함수에서는 이렇게 찍으면 window(화면 전체) 객체가 나온다
+    //     // console.log(this.value); //JS
+    //     // console.log($(this).val()); //Jquery
+    // })
+
+    //익명함수
+    // $(".ch").click(function(e){
+    //     console.log("e: ",e);
+    //     console.log(this); //익명 함수에서는 해당 태그를 가리킨다
+    //     console.log($(this).val());
+    // })
+
+    //**어떤 함수에서 사용하냐에 따라서 this가 가리키는게 달라진다
+    //자기자신을 선택할 일이 있다면 익명함수와 화살표함수에서 어떻게 사용할지 고민을 해봐야한다.
+    //화살표함수에서 this를 제대로 쓰고싶다면? JS에서 사용했던것 처럼 e.target을 사용
+    // $(".ch").click((e)=>{
+    //     console.log("e: ",e);
+    //     console.log(e.target); //익명 함수에서의 해당 태그를 가리키는것 처럼 제대로 선택함
+    //     console.log($(e.target).val()); //Jquery
+    // })
+
+
+
+
+////////////////////
