@@ -9,6 +9,9 @@
 <meta charset="UTF-8">
 <title>Bankbook Add Page</title>
 	<c:import url="../template/common_css.jsp"></c:import>
+	<!-- include summernote css/js-->
+	<link href="summernote-bs5.css" rel="stylesheet">
+	<script src="summernote-bs5.js"></script>
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
@@ -79,11 +82,12 @@
 	</form>
 </div>
 
+<c:import url="../template/common_js.jsp"></c:import>
 <script src="../resources/js/fileManager.js"></script>
 <script>
 	setMax(3);
+	$('#bookDetail').summernote();
 	// setParam('f');
 </script>
-<c:import url="../template/common_js.jsp"></c:import>
 </body>
 </html>

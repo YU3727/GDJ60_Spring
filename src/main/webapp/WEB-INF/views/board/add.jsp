@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>${boardName} Add Page</title>
 	<c:import url="../template/common_css.jsp"></c:import>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
@@ -53,11 +55,12 @@
 	</form>
 </div>
 
+<c:import url="../template/common_js.jsp"></c:import>
 <script src="../resources/js/fileManager.js"></script>
 <script>
 	setMax(5);
 	setParam('files');
+	$('#contents').summernote(); /* textArea의 id를 가져오세요 */
 </script>
-<c:import url="../template/common_js.jsp"></c:import>
 </body>
 </html>
