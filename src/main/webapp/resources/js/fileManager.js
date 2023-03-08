@@ -152,3 +152,30 @@ $("#fileList").on("click", ".dels", function(){ //".dels"
     $(this).parent().remove();
     count--;
 })
+
+//update - checkbox에 check된 것 확인
+//버튼 추가 박스 넣고 뺄때 count, idx 계산 등은 메모해가면서 해야한다
+$(".deleteCheck").click(function(){
+    if($(this).prop("checked")){
+        //체크 여부를 confirm창으로 확인 받기
+        let result = confirm('파일이 영구 삭제 됩니다'); //return boolean
+
+        if(result){
+            count--;
+        }else{
+            $(this).prop("checked", false);
+        }
+
+    }else{
+        if(count==5){
+            // console.log('idx: '+idx);
+            //idx같은게 없는경우, 상대선택자를 선택해야함
+            idx--;
+            $("#del"+idx).remove();
+            return;
+           //마지막으로 추가된 파일의 x버튼을 강제로 누르는 이벤트 실행하는 방법도 ok일듯
+
+        }
+        count++;
+    }
+})

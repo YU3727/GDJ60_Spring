@@ -93,8 +93,11 @@ public class QnaService implements BoardService{
 		//파일처리(기존 파일 삭제 -> 있는 첨부파일 모두 insert 하는식으로)
 		//notice도 할 작업이므로 boardDAO에 작성한다
 		//qnaFiles Delete
-		for(Long fileNum : fileNums) {
-			qnaDAO.setBoardFileDelete(fileNum);
+		if(fileNums != null) { //삭제를 안하는 경우 fileNum이 null이므로, 이 작업을 안하는것으로
+			for(Long fileNum : fileNums) {
+				qnaDAO.setBoardFileDelete(fileNum);
+				//원래는 여기서 os에 있는 파일 정보도 지워줘야한다. setBoardDelete에 쓴 것 처럼
+			}
 		}
 		
 		//qnaFiles Insert - add에서 insert 하는것과 동일한 작업
