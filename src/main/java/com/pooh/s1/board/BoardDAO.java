@@ -29,4 +29,8 @@ public interface BoardDAO extends BbsDAO{
 	
 	//BoardFileDetail - 파일 하나 조회 -> boardService에도
 	public BoardFileDTO getBoardFileDetail(BoardFileDTO boardFileDTO) throws Exception;
+	
+	//update - file을 지우기 위한 메서드
+	public int setBoardFileDelete(Long fileNum) throws Exception;
+	
 }

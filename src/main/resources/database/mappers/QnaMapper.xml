@@ -124,4 +124,18 @@
   		SELECT * FROM QNAFILES WHERE FILENUM=#{fileNum}
   	</select>
   	
+  	<!-- update - file delete -->
+  	<!-- primitive Type, String은 getter가 없으므로, DAO에서 넘겨주는 매개변수 이름 자체를 쓰면 된다 (Long fileNum)의 fileNum -->
+  	<delete id="setBoardFileDelete" parameterType="Long">
+  		DELETE QNAFILES WHERE FILENUM=${fileNum}
+  	</delete>
+  	
+  	<!-- Update -->
+	<update id="setBoardUpdate" parameterType="BbsDTO">
+		UPDATE QNA SET TITLE=#{title}, CONTENTS=#{contents} WHERE NUM=#{num}
+	</update>
+	
+	
+	
+	
   </mapper>

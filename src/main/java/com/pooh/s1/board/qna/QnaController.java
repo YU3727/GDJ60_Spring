@@ -162,6 +162,22 @@ public class QnaController {
 		return mv;
 	}
 	
+	//update에는 파일추가까지 필요하다 + realPath를 받기위해 session(application), 지우려고 하는 fileNum까지
+	@PostMapping("update")
+	public ModelAndView setBoardUpdate(BoardDTO boardDTO, MultipartFile [] addFiles, HttpSession session, Long [] fileNum) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		//확인용
+//		for(Long fn : fileNum) {System.out.println(fn);}
+		
+		int result = qnaService.setBoardUpdate(boardDTO, addFiles, session, fileNum);
+		
+		mv.addObject("result", "수정 성공");
+		mv.addObject("url", "./list");
+		mv.setViewName("common/result");
+		
+		return mv;
+	}
+	
 	
 	//-------------------------------------------------------------------------
 	

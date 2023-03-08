@@ -22,10 +22,11 @@
 	</div>
 	
 	<div class="row justify-content-center">
-	<form class="col-md-7" action="./add" method="post" enctype="multipart/form-data"> <!-- 미리 확인해야한다 + -context.xml의 mutipartresolver도 -->
+	<form class="col-md-7" action="./update" method="post" enctype="multipart/form-data"> <!-- 미리 확인해야한다 + -context.xml의 mutipartresolver도 -->
+		<input type="hidden" name="num" value="${dto.num}">
 		<div class="mb-3">
 		  <label for="writer" class="form-label">작성자</label>
-		  <input type="text" name="writer" readonly value="${member.id}" class="form-control" id="writer">
+		  <input type="text" name="writer" readonly value="${dto.writer}" class="form-control" id="writer">
 		</div>
 		
 		<div class="mb-3">
@@ -42,12 +43,28 @@
 			<button type="button" id="fileAdd">File Add</button>
 			<c:forEach items="${dto.boardFileDTOs}" var="fileDTO">		
 				<div class="input-group my-3">
-					<input type="file" class="form-control" value="${fileDTO.oriName}" id="files" name="files">
-					<button type="button" class="dels btn btn-outline-secondary">X</button>
+					<div class="input-group-text">
+						<input class="form-check-input mt-0" type="checkbox" value="${fileDTO.fileNum}" name="fileNum" aria-label="Checkbox for following text input">
+					</div>
+				<input type="text" class="form-control" disabled value="${fileDTO.oriName}" aria-label="Text input with checkbox">			
 				</div>
 			</c:forEach>
 		</div>
 		
+
+		<!-- <div id="fileList" class="my-5">
+            <button type="button" class="btn btn-primary" id="fileAdd">ADD</button>
+			<c:forEach items="${dto.boardFileDTOs}" var="fileDTO">
+				<div class="input-group mb-3">
+					<div class="input-group-text">
+						<input class="form-check-input mt-0" type="checkbox" value="${fileDTO.fileNum}" name="fileNums" aria-label="Checkbox for following text input">
+					</div>
+				<input type="text" class="form-control" disabled value="${fileDTO.oriName}" aria-label="Text input with checkbox">
+				</div>
+			</c:forEach>
+       </div> -->
+
+
 
 		<div class="row justify-content-center mx-auto">
 			<button class="btn btn-outline-success col-2" type="submit">글쓰기</button>	
