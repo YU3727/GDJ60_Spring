@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>${boardName} Update Page</title>
 	<c:import url="../template/common_css.jsp"></c:import>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
@@ -28,21 +30,22 @@
 		
 		<div class="mb-3">
 		  <label for="title" class="form-label">글제목</label>
-		  <input type="text" name="title" class="form-control" id="title" placeholder="insert title here">
+		  <input type="text" name="title" class="form-control" value="${dto.title}" id="title" placeholder="insert title here">
 		</div>
 	
 		<div class="mb-3">
 		  <label for="contents" class="form-label">상세내용</label>
-		  <textarea name="contents" class="form-control" id="contents" placeholder="insert contents here" rows="5"></textarea>
+		  <textarea name="contents" class="form-control" id="contents" placeholder="insert contents here" rows="5">${dto.contents}</textarea>
 		</div>
 		
 		<div id="fileList" class="my-5">
-<!-- 			<div class="mb-3">
-				<label for="files" class="form-label">이미지</label>
-				<input type="file" class="form-control" id="files" name="files">
-				<button type="button" id="del01~">X</button>
-			</div> -->
 			<button type="button" id="fileAdd">File Add</button>
+			<c:forEach items="${dto.boardFileDTOs}" var="fileDTO">		
+				<div class="input-group my-3">
+					<input type="file" class="form-control" value="${fileDTO.oriName}" id="files" name="files">
+					<button type="button" class="dels btn btn-outline-secondary">X</button>
+				</div>
+			</c:forEach>
 		</div>
 		
 
@@ -56,7 +59,9 @@
 <script src="../resources/js/fileManager.js"></script>
 <script>
 	setMax(5);
-	setParam('files');
+	setParam('addFiles');
+	setCount('${dto.boardFileDTOs.size()}');
+	$('#contents').summernote(); 
 </script>
 <c:import url="../template/common_js.jsp"></c:import>
 </body>

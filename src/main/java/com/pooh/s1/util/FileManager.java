@@ -55,7 +55,6 @@ public class FileManager {
 		//1) OriginalName에서 subString을 이용해서 확장자 추출
 		//2. OriginalName을 그냥 붙여넣는 방법
 		name = name+"_"+multipartFile.getOriginalFilename();
-		
 		System.out.println(name);
 		
 		//5. 파일 저장

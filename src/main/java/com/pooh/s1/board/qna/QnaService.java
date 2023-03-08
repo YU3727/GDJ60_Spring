@@ -41,7 +41,6 @@ public class QnaService implements BoardService{
 
 	@Override
 	public int setBoardAdd(BbsDTO bbsDTO, MultipartFile [] multipartFiles, HttpSession session) throws Exception {
-		//jsp에서 사용하는 input의 name속성명과 동일하게
 		//글쓴 것 insert와 파일 insert중에 뭘 먼저해야하는가? -> erdCloud에 가서 보면 글이 있어야 파일이 있을 수 있음(FK 관계에 의해 - 데이터 무결성)
 		//1. 글 insert
 		int result = qnaDAO.setBoardAdd(bbsDTO);

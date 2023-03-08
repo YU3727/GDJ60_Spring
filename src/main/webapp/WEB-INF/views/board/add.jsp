@@ -58,9 +58,9 @@
 <c:import url="../template/common_js.jsp"></c:import>
 <script src="../resources/js/fileManager.js"></script>
 <script>
+	setParam('addFiles'); /* files에서 summernote 사용 후 addFiles로 변경, Controller의 매개변수 이름도 변경 */
 	setMax(5);
-	setParam('files');
-	$('#contents').summernote(); /* textArea의 id를 가져오세요 */
+	$('#contents').summernote(); /* 선택자 내부에는 섬머노트를 적용할 element(보통 textArea)의 id를 써준다 */
 </script>
 </body>
 </html>

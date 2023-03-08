@@ -53,10 +53,10 @@ public class QnaController {
 	}
 	
 	@PostMapping("add")
-	public ModelAndView setBoardAdd(QnaDTO qnaDTO, MultipartFile [] files, HttpSession session) throws Exception{
+	public ModelAndView setBoardAdd(QnaDTO qnaDTO, MultipartFile [] addFiles, HttpSession session) throws Exception{
 		//매개변수명은 add.jsp에서 쓴 input 타입의 name 속성명과 같게
 		ModelAndView mv = new ModelAndView();
-		int result = qnaService.setBoardAdd(qnaDTO, files, session);
+		int result = qnaService.setBoardAdd(qnaDTO, addFiles, session);
 		//보안을 위해서는 원래, 여기서 session에서 로그인한 멤버의 DTO를 꺼내서 매개변수 qnaDTO에 넣어줘야한다.
 		
 		String message = "등	록에 실패했습니다";

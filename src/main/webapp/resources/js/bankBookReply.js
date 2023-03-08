@@ -7,7 +7,7 @@ $("#replyAdd").click(function(){
     form.append("bookNumber", $("#replyAdd").attr("data-idx-bookNumber"));
 
 
-    //fetch - 사용은 이걸로 해야한다
+    //Ajax - fetch
     //JS에서 중괄호는 객체를 만든다는 의미. 멤버변수를 자기마음대로 추가할 수 있다
     //값을 구분할때는 쉼표(,)를 쓴다
     //fetch는 XMLHttpRequest의 open ~ send까지 다 한것
