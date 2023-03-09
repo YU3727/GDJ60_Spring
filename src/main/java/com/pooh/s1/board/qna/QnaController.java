@@ -178,6 +178,18 @@ public class QnaController {
 		return mv;
 	}
 	
+	@PostMapping("boardFileDelete")
+	public ModelAndView setBoardFileDelete(Long fileNum) throws Exception{
+		//boardFileDelete 만들어둔게 Long type으로 매개변수를 받음
+		ModelAndView mv = new ModelAndView();
+		int result = qnaService.setBoardFileDelete(fileNum);
+		
+		mv.addObject("result", result);
+		mv.setViewName("common/ajaxResult");
+		
+		return mv;
+	}
+	
 	
 	//-------------------------------------------------------------------------
 	

@@ -153,29 +153,82 @@ $("#fileList").on("click", ".dels", function(){ //".dels"
     count--;
 })
 
-//update - checkbox에 check된 것 확인
-//버튼 추가 박스 넣고 뺄때 count, idx 계산 등은 메모해가면서 해야한다
+//update - 
+//버튼을 체크하면 바로 삭제되게끔
+//이방법은 파일지우고 뒤로가기 누르면 파일이 지워져버리는 단점이 있긴함
 $(".deleteCheck").click(function(){
-    if($(this).prop("checked")){
-        //체크 여부를 confirm창으로 확인 받기
-        let result = confirm('파일이 영구 삭제 됩니다'); //return boolean
+    let result=confirm('파일이 영구 삭제 됩니다');
+    let ch = $(this);
+    if(result){
+        let fileNum = $(this).val();
+        //두가지를 합친 Jqery Ajax
+        //통합요청방식을 많이 사용한다(header값의 변경, 배열전송 등 많은 기능을 사용가능)
+        $.ajax({
+            type:'POST',
+            url:'./boardFileDelete',
+            data:{
+                //fileNum은 클릭한 자기자신의 value 속성에 있다 -> $(선택자).val()
+                fileNum:fileNum //속성명:변수명
+            },
+            //위까지 기본, 아래부터는 응답
+            success:function(response){
+                if(response.trim()>0){
+                    //상대선택자를 사용해서 부모의 부모를 찾으러 가서 지우기
+                    alert("삭제 되었습니다");
+                    //여기서 this는 Ajax 객체 자기자신을 의미
+                    console.log($(this));
+                    ch.parent().parent().remove();
+                    count--;
+                }else {
+                    alert("삭제 실패<br> 관리자에게 문의하세요");
+                }
+            },
+            error:function(){
 
-        if(result){
-            count--;
-        }else{
-            $(this).prop("checked", false);
-        }
+            }
+        })
+        
+        
+        
+        //Ajax를 이용해서 DB에서 삭제
+        //fetch - get
+        // fetch('URL?p=1', {
+        //     method: 'GET'
+        // })
+        // .then((response)=>response.text())
+        // .then((res)=>{
 
-    }else{
-        if(count==5){
-            // console.log('idx: '+idx);
-            //idx같은게 없는경우, 상대선택자를 선택해야함
-            idx--;
-            $("#del"+idx).remove();
-            return;
-           //마지막으로 추가된 파일의 x버튼을 강제로 누르는 이벤트 실행하는 방법도 ok일듯
+        // })
 
-        }
-        count++;
+        //Jquery Ajax - GET
+        //Jquery에 있는 Ajax를 사용할 것
+        //익명함수의 매개변수 response는 요청에 대한 응답을 받는역할
+        // $.get("URL?p=1", function(response){
+        //     //여기서 response는 fetch에서 response.text()한 것과 같다
+        // })
+
+
+        //fetch - POST
+        // fetch('URL', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Contents-Type':'x...'
+        //     },
+        //     body:"p=1"
+        // })
+        // .then((response)=>response.text())
+        // .then((res)=>{
+
+        // })
+
+        //Jquery Ajax - POST
+        //callback function내에 매개변수명은 개발자 마음대로 설정
+        $.post("URL", {p:1, p:2}, function(result){
+
+        })
+
+
+    }else {
+        $(this).prop('checked', false);
     }
 })

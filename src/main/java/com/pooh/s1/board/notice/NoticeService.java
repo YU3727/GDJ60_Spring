@@ -69,6 +69,13 @@ public class NoticeService implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public int setBoardUpdate(BbsDTO bbsDTO, MultipartFile[] multipartFiles, HttpSession session, Long[] fileNums)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public int setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception {

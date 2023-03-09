@@ -176,7 +176,7 @@ public class QnaService implements BoardService{
 		qnaDTO.setDepth(parent.getDepth()+1);
 		
 		//3. Step을 Update
-		//쿼리문 만들고... 부모의 정보로 자식의 정보를 업데이트 해야한다!!
+		//쿼리문 만들고... 부모의 정보로 자식의 정보를 업데이트 해야한다
 		int result = qnaDAO.setStepUpdate(parent);
 		
 		//4. 답글을 insert
@@ -192,6 +192,12 @@ public class QnaService implements BoardService{
 	public BoardFileDTO getBoardFileDetail(BoardFileDTO boardFileDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return qnaDAO.getBoardFileDetail(boardFileDTO);
+	}
+	
+	
+	public int setBoardFileDelete(Long fileNum) throws Exception{
+		//HDD에서 파일을 삭제하는 코드도 입력해야함
+		return qnaDAO.setBoardFileDelete(fileNum);
 	}
 	
 }
