@@ -19,9 +19,15 @@
 	
 	<div class="row justify-content-center">
 	<form class="col-md-7" action="./memberLogin" method="post">
+<%-- 		<div class="mb-3">
+		  <label for="id" class="form-label">ID</label>
+		  <input type="text" name="id" value="${rememberId}" class="form-control" id="id" placeholder="id 입력">
+		</div> --%>
+		
+		<!-- 이렇게도 사용 가능하다. MemberController에서 쿠키 처리를 하지 않고, jsp에서 바로 쿠키를 꺼내보고 싶은 경우. -->
 		<div class="mb-3">
 		  <label for="id" class="form-label">ID</label>
-		  <input type="text" name="id" class="form-control" id="id" placeholder="id 입력">
+		  <input type="text" name="id" value="${cookie.rememberId.value}" class="form-control" id="id" placeholder="id 입력">
 		</div>
 		
 		<div class="mb-3">

@@ -2,7 +2,9 @@ package com.pooh.s1.member;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,21 +102,59 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="memberLogin", method = RequestMethod.GET)
-	public ModelAndView memberLogin() throws Exception{
+	public ModelAndView memberLogin(HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("member/memberLogin");
+		
+		//모든 요청은 request 객체에 담겨져 온다. 쿠키를 꺼내오는것도 마찬가지.
+		//여기서 해도 되고, jsp에서 해도 된다. memberLogin.jsp로(백엔드에서 작업할 필요가 없는 경우에는 이렇게 해도 된다)
+//		Cookie [] cookies = request.getCookies();
+//		
+//		for(Cookie cookie : cookies) {
+//			//확인용
+//			System.out.println(cookie.getName());
+//			System.out.println(cookie.getValue());
+//			System.out.println(cookie.getDomain());
+//			System.out.println(cookie.getPath());
+//			System.out.println("---------------");
+//			
+//			if(cookie.getName().equals("rememberId")) {
+//				mv.addObject("rememberId", cookie.getValue());
+//				break;
+//			}
+//		}
+		
 		return mv;
 	}
 	
 	@RequestMapping(value = "memberLogin", method = RequestMethod.POST)
-	public ModelAndView getMemberLogin(MemberDTO memberDTO, HttpServletRequest request)throws Exception{
+	public ModelAndView getMemberLogin(MemberDTO memberDTO, HttpServletRequest request, String remember, HttpServletResponse response)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		memberDTO = memberService.getMemberLogin(memberDTO);
-		//request에서 session객체를 반환해줌(lifecycle이 작은 객체에서 큰 객체를 꺼내기 가능 - 무조건 존재하기때문)
-		if(memberDTO != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("member", memberDTO);
+		
+		//매개변수 remember를 사용해서 ID 기억하기 기능 구현
+//		System.out.println("Remember: "+remember);
+		if(remember != null && remember.equals("remember")) {
+			//id를 쿠키에 담아서 보내려고 한다 - 세션이 아님(끄고 나가서 차후에 접속하면 세션이 소멸)
+			//로그인 성공했을 때만 아이디 기억을 하려고 하면 로그인 단계인 아래쪽에 이 코드를 작성하면 된다
+			Cookie cookie = new Cookie("rememberId", memberDTO.getId());
+			//쿠키의 수명설정(초 단위), -1인 경우 영구히 저장하라는 의미
+			cookie.setMaxAge(60*60*24*7);
+			//쿠키도 응답으로 나가기 때문에 response에 쿠키를 담아준다
+			response.addCookie(cookie);
+		}else {
+			//체크 안됐을 때 -> 아이디가 계속 남아있으면 안되므로, 쿠키를 삭제하거나 삭제하는 것 처럼 보이게 한다
+			Cookie cookie = new Cookie("rememberId", ""); //덮어씌우기
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
 		}
+		
+		
+//		memberDTO = memberService.getMemberLogin(memberDTO);
+//		//request에서 session객체를 반환해줌(lifecycle이 작은 객체에서 큰 객체를 꺼내기 가능 - 무조건 존재하기때문)
+//		if(memberDTO != null) {
+//			HttpSession session = request.getSession();
+//			session.setAttribute("member", memberDTO);
+//		}
 		mv.setViewName("redirect:../");
 		return mv;
 	}
