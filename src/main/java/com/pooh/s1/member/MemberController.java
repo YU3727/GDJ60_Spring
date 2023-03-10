@@ -94,7 +94,7 @@ public class MemberController {
 		//1. member를 꺼냈을 떄 null이면 로그아웃처리. 이건 잘 안씀
 		//2. session의 메서드 invalidate()를 쓴다(즉시 삭제 효과)
 		ModelAndView mv = new ModelAndView();
-		session.invalidate();
+		session.invalidate(); //session객체의 남은 시간을 0으로 조정
 		mv.setViewName("redirect:../");
 		return mv;
 	}

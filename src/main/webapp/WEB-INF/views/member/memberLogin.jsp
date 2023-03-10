@@ -29,6 +29,11 @@
 		  <input type="password" name="pw" class="form-control" id="pw" placeholder="password 입력">
 		</div>
 	</div>
+	
+	<div class="mb-3 form-check">
+		<input type="checkbox" name="remember" value="remember" class="form-check-input" id="remember">
+		<label class="form-check-label" for="remember">ID 기억하기</label>
+	</div>
 
 		<div class="row justify-content-center mx-auto">
 			<button class="btn btn-outline-success col-2" type="submit" value="등록">로그인</button>	
