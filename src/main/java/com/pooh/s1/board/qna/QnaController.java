@@ -5,13 +5,19 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,6 +48,38 @@ public class QnaController {
 		
 		mv.addObject("list", ar);
 		mv.setViewName("board/list");
+		
+		
+		//번외 - Java에서 외부서버로 요청을 보낼 때 사용하는 객체
+		RestTemplate restTemplate = new RestTemplate();
+		
+		//URL, method형식, parameter, header를 세팅해서 요청을 보내야함
+		
+		//아래는 문서를 보고 메서드에 보낼 매개변수를 작성해야한다
+		//header - 설정하는 몇가지 방법이 있음
+		HttpHeaders headers = new HttpHeaders();
+		//1. headers.add("header name", "header value"); 
+		headers.add("Content-Type", "application/x-www-form-urlencoded");
+		//2. headers.set헤더명("헤더값");
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		//parameter(post)
+		//인터페이스로 선언, 생성자는 실제객체가 있어야 하므로 다른것으로
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.add("parameter name", "parameter value");
+		params.add("grand_type=", "authorization_code");
+		params.add("cliend_id=", "${REST_API_KEY}");
+		
+		//header와 parameter를 하나의 객체에 담는다
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String,String>>(params, headers);
+		
+		//요청 보내기 - request 객체를 아래 restTemplate의 매개변수로 넣음
+		//getForEntity/Object, postForEntity/Object로 구분 <T>는 Type을 의미, GET/POST는 순서가 다름에 주의
+		//String result = restTemplate.getForObject("https://dummyjson.com/products/1", String.class, request);
+		String result = restTemplate.postForObject("https://dummyjson.com/products/1", request, String.class);
+		
+		System.out.println(result);
+		
 		return mv;
 	}
 	
