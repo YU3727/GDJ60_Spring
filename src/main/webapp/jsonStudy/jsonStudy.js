@@ -63,8 +63,6 @@ $("#productList").on("click", ".detail", function(e){
     let productId = $(this).attr("data-productId");
 
 
-
-
     $.get('https://dummyjson.com/products/'+productId, (response)=>{
         //응답이 오는걸 매개변수로 받음
         console.log(response);
