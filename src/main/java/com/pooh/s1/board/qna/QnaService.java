@@ -129,7 +129,7 @@ public class QnaService implements BoardService{
 	public int setBoardDelete(BbsDTO bbsDTO, HttpSession session) throws Exception {
 		//나중에 비밀번호 확인작업같은거 하면 여기서
 		
-		//CASCADE 옵션이 있으면, 글에 묶인 파일을 먼저 조회해와야 한다.(대신 따로 자식파일을 지울 필요는 없음)
+		//CASCADE 옵션이 있으면, 글에 묶인 파일을 먼저 조회해와야 한다.(대신 따로 자식파일을 db에서 지울 필요는 없음)
 		List<BoardFileDTO> ar = qnaDAO.getBoardFileList(bbsDTO);
 		int result = qnaDAO.setBoardDelete(bbsDTO);
 		

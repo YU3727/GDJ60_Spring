@@ -127,7 +127,7 @@
   	<!-- update - file delete -->
   	<!-- primitive Type, String은 getter가 없으므로, DAO에서 넘겨주는 매개변수 이름 자체를 쓰면 된다 (Long fileNum)의 fileNum -->
   	<delete id="setBoardFileDelete" parameterType="Long">
-  		DELETE QNAFILES WHERE FILENUM=${fileNum}
+  		DELETE QNAFILES WHERE FILENUM=#{fileNum}
   	</delete>
   	
   	<!-- Update -->
